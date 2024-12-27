@@ -39,7 +39,6 @@ To get started with FastBreakR, simply load the package:
 # Load the FastBreakR package
 library(FastBreakR)
 library(dplyr, warn.conflicts = FALSE)
-
 ```
 
 ## Fetching Team Stats
@@ -54,14 +53,11 @@ The **`nba_team_stats()`** function retrieves NBA team statistics for the season
 
 
 ```{r, team stats}
-
 # Fetch team stats for the 2022-2023 & 2023-2024 regular season
 team_stats <- nba_team_stats(2023:2024, season_type = "Regular Season")
 
 # Display a glimpse of the advanced stats for the 2024 season
 glimpse(team_stats$season_2024$Advanced)
-
-
 ```
 
 Once you have the data, you can analyze it as is or consolidate it using additional package functions.
@@ -73,15 +69,13 @@ Once you've fetched the data, you might want to clean and process it further to 
 For example, you can consolidate team stats and calculate additional metrics based on the schedule:
 
 ```{r, process team stats}
-
 # Process team stats using the data from scrape_nba_team_stats()
 team_stats_processed <- team_stats %>%
-    consolidate_stats() %>%      # Consolidates stats into one data frame
-    add_schedule_details()      # Calculates additional schedule metrics
+  consolidate_stats() %>% # Consolidates stats into one data frame
+  add_schedule_details() # Calculates additional schedule metrics
 
 # Display a glimpse of the processed data
 glimpse(team_stats_processed$season_2024)
-
 ```
 
 **`consolidate_stats()`**: This function combines data from multiple statistical categories (e.g., basic, advanced, scoring) into a single data frame for easier analysis.
@@ -96,12 +90,11 @@ The **`nba_box_scores()`** function allows you to fetch detailed box score data 
 stat categories removed.
 
 ```{r, fetch box scores, error = FALSE}
-
 # Here, we're fetching play-by-play data for a subset of game IDs
 games <- team_stats_processed$season_2024 %>%
-    filter(game_date == "2023-12-25") %>%
-    pull(game_id) %>%
-    unique()
+  filter(game_date == "2023-12-25") %>%
+  pull(game_id) %>%
+  unique()
 
 # Fetching Traditional and Miscellaneous box scores
 box_scores <- nba_box_scores(
@@ -111,7 +104,6 @@ box_scores <- nba_box_scores(
 
 # Display a glimpse of the processed data
 glimpse(box_scores)
-
 ```
 
 ## Fetching Play-by-Play Data with Rate Limiting
@@ -121,13 +113,11 @@ Fetching play-by-play data from the NBA can be resource-intensive, especially wh
 Below is an example of how to fetch play-by-play data for a specific set of games, using the **`nba_play_by_play()`** function. This example demonstrates how to fetch data for a list of game IDs, while respecting rate limits to avoid overloading the server.
 
 ```{r, fetch play by play}
-
 # Fetch the play-by-play data for the same games
 play_by_play_data <- nba_play_by_play(games)
 
 # Display a glimpse of the fetched data
 glimpse(play_by_play_data)
-
 ```
 
 In this example:

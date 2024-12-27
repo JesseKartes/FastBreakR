@@ -5,32 +5,32 @@
 #' @return A tibble containing the player dictionary.
 #' @export
 nba_player_dictionary <- function() {
-    player_dictionary <- fetch_player_dictionary_data()
+  player_dictionary <- fetch_player_dictionary_data()
 
-    return(player_dictionary)
+  return(player_dictionary)
 }
 
 #' Fetch Player Dictionary from API
 #'
 #' @return A list containing the raw player dictionary data.
 fetch_player_dictionary_data <- function() {
-    headers <- generate_headers_stats()
-    params <- generate_parameters_player_dict()
+  headers <- generate_headers_stats()
+  params <- generate_params_player_dict()
 
-    url <- "https://stats.nba.com/stats/playerindex"
+  url <- "https://stats.nba.com/stats/playerindex"
 
-    data <- get_data(url, headers, params)
+  data <- get_data(url, headers, params)
 
-    column_names <- data$resultSets$headers[[1]] %>%
-        as.character()
+  column_names <- data$resultSets$headers[[1]] %>%
+    as.character()
 
-    dt <- data$resultSets$rowSet[[1]] %>%
-        data.frame(stringsAsFactors = FALSE) %>%
-        as_tibble() %>%
-        set_names(column_names) %>%
-        clean_names()
+  dt <- data$resultSets$rowSet[[1]] %>%
+    data.frame(stringsAsFactors = FALSE) %>%
+    as_tibble() %>%
+    set_names(column_names) %>%
+    clean_names()
 
-    return(dt)
+  return(dt)
 }
 
 #' Get NBA Team Dictionary
@@ -40,32 +40,32 @@ fetch_player_dictionary_data <- function() {
 #' @return A tibble containing the team dictionary.
 #' @export
 nba_team_dictionary <- function() {
-    team_dictionary <- fetch_team_dictionary_data()
+  team_dictionary <- fetch_team_dictionary_data()
 
-    return(team_dictionary)
+  return(team_dictionary)
 }
 
 #' Fetch Team Dictionary from API
 #'
 #' @return A list containing the raw team dictionary data.
 fetch_team_dictionary_data <- function() {
-    headers <- generate_headers_stats()
-    params <- generate_parameters_team_dict()
+  headers <- generate_headers_stats()
+  params <- generate_params_team_dict()
 
-    url <- "https://stats.nba.com/stats/franchisehistory"
+  url <- "https://stats.nba.com/stats/franchisehistory"
 
-    data <- get_data(url, headers, params)
+  data <- get_data(url, headers, params)
 
-    column_names <- data$resultSets$headers[[1]] %>%
-        as.character()
+  column_names <- data$resultSets$headers[[1]] %>%
+    as.character()
 
-    dt <- data$resultSets$rowSet[[1]] %>%
-        data.frame(stringsAsFactors = FALSE) %>%
-        as_tibble() %>%
-        set_names(column_names) %>%
-        clean_names()
+  dt <- data$resultSets$rowSet[[1]] %>%
+    data.frame(stringsAsFactors = FALSE) %>%
+    as_tibble() %>%
+    set_names(column_names) %>%
+    clean_names()
 
-    return(dt)
+  return(dt)
 }
 
 #' Get NBA Player Headshot Photo
@@ -76,15 +76,15 @@ fetch_team_dictionary_data <- function() {
 #' @return A character vector containing the headshot URLs.
 #' @export
 nba_player_headshot <- function(player_id) {
-    if (missing(player_id)) {
-        stop("Error: 'player_id' is required to retrieve the player headshot URL.")
-    }
+  if (missing(player_id)) {
+    stop("Error: 'player_id' is required to retrieve the player headshot URL.")
+  }
 
-    if (!is.numeric(player_id) && !is.character(player_id)) {
-        stop("Error: 'player_id' must be a numeric or character vector.")
-    }
+  if (!is.numeric(player_id) && !is.character(player_id)) {
+    stop("Error: 'player_id' must be a numeric or character vector.")
+  }
 
-    get_player_headshot(player_id)
+  get_player_headshot(player_id)
 }
 
 #' Get NBA Team Logo
@@ -95,14 +95,13 @@ nba_player_headshot <- function(player_id) {
 #' @return A character vector containing the logo URLs.
 #' @export
 nba_team_logo <- function(team_id) {
-    if (missing(team_id)) {
-        stop("Error: 'team_id' is required to retrieve the team logo URL.")
-    }
+  if (missing(team_id)) {
+    stop("Error: 'team_id' is required to retrieve the team logo URL.")
+  }
 
-    if (!is.numeric(team_id) && !is.character(team_id)) {
-        stop("Error: 'team_id' must be a numeric or character vector.")
-    }
+  if (!is.numeric(team_id) && !is.character(team_id)) {
+    stop("Error: 'team_id' must be a numeric or character vector.")
+  }
 
-    get_team_logo(team_id)
+  get_team_logo(team_id)
 }
-
