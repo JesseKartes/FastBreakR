@@ -19,5 +19,6 @@ A tibble containing combined FanDuel data for all game IDs.
 \description{
 This function gets FanDuel data for a vector of game IDs and returns a
 combined tibble.
-Creates batches of \code{game_ids} and pauses between batches to avoid timeout issues.
+Creates batches of \code{game_ids} and pauses between batches to avoid timeout
+issues.
 }
