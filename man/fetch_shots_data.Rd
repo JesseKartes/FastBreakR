@@ -9,11 +9,13 @@ fetch_shots_data(season, season_type)
 \arguments{
 \item{season}{A numeric value representing the season (e.g., 2024).}
 
-\item{season_type}{A character string specifying the type of season (e.g., "Regular Season").}
+\item{season_type}{A character string specifying the type of season
+(e.g., "Regular Season").}
 }
 \value{
 A list containing raw shots data and league average data.
 }
 \description{
-This function fetches raw NBA shot data and league average data for a given season.
+This function fetches raw NBA shot data and league average data for a given
+season.
 }
