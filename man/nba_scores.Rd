@@ -7,9 +7,11 @@
 nba_scores(seasons, season_type = "Regular Season")
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to scrape NBA scores.}
+\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to scrape
+NBA scores.}
 
-\item{season_type}{A character string specifying the type of season (e.g., "Regular Season").}
+\item{season_type}{A character string specifying the type of season
+(e.g., "Regular Season").}
 }
 \value{
 A data frame containing the NBA scores and related statistics.
