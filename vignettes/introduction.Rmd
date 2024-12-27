@@ -27,7 +27,9 @@ Before you start, ensure you have installed the FastBreakR package and its depen
 
 ```r
 # Install from GitHub
-devtools::install_github("JayKay-15/FastBreakR")
+
+# install.packages("pak")
+pak::pak("JayKay-15/FastBreakR")
 install.packages("dplyr")
 ```
 
