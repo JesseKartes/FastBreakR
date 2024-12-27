@@ -7,8 +7,9 @@
 nba_box_scores(measure_types, game_ids, batch_size = 100, pause_seconds = 15)
 }
 \arguments{
-\item{measure_types}{A character vector of selected box score options. Each option corresponds to an entry in
-\code{box_score_types}. Valid options include:
+\item{measure_types}{A character vector of selected box score options.
+Each option corresponds to an entry in \code{box_score_types}. Valid options
+include:
 \itemize{
 \item \strong{"Traditional"} - Box score with traditional statistics.
 \item \strong{"Advanced"} - Box score with advanced statistics.
@@ -34,5 +35,6 @@ measure types.
 \description{
 This function gets NBA box score data for the specified \code{game_ids}, returning
 a data frame with all selected \code{measure_types}.
-Creates batches of \code{game_ids} and pauses between batches to avoid timeout issues.
+Creates batches of \code{game_ids} and pauses between batches to avoid
+timeout issues.
 }
