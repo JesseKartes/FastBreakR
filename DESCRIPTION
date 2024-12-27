@@ -11,6 +11,8 @@ Description: FastBreakR provides a seamless interface for fetching and processin
     advanced models, visualizations, or simply exploring NBA stats, FastBreakR
     makes it easy to access and work with up-to-date NBA data.
 License: MIT + file LICENSE
+URL: https://jaykay-15.github.io/FastBreakR
+BugReports: https://github.com/jaykay-15/FastBreakR/issues
 Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
