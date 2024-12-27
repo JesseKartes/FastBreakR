@@ -37,28 +37,6 @@ library(FastBreakR)
 
 scores <- nba_scores(2025, season_type = "Regular Season")
 #> Processing season 2025 (1/1)
-
-head(scores)
-#> $season_2025
-#> # A tibble: 878 × 22
-#>    season_year team_id    team_abbreviation team_name              opp_team_id
-#>          <dbl> <chr>      <chr>             <chr>                  <chr>      
-#>  1        2025 1610612752 NYK               New York Knicks        1610612738 
-#>  2        2025 1610612738 BOS               Boston Celtics         1610612752 
-#>  3        2025 1610612750 MIN               Minnesota Timberwolves 1610612747 
-#>  4        2025 1610612747 LAL               Los Angeles Lakers     1610612750 
-#>  5        2025 1610612754 IND               Indiana Pacers         1610612765 
-#>  6        2025 1610612765 DET               Detroit Pistons        1610612754 
-#>  7        2025 1610612751 BKN               Brooklyn Nets          1610612737 
-#>  8        2025 1610612737 ATL               Atlanta Hawks          1610612751 
-#>  9        2025 1610612753 ORL               Orlando Magic          1610612748 
-#> 10        2025 1610612748 MIA               Miami Heat             1610612753 
-#> # ℹ 868 more rows
-#> # ℹ 17 more variables: opp_team_abbreviation <chr>, opp_team_name <chr>,
-#> #   game_id <chr>, game_date <date>, matchup <chr>, location <chr>, wl <chr>,
-#> #   min <dbl>, pts <dbl>, opp_pts <dbl>, plus_minus <dbl>, game_count <dbl>,
-#> #   opp_game_count <dbl>, is_b2b_first <lgl>, is_b2b_second <lgl>,
-#> #   opp_is_b2b_first <lgl>, opp_is_b2b_second <lgl>
 ```
 
 ## Documentation
