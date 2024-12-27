@@ -3,8 +3,10 @@
 #' This function gets NBA scores for the specified seasons. Function pauses for
 #' five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape NBA scores.
-#' @param season_type A character string specifying the type of season (e.g., "Regular Season").
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape
+#' NBA scores.
+#' @param season_type A character string specifying the type of season
+#' (e.g., "Regular Season").
 #' @return A data frame containing the NBA scores and related statistics.
 #' @export
 nba_scores <- function(seasons, season_type = "Regular Season") {
@@ -38,7 +40,9 @@ nba_scores <- function(seasons, season_type = "Regular Season") {
 
     # Pause after processing each season unless it's the last
     if (i < length(seasons)) {
-      message(glue::glue("Pausing for 5 seconds before processing the next season..."))
+      message(glue::glue(
+        "Pausing for 5 seconds before processing the next season..."
+      ))
       Sys.sleep(5)
     }
 
@@ -54,14 +58,15 @@ nba_scores <- function(seasons, season_type = "Regular Season") {
 #' This function fetches NBA scores data for a specified season.
 #'
 #' @param season A numeric value representing the season (e.g., 2024).
-#' @param season_type A character string specifying the type of season (e.g., "Regular Season").
+#' @param season_type A character string specifying the type of season
+#' (e.g., "Regular Season").
 #' @return A data frame containing raw NBA scores data.
 fetch_nba_scores <- function(season, season_type) {
   headers <- generate_headers_stats()
 
   url <- "https://stats.nba.com/stats/teamgamelogs"
 
-  params <- generate_parameters_stats(season, "Base", season_type)
+  params <- generate_params_stats(season, "Base", season_type)
 
   data <- get_data(url, headers, params)
 
