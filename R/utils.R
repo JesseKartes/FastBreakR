@@ -37,7 +37,8 @@ calc_days_next_game <- function(game_count, game_date) {
 
 #' Determine If Back-to-Back
 #'
-#' This function determines if the current game is part of a back-to-back (B2B) scenario.
+#' This function determines if the current game is part of a back-to-back (B2B)
+#' scenario.
 #'
 #' @param days_next_game The number of days until the next game.
 #' @param days_rest The number of days of rest before the current game.
@@ -48,7 +49,8 @@ calc_is_b2b <- function(days_next_game, days_rest) {
 
 #' Determine If B2B First
 #'
-#' This function determines if the current game is the first game of a back-to-back (B2B) scenario.
+#' This function determines if the current game is the first game of a
+#' back-to-back (B2B) scenario.
 #'
 #' @param days_next_game The number of days until the next game.
 #' @return A logical value indicating if it's the first game of a back-to-back.
@@ -58,7 +60,8 @@ calc_is_b2b_first <- function(days_next_game) {
 
 #' Determine If B2B Second
 #'
-#' This function determines if the current game is the second game of a back-to-back (B2B) scenario.
+#' This function determines if the current game is the second game of a
+#' back-to-back (B2B) scenario.
 #'
 #' @param days_rest The number of days of rest before the current game.
 #' @return A logical value indicating if it's the second game of a back-to-back.
@@ -84,14 +87,17 @@ add_game_details <- function(data) {
 
 #' Join Multiple Data Frames by Removing Duplicate Columns
 #'
-#' This function takes a list of data frames and joins them using `full_join`, ensuring that
-#' only unique columns from each data frame are included in the final result. It removes any
-#' columns that already exist in the preceding data frames.
+#' This function takes a list of data frames and joins them using `full_join`,
+#' ensuring that only unique columns from each data frame are included in the
+#' final result. It removes any columns that already exist in the preceding data
+#' frames.
 #'
 #' @param data_frames A list of data frames to be joined.
-#' @param join_columns A character vector of column names to join the data frames by.
+#' @param join_columns A character vector of column names to join the data
+#' frames by.
 #'
-#' @return A single data frame with all the data frames joined by the specified columns.
+#' @return A single data frame with all the data frames joined by the specified
+#' columns.
 join_data_frames <- function(data_frames, join_columns) {
   # Use `reduce` to join all data frames in the list
   reduce(data_frames, function(x, y) {
@@ -116,13 +122,14 @@ join_data_frames <- function(data_frames, join_columns) {
 #'
 #' @param data A named list where each element represents a season. Each season
 #'   contains a list of data frames for various statistical categories.
-#' @return A named list of consolidated data frames, one for each season. Seasons
-#'   with no valid data or common join columns are excluded.
+#' @return A named list of consolidated data frames, one for each season.
+#' Seasons with no valid data or common join columns are excluded.
 #' @export
 consolidate_stats <- function(data) {
   # Check if input is a list
   if (!is.list(data)) {
-    stop("Input must be a list of seasons, where each season contains a data frame.")
+    stop("Input must be a list of seasons, where each season contains a
+         data frame.")
   }
 
   data %>%
@@ -166,15 +173,19 @@ consolidate_stats <- function(data) {
 #' Add Schedule Details Across Seasons
 #'
 #' To be used only after `consolidate_stats()`.
-#' This function calculates schedule details (such as back-to-back games, rest days, etc.)
-#' for each team across multiple NBA seasons.
-#' @param data A list where each element is a season's data frame containing NBA stats for teams (must include columns such as `season_year`, `team_id`, `game_date`, etc.).
-#' @return A list of data frames, each containing the calculated stats for a specific season.
+#' This function calculates schedule details (such as back-to-back games,
+#' rest days, etc.) for each team across multiple NBA seasons.
+#' @param data A list where each element is a season's data frame containing NBA
+#' stats for teams (must include columns such as
+#' `season_year`, `team_id`, `game_date`, etc.).
+#' @return A list of data frames, each containing the calculated stats for a
+#' specific season.
 #' @export
 add_schedule_details <- function(data) {
   # Check if input is a list
   if (!is.list(data)) {
-    stop("Input must be a list of seasons, where each season contains a data frame.")
+    stop("Input must be a list of seasons, where each season contains a
+         data frame.")
   }
 
   # Calculate stats for each season
@@ -249,9 +260,11 @@ get_player_measure_types <- function() {
 #' Makes an HTTP GET request to the specified URL and retrieves the content.
 #'
 #' @param url A character string specifying the URL to fetch data from.
-#' @param headers A named character vector of HTTP headers to include in the request. Default is `NULL`.
+#' @param headers A named character vector of HTTP headers to include in the
+#' request. Default is `NULL`.
 #' @param params Parameters to include in the request.
-#' @return The content of the HTTP response. The type of content depends on the response from the server.
+#' @return The content of the HTTP response. The type of content depends on the
+#' response from the server.
 get_data <- function(url, headers = NULL, params = NULL) {
   res <- httr::GET(
     url = url,
@@ -265,7 +278,7 @@ get_data <- function(url, headers = NULL, params = NULL) {
 
   data <- res$content %>%
     rawToChar() %>%
-    jsonlite::fromJSON(simplifyVector = T)
+    jsonlite::fromJSON(simplifyVector = TRUE)
 
   return(data)
 }
@@ -275,8 +288,10 @@ get_data <- function(url, headers = NULL, params = NULL) {
 #' Makes an HTTP GET request to the specified URL and retrieves the content.
 #'
 #' @param url A character string specifying the URL to fetch data from.
-#' @param headers A named character vector of HTTP headers to include in the request. Default is `NULL`.
-#' @return The content of the HTTP response. The type of content depends on the response from the server.
+#' @param headers A named character vector of HTTP headers to include in the
+#' request. Default is `NULL`.
+#' @return The content of the HTTP response. The type of content depends on the
+#' response from the server.
 get_data_no_params <- function(url, headers = NULL) {
   res <- httr::GET(
     url = url,
@@ -289,7 +304,7 @@ get_data_no_params <- function(url, headers = NULL) {
 
   data <- res$content %>%
     rawToChar() %>%
-    jsonlite::fromJSON(simplifyVector = T)
+    jsonlite::fromJSON(simplifyVector = TRUE)
 
   return(data)
 }
@@ -301,7 +316,9 @@ get_data_no_params <- function(url, headers = NULL) {
 #' @param player_id A numeric or character vector representing the player's ID.
 #' @return A character vector containing the headshot URLs.
 get_player_headshot <- function(player_id) {
-  glue::glue("https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png")
+  glue::glue(
+    "https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png"
+  )
 }
 
 #' Generate NBA Team Logo URL
