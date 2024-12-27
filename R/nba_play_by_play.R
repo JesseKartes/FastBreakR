@@ -10,41 +10,42 @@
 #' @return A tibble containing combined play-by-play data for all game IDs.
 #' @export
 nba_play_by_play <- function(game_ids, batch_size = 100, pause_seconds = 15) {
-    unique_games <- unique(game_ids)
-    total_games <- length(unique_games)
+  unique_games <- unique(game_ids)
+  total_games <- length(unique_games)
 
-    # Divide game IDs into batches
-    batched_games <- split(unique_games, ceiling(seq_along(unique_games) / batch_size))
-    num_batches <- length(batched_games)
+  # Divide game IDs into batches
+  batched_games <- split(unique_games, ceiling(seq_along(unique_games) / batch_size))
+  num_batches <- length(batched_games)
 
-    message(glue::glue("Processing {total_games} games in {num_batches} batches"))
+  message(glue::glue("Processing {total_games} games in {num_batches} batches"))
 
-    future::plan(future::multisession)
+  future::plan(future::multisession)
 
-    # Process each batch sequentially with parallel handling within batches
-    results <- map_dfr(seq_along(batched_games), function(batch_num) {
-        batch_games <- batched_games[[batch_num]]
-        message(glue::glue("Processing batch {batch_num}/{num_batches}: games {batch_games[1]} to {batch_games[length(batch_games)]}"))
+  # Process each batch sequentially with parallel handling within batches
+  results <- map_dfr(seq_along(batched_games), function(batch_num) {
+    batch_games <- batched_games[[batch_num]]
+    message(glue::glue("Processing batch {batch_num}/{num_batches}: games {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
-        # Fetch data in parallel for the current batch
-        batch_results <- future_map_dfr(batch_games, ~ {
-            tryCatch(fetch_play_by_play_data(.x),
-                     error = function(e) {
-                         message(glue::glue("Error fetching data for Game ID {.x}: {e$message}"))
-                         return(tibble())
-                     })
-        })
-
-        # Pause after processing a batch unless it's the last batch
-        if (batch_num < num_batches) {
-            message(glue::glue("Pausing for {pause_seconds} seconds..."))
-            Sys.sleep(pause_seconds)
+    # Fetch data in parallel for the current batch
+    batch_results <- future_map_dfr(batch_games, ~ {
+      tryCatch(fetch_play_by_play_data(.x),
+        error = function(e) {
+          message(glue::glue("Error fetching data for Game ID {.x}: {e$message}"))
+          return(tibble())
         }
-
-        return(batch_results)
+      )
     })
 
-    return(results)
+    # Pause after processing a batch unless it's the last batch
+    if (batch_num < num_batches) {
+      message(glue::glue("Pausing for {pause_seconds} seconds..."))
+      Sys.sleep(pause_seconds)
+    }
+
+    return(batch_results)
+  })
+
+  return(results)
 }
 
 #' Fetch Play-by-Play Data from API
@@ -54,25 +55,27 @@ nba_play_by_play <- function(game_ids, batch_size = 100, pause_seconds = 15) {
 #' @param game_id The ID of the game for which to fetch data.
 #' @return A list containing the raw play-by-play data and column names.
 fetch_play_by_play_data <- function(game_id) {
-    headers <- generate_headers_stats()
+  headers <- generate_headers_stats()
 
-    all_data <- map_dfr(game_id, function(game) {
-        url <- paste0("https://stats.nba.com/stats/playbyplayv2?GameID=", game,
-                      "&StartPeriod=0&EndPeriod=12")
+  all_data <- map_dfr(game_id, function(game) {
+    url <- paste0(
+      "https://stats.nba.com/stats/playbyplayv2?GameID=", game,
+      "&StartPeriod=0&EndPeriod=12"
+    )
 
-        data <- get_data_no_params(url, headers)
+    data <- get_data_no_params(url, headers)
 
-        column_names <- data$resultSets$headers[[1]] %>%
-            as.character()
+    column_names <- data$resultSets$headers[[1]] %>%
+      as.character()
 
-        data <- data$resultSets$rowSet[[1]] %>%
-            data.frame(stringsAsFactors = FALSE) %>%
-            as_tibble() %>%
-            set_names(column_names) %>%
-            clean_names()
+    data <- data$resultSets$rowSet[[1]] %>%
+      data.frame(stringsAsFactors = FALSE) %>%
+      as_tibble() %>%
+      set_names(column_names) %>%
+      clean_names()
 
-        return(data)
-    })
+    return(data)
+  })
 
-    return(all_data)
+  return(all_data)
 }
