@@ -7,12 +7,14 @@
 nba_team_stats(seasons, season_type = "Regular Season")
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to scrape NBA team stats.}
+\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to scrape
+NBA team stats.}
 
 \item{season_type}{The season type for the API request.}
 }
 \value{
-A named list where each element is a data frame containing team level stats for that season.
+A named list where each element is a data frame containing team level
+stats for that season.
 }
 \description{
 This function gets NBA team stats for the specified seasons returning a list
