@@ -33,36 +33,40 @@ fetch_nba_schedule <- function() {
 process_nba_schedule <- function(data) {
   games_list <- data$leagueSchedule$gameDates$games
 
-  process_team_schedule <- function(team_data, gameId, gameDateEst, location, gameLabel) {
+  process_team_schedule <- function(team_data,
+                                    game_id,
+                                    game_date_est,
+                                    location,
+                                    game_label) {
     team_schedule <- as_tibble(team_data) %>%
       mutate(
-        gameId = gameId,
-        gameDateEst = gameDateEst,
+        game_id = game_id,
+        game_date_est = game_date_est,
         location = location,
-        gameLabel = gameLabel
+        game_label = game_label
       )
     return(team_schedule)
   }
 
   schedule_list <- map(games_list, function(game_info) {
-    gameId <- game_info$gameId
-    gameDateEst <- game_info$gameDateEst
-    gameLabel <- game_info$gameLabel
+    game_id <- game_info$gameId
+    game_date_est <- game_info$gameDateEst
+    game_label <- game_info$gameLabel
 
     away_schedule <- process_team_schedule(
       team_data = game_info$awayTeam,
-      gameId = gameId,
-      gameDateEst = gameDateEst,
+      game_id = game_id,
+      game_date_est = game_date_est,
       location = "away",
-      gameLabel = gameLabel
+      game_label = game_label
     )
 
     home_schedule <- process_team_schedule(
       team_data = game_info$homeTeam,
-      gameId = gameId,
-      gameDateEst = gameDateEst,
+      game_id = game_id,
+      game_date_est = game_date_est,
       location = "home",
-      gameLabel = gameLabel
+      game_label = game_label
     )
 
     list(away_schedule, home_schedule)
@@ -83,7 +87,9 @@ process_nba_schedule <- function(data) {
     group_by(game_id) %>%
     mutate(
       opp_team_id = team_id[c(2, 1)],
-      opp_team_name = if_else(location == "home", lag(team_name), lead(team_name))
+      opp_team_name = if_else(location == "home",
+        lag(team_name), lead(team_name)
+      )
     ) %>%
     filter(team_id != opp_team_id) %>%
     ungroup() %>%
