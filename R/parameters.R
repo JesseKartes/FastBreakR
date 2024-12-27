@@ -12,7 +12,8 @@ generate_headers_cdn <- function() {
     `Accept-Language` = "en-US,en;q=0.9",
     `Sec-Fetch-Mode` = "cors",
     `Host` = "cdn.nba.com",
-    `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+    `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+    AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
     `Referer` = "https://www.nba.com/",
     `Accept-Encoding` = "gzip, deflate, br",
     `Connection` = "keep-alive"
@@ -34,7 +35,8 @@ generate_headers_stats <- function() {
     `Accept-Language` = "en-US,en;q=0.9",
     `Sec-Fetch-Mode` = "cors",
     `Host` = "stats.nba.com",
-    `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+    `User-Agent` = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+    AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
     `Referer` = "https://www.nba.com/",
     `Accept-Encoding` = "gzip, deflate, br",
     `Connection` = "keep-alive"
@@ -50,7 +52,7 @@ generate_headers_stats <- function() {
 #' @param measure_type The measure type for the API request.
 #' @param season_type The season type for the API request.
 #' @return A named list of query parameters.
-generate_parameters_stats <- function(year, measure_type, season_type) {
+generate_params_stats <- function(year, measure_type, season_type) {
   year <- (year - 1)
   season <- sprintf("%d-%02d", year, (year + 1) %% 100)
   params <- list(
@@ -86,14 +88,12 @@ generate_parameters_stats <- function(year, measure_type, season_type) {
 #' @param year The season year for which to generate parameters.
 #' @param season_type The season type for the API request.
 #' @return A list of query parameters for the API request.
-generate_parameters_shots <- function(year, season_type) {
+generate_params_shots <- function(year, season_type) {
   year <- (year - 1)
   season <- sprintf("%d-%02d", year, (year + 1) %% 100)
 
   params <- list(
     `AheadBehind` = "",
-    # `CFID` = '155',
-    # `CFPARAMS` = '2021-22',
     `ClutchTime` = "",
     `Conference` = "",
     `ContextFilter` = "",
@@ -158,7 +158,7 @@ generate_parameters_shots <- function(year, season_type) {
 #'
 #' @param year The season year for which to generate parameters.
 #' @return A named list of query parameters.
-generate_parameters_standings <- function(year) {
+generate_params_standings <- function(year) {
   year <- (year - 1)
   season <- sprintf("%d-%02d", year, (year + 1) %% 100)
   params <- list(
@@ -178,7 +178,7 @@ generate_parameters_standings <- function(year) {
 #'
 #' @param game_id The game id for which to generate parameters.
 #' @return A named list of query parameters.
-generate_parameters_box_scores <- function(game_id) {
+generate_params_box_scores <- function(game_id) {
   params <- list(
     `GameID` = as.character(game_id),
     `LeagueID` = "00",
@@ -197,7 +197,7 @@ generate_parameters_box_scores <- function(game_id) {
 #' NBA player dictionary
 #'
 #' @return A named list of query parameters.
-generate_parameters_player_dict <- function() {
+generate_params_player_dict <- function() {
   player_params <- list(
     `College` = "",
     `Country` = "",
@@ -221,7 +221,7 @@ generate_parameters_player_dict <- function() {
 #' NBA team dictionary
 #'
 #' @return A named list of query parameters.
-generate_parameters_team_dict <- function() {
+generate_params_team_dict <- function() {
   team_params <- list(
     `LeagueID` = "00",
     `Season` = "2024-25"
