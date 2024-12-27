@@ -8,17 +8,17 @@
 #' for the specified seasons.
 #' @export
 nba_standings <- function(seasons) {
-    if (!is.numeric(seasons) || length(seasons) == 0) {
-        stop("The 'seasons' parameter must be a non-empty numeric vector.")
-    }
+  if (!is.numeric(seasons) || length(seasons) == 0) {
+    stop("The 'seasons' parameter must be a non-empty numeric vector.")
+  }
 
-    results <- map(seasons, function(year) {
-        all_standings <- fetch_standings(year)
-        return(all_standings)
-    })
+  results <- map(seasons, function(year) {
+    all_standings <- fetch_standings(year)
+    return(all_standings)
+  })
 
-    names(results) <- as.character(paste0("season_", seasons))
-    return(results)
+  names(results) <- as.character(paste0("season_", seasons))
+  return(results)
 }
 
 #' Fetch and Process NBA Standings Data
@@ -30,27 +30,25 @@ nba_standings <- function(seasons) {
 #' @return A data frame containing the processed NBA standings data for the specified season.
 #' @export
 fetch_standings <- function(seasons) {
-    headers <- generate_headers_stats()
+  headers <- generate_headers_stats()
 
-    url <- "https://stats.nba.com/stats/leaguestandingsv3"
+  url <- "https://stats.nba.com/stats/leaguestandingsv3"
 
-    all_data <- map_dfr(seasons, function(year) {
-        params <- generate_parameters_standings(year)
+  all_data <- map_dfr(seasons, function(year) {
+    params <- generate_parameters_standings(year)
 
-        data <- get_data(url, headers, params)
+    data <- get_data(url, headers, params)
 
-        column_names <- data$resultSets$headers[[1]] %>%
-            as.character()
+    column_names <- data$resultSets$headers[[1]] %>%
+      as.character()
 
-        dt <- data$resultSets$rowSet[[1]] %>%
-            data.frame(stringsAsFactors = FALSE) %>%
-            as_tibble() %>%
-            set_names(column_names) %>%
-            clean_names() %>%
-            mutate(season_year = year)
+    dt <- data$resultSets$rowSet[[1]] %>%
+      data.frame(stringsAsFactors = FALSE) %>%
+      as_tibble() %>%
+      set_names(column_names) %>%
+      clean_names() %>%
+      mutate(season_year = year)
+  })
 
-    })
-
-    return(all_data)
-
+  return(all_data)
 }
