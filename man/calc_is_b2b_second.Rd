@@ -13,5 +13,6 @@ calc_is_b2b_second(days_rest)
 A logical value indicating if it's the second game of a back-to-back.
 }
 \description{
-This function determines if the current game is the second game of a back-to-back (B2B) scenario.
+This function determines if the current game is the second game of a
+back-to-back (B2B) scenario.
 }
