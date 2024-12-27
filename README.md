@@ -41,7 +41,8 @@ scores <- nba_scores(2025, season_type = "Regular Season")
 
 ## Documentation
 
-Full Documentation: <https://jaykay-15.github.io/FastBreakR/>
+Full Documentation:
+<https://jaykay-15.github.io/FastBreakR/reference/index.html>
 
 For any questions, suggestions, or issues, feel free to open an issue on
 GitHub.
