@@ -3,7 +3,8 @@
 #' This function gets NBA standings data for a single or multiple seasons
 #' and returns it as a list of data frames.
 #'
-#' @param seasons A numeric vector of seasons for which to get the standings data.
+#' @param seasons A numeric vector of seasons for which to get the standings
+#' data.
 #' @return A named list of data frames, each containing the NBA standings data
 #' for the specified seasons.
 #' @export
@@ -26,8 +27,10 @@ nba_standings <- function(seasons) {
 #' This function fetches the NBA standings data for a specific season, processes
 #' it into a tidy format, and returns it as a data frame.
 #'
-#' @param seasons A numeric value representing the year for which to fetch the standings data.
-#' @return A data frame containing the processed NBA standings data for the specified season.
+#' @param seasons A numeric value representing the year for which to fetch the
+#' standings data.
+#' @return A data frame containing the processed NBA standings data for the
+#' specified season.
 #' @export
 fetch_standings <- function(seasons) {
   headers <- generate_headers_stats()
@@ -35,7 +38,7 @@ fetch_standings <- function(seasons) {
   url <- "https://stats.nba.com/stats/leaguestandingsv3"
 
   all_data <- map_dfr(seasons, function(year) {
-    params <- generate_parameters_standings(year)
+    params <- generate_params_standings(year)
 
     data <- get_data(url, headers, params)
 
@@ -48,6 +51,8 @@ fetch_standings <- function(seasons) {
       set_names(column_names) %>%
       clean_names() %>%
       mutate(season_year = year)
+
+    return(dt)
   })
 
   return(all_data)
