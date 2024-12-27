@@ -1,5 +1,3 @@
-# tests/testthat/test-scrape_nba_team_stats.R
-
 test_that("nba_team_stats handles invalid input", {
   # Test for non-numeric input
   expect_error(
