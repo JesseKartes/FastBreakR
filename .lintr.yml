@@ -1,5 +1,0 @@
-# .lintr configuration file
-linters:
-  line_length_linter: 80  # Enforce a maximum line length of 80 characters
-  object_name_linter: "snake_case"  # Enforce snake_case naming convention
-  # Add other linters as needed
