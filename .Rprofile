@@ -1,13 +1,15 @@
 # Activate renv if used in the project
-source("renv/activate.R")
+if (file.exists("renv/activate.R")) {
+  source("renv/activate.R")
+}
 
-# Enable strict formatting globally
+# Enable strict formatting globally with styler
 options(styler.strict = TRUE)
 
-# Customize styler rules (optional)
-styler::style_guides$set_active(
-  styler::create_style_guide(
-    line_length = 80, # Set max line length to 80 characters
-    indent_by = 2 # Use 2 spaces for indentation
-  )
+# Customize styling via styler (if you want manual control)
+library(styler)
+
+styler::style_pkg(
+  line_length = 80,   # Set max line length to 80 characters
+  strict = TRUE       # Apply strict formatting rules
 )
