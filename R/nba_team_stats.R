@@ -4,9 +4,11 @@
 #' where each season contains a data frame for each measure type. Function
 #' pauses for five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape NBA team stats.
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape
+#' NBA team stats.
 #' @param season_type The season type for the API request.
-#' @return A named list where each element is a data frame containing team level stats for that season.
+#' @return A named list where each element is a data frame containing team level
+#' stats for that season.
 #' @export
 nba_team_stats <- function(seasons, season_type = "Regular Season") {
   if (!is.numeric(seasons) || length(seasons) == 0) {
@@ -34,7 +36,9 @@ nba_team_stats <- function(seasons, season_type = "Regular Season") {
 
     # Pause after processing each season unless it's the last
     if (i < length(seasons)) {
-      message(glue::glue("Pausing for 5 seconds before processing the next season..."))
+      message(glue::glue(
+        "Pausing for 5 seconds before processing the next season..."
+      ))
       Sys.sleep(5)
     }
 
@@ -55,15 +59,17 @@ nba_team_stats <- function(seasons, season_type = "Regular Season") {
 #' all measure types.
 #'
 #' @param season A numeric value representing the season (e.g., 2024).
-#' @param measure_type A character string specifying the measure type (e.g., "Base").
-#' @param season_type A character string specifying the type of season (e.g., "Regular Season").
+#' @param measure_type A character string specifying the measure type
+#' (e.g., "Base").
+#' @param season_type A character string specifying the type of season
+#' (e.g., "Regular Season").
 #' @return A data frame with cleaned NBA team stats.
 fetch_team_stats <- function(season, measure_type, season_type) {
   headers <- generate_headers_stats()
 
   url <- "https://stats.nba.com/stats/teamgamelogs"
 
-  params <- generate_parameters_stats(season, measure_type, season_type)
+  params <- generate_params_stats(season, measure_type, season_type)
 
   data <- get_data(url, headers, params)
 
@@ -84,7 +90,8 @@ fetch_team_stats <- function(season, measure_type, season_type) {
 #' This helper function processes team data by converting the `game_date` column
 #' to a Date object and converting necessary columns to numeric values.
 #'
-#' @param team_data A data frame containing team stats to be converted to numeric.
+#' @param team_data A data frame containing team stats to be converted to
+#' numeric.
 #' @return A data frame with the `game_date` column converted to Date and other
 #' relevant columns converted to numeric.
 #' @export
