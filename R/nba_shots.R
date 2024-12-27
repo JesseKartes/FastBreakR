@@ -5,8 +5,10 @@
 #' `league_avg`. Function pauses for five seconds after each season to prevent
 #' timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape NBA shot data.
-#' @param season_type A character string specifying the type of season (e.g., "Regular Season").
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape
+#' NBA shot data.
+#' @param season_type A character string specifying the type of season
+#' (e.g., "Regular Season").
 #' @return A named list where each element is a list containing two data frames:
 #' `shots` and `league_avg`.
 #' @export
@@ -37,7 +39,9 @@ nba_shots <- function(seasons, season_type = "Regular Season") {
 
     # Pause after processing each season unless it's the last
     if (i < length(seasons)) {
-      message(glue::glue("Pausing for 5 seconds before processing the next season..."))
+      message(glue::glue(
+        "Pausing for 5 seconds before processing the next season..."
+      ))
       Sys.sleep(5)
     }
 
@@ -51,17 +55,19 @@ nba_shots <- function(seasons, season_type = "Regular Season") {
 
 #' Fetch NBA Shots from API
 #'
-#' This function fetches raw NBA shot data and league average data for a given season.
+#' This function fetches raw NBA shot data and league average data for a given
+#' season.
 #'
 #' @param season A numeric value representing the season (e.g., 2024).
-#' @param season_type A character string specifying the type of season (e.g., "Regular Season").
+#' @param season_type A character string specifying the type of season
+#' (e.g., "Regular Season").
 #' @return A list containing raw shots data and league average data.
 fetch_shots_data <- function(season, season_type) {
   headers <- generate_headers_stats()
 
   url <- "https://stats.nba.com/stats/shotchartdetail"
 
-  params <- generate_parameters_shots(season, season_type)
+  params <- generate_params_shots(season, season_type)
 
   data <- get_data(url, headers, params)
 
@@ -105,7 +111,8 @@ fetch_shots_data <- function(season, season_type) {
 process_shots <- function(data) {
   # Check if input is a list
   if (!is.list(data)) {
-    stop("Input must be a list of seasons, where each season contains a 'shots' and 'league_avg' data frame.")
+    stop("Input must be a list of seasons, where each season contains a
+         'shots' and 'league_avg' data frame.")
   }
 
   data %>%
@@ -144,7 +151,8 @@ process_shots <- function(data) {
           fgm = as.numeric(fgm),
           fg_pct = as.numeric(fg_pct),
           shot_value = if_else(
-            str_detect(shot_zone_basic, "3") | shot_zone_basic == "Backcourt", 3, 2
+            str_detect(shot_zone_basic, "3") | shot_zone_basic == "Backcourt",
+            3, 2
           )
         )
 
