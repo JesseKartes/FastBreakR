@@ -4,12 +4,5 @@ template:
 home:
   title: "Welcome to FastBreakR"
   description: |
-    FastBreakR is an R package designed for basketball analysis.
+    FastBreakR is an R package designed for basketball enthusiasts.
     Use it to analyze NBA stats, create projections, and more!
-  contents:
-    - title: "Getting Started"
-      url: getting_started.html
-    - title: "Reference"
-      url: reference.html
-    - title: "Vignettes"
-      url: vignettes.html
