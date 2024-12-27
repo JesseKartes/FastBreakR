@@ -7,10 +7,12 @@
 fetch_standings(seasons)
 }
 \arguments{
-\item{seasons}{A numeric value representing the year for which to fetch the standings data.}
+\item{seasons}{A numeric value representing the year for which to fetch the
+standings data.}
 }
 \value{
-A data frame containing the processed NBA standings data for the specified season.
+A data frame containing the processed NBA standings data for the
+specified season.
 }
 \description{
 This function fetches the NBA standings data for a specific season, processes

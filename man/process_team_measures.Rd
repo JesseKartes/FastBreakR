@@ -7,7 +7,8 @@
 process_team_measures(team_data)
 }
 \arguments{
-\item{team_data}{A data frame containing team stats to be converted to numeric.}
+\item{team_data}{A data frame containing team stats to be converted to
+numeric.}
 }
 \value{
 A data frame with the \code{game_date} column converted to Date and other

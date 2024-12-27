@@ -1,5 +1,3 @@
-# tests/testthat/test-scrape_nba_player_stats.R
-
 test_that("nba_player_stats works correctly for valid seasons", {
   # Mock fetch_player_stats to return fake data
   mock_fetch_player_stats <- function(season, measure_type, season_type) {

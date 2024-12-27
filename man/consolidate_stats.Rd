@@ -11,8 +11,8 @@ consolidate_stats(data)
 contains a list of data frames for various statistical categories.}
 }
 \value{
-A named list of consolidated data frames, one for each season. Seasons
-with no valid data or common join columns are excluded.
+A named list of consolidated data frames, one for each season.
+Seasons with no valid data or common join columns are excluded.
 }
 \description{
 To be used on the output of \code{nba_team_stats()} or \code{nba_player_stats()}.

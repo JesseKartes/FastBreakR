@@ -7,9 +7,11 @@
 nba_shots(seasons, season_type = "Regular Season")
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to scrape NBA shot data.}
+\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to scrape
+NBA shot data.}
 
-\item{season_type}{A character string specifying the type of season (e.g., "Regular Season").}
+\item{season_type}{A character string specifying the type of season
+(e.g., "Regular Season").}
 }
 \value{
 A named list where each element is a list containing two data frames:

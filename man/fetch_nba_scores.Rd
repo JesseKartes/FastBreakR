@@ -9,7 +9,8 @@ fetch_nba_scores(season, season_type)
 \arguments{
 \item{season}{A numeric value representing the season (e.g., 2024).}
 
-\item{season_type}{A character string specifying the type of season (e.g., "Regular Season").}
+\item{season_type}{A character string specifying the type of season
+(e.g., "Regular Season").}
 }
 \value{
 A data frame containing raw NBA scores data.

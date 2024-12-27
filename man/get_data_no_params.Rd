@@ -9,10 +9,12 @@ get_data_no_params(url, headers = NULL)
 \arguments{
 \item{url}{A character string specifying the URL to fetch data from.}
 
-\item{headers}{A named character vector of HTTP headers to include in the request. Default is \code{NULL}.}
+\item{headers}{A named character vector of HTTP headers to include in the
+request. Default is \code{NULL}.}
 }
 \value{
-The content of the HTTP response. The type of content depends on the response from the server.
+The content of the HTTP response. The type of content depends on the
+response from the server.
 }
 \description{
 Makes an HTTP GET request to the specified URL and retrieves the content.
