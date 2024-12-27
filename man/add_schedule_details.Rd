@@ -7,13 +7,16 @@
 add_schedule_details(data)
 }
 \arguments{
-\item{data}{A list where each element is a season's data frame containing NBA stats for teams (must include columns such as \code{season_year}, \code{team_id}, \code{game_date}, etc.).}
+\item{data}{A list where each element is a season's data frame containing NBA
+stats for teams (must include columns such as
+\code{season_year}, \code{team_id}, \code{game_date}, etc.).}
 }
 \value{
-A list of data frames, each containing the calculated stats for a specific season.
+A list of data frames, each containing the calculated stats for a
+specific season.
 }
 \description{
 To be used only after \code{consolidate_stats()}.
-This function calculates schedule details (such as back-to-back games, rest days, etc.)
-for each team across multiple NBA seasons.
+This function calculates schedule details (such as back-to-back games,
+rest days, etc.) for each team across multiple NBA seasons.
 }
