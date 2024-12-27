@@ -7,7 +7,8 @@
 nba_standings(seasons)
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons for which to get the standings data.}
+\item{seasons}{A numeric vector of seasons for which to get the standings
+data.}
 }
 \value{
 A named list of data frames, each containing the NBA standings data
