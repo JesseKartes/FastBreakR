@@ -15,7 +15,7 @@ nba_player_dictionary <- function() {
 #' @return A list containing the raw player dictionary data.
 fetch_player_dictionary_data <- function() {
   headers <- generate_headers_stats()
-  params <- generate_parameters_player_dict()
+  params <- generate_params_player_dict()
 
   url <- "https://stats.nba.com/stats/playerindex"
 
@@ -50,7 +50,7 @@ nba_team_dictionary <- function() {
 #' @return A list containing the raw team dictionary data.
 fetch_team_dictionary_data <- function() {
   headers <- generate_headers_stats()
-  params <- generate_parameters_team_dict()
+  params <- generate_params_team_dict()
 
   url <- "https://stats.nba.com/stats/franchisehistory"
 
