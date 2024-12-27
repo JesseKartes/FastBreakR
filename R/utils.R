@@ -4,7 +4,7 @@
 #'
 #' @return A numeric vector with game counts.
 calc_game_count <- function() {
-    row_number()
+  row_number()
 }
 
 #' Calculate Days Rest
@@ -15,10 +15,10 @@ calc_game_count <- function() {
 #' @param game_date The date of the current game.
 #' @return A numeric value representing the days of rest.
 calc_days_rest <- function(game_count, game_date) {
-    case_when(
-        game_count > 1 ~ as.numeric(game_date - lag(game_date) - 1),
-        TRUE ~ 120
-    )
+  case_when(
+    game_count > 1 ~ as.numeric(game_date - lag(game_date) - 1),
+    TRUE ~ 120
+  )
 }
 
 #' Calculate Days Next Game
@@ -29,10 +29,10 @@ calc_days_rest <- function(game_count, game_date) {
 #' @param game_date The date of the current game.
 #' @return A numeric value representing the days until the next game.
 calc_days_next_game <- function(game_count, game_date) {
-    case_when(
-        game_count < 82 ~ as.numeric(lead(game_date) - game_date - 1),
-        TRUE ~ 120
-    )
+  case_when(
+    game_count < 82 ~ as.numeric(lead(game_date) - game_date - 1),
+    TRUE ~ 120
+  )
 }
 
 #' Determine If Back-to-Back
@@ -43,7 +43,7 @@ calc_days_next_game <- function(game_count, game_date) {
 #' @param days_rest The number of days of rest before the current game.
 #' @return A logical value indicating if it's a back-to-back.
 calc_is_b2b <- function(days_next_game, days_rest) {
-    days_next_game == 0 | days_rest == 0
+  days_next_game == 0 | days_rest == 0
 }
 
 #' Determine If B2B First
@@ -53,7 +53,7 @@ calc_is_b2b <- function(days_next_game, days_rest) {
 #' @param days_next_game The number of days until the next game.
 #' @return A logical value indicating if it's the first game of a back-to-back.
 calc_is_b2b_first <- function(days_next_game) {
-    days_next_game == 0
+  days_next_game == 0
 }
 
 #' Determine If B2B Second
@@ -63,7 +63,7 @@ calc_is_b2b_first <- function(days_next_game) {
 #' @param days_rest The number of days of rest before the current game.
 #' @return A logical value indicating if it's the second game of a back-to-back.
 calc_is_b2b_second <- function(days_rest) {
-    days_rest == 0
+  days_rest == 0
 }
 
 #' Process Game Details
@@ -73,13 +73,13 @@ calc_is_b2b_second <- function(days_rest) {
 #' @param data A data frame containing raw data.
 #' @return A data frame with processed location data.
 add_game_details <- function(data) {
-    data %>%
-        arrange(game_date, game_id) %>%
-        mutate(
-            location = if_else(grepl("@", matchup), "away", "home"),
-            game_date = as_date(game_date),
-            season_year = as.numeric(substr(season_year, 1, 4)) + 1
-        )
+  data %>%
+    arrange(game_date, game_id) %>%
+    mutate(
+      location = if_else(grepl("@", matchup), "away", "home"),
+      game_date = as_date(game_date),
+      season_year = as.numeric(substr(season_year, 1, 4)) + 1
+    )
 }
 
 #' Join Multiple Data Frames by Removing Duplicate Columns
@@ -93,17 +93,17 @@ add_game_details <- function(data) {
 #'
 #' @return A single data frame with all the data frames joined by the specified columns.
 join_data_frames <- function(data_frames, join_columns) {
-    # Use `reduce` to join all data frames in the list
-    reduce(data_frames, function(x, y) {
-        # Determine columns in y that are not in x
-        y_cols <- setdiff(names(y), names(x))
+  # Use `reduce` to join all data frames in the list
+  reduce(data_frames, function(x, y) {
+    # Determine columns in y that are not in x
+    y_cols <- setdiff(names(y), names(x))
 
-        # Select the join columns and the new columns from y
-        y_subset <- select(y, all_of(c(join_columns, y_cols)))
+    # Select the join columns and the new columns from y
+    y_subset <- select(y, all_of(c(join_columns, y_cols)))
 
-        # Perform the full join
-        full_join(x, y_subset, by = join_columns)
-    })
+    # Perform the full join
+    full_join(x, y_subset, by = join_columns)
+  })
 }
 
 #' Consolidate NBA Statistics
@@ -120,44 +120,47 @@ join_data_frames <- function(data_frames, join_columns) {
 #'   with no valid data or common join columns are excluded.
 #' @export
 consolidate_stats <- function(data) {
-    # Check if input is a list
-    if (!is.list(data)) {
-        stop("Input must be a list of seasons, where each season contains a data frame.")
-    }
+  # Check if input is a list
+  if (!is.list(data)) {
+    stop("Input must be a list of seasons, where each season contains a data frame.")
+  }
 
-    data %>%
-        # Use map to process each season
-        map(function(season_data) {
-            # Identify column types that have data
-            column_types <- names(season_data)
+  data %>%
+    # Use map to process each season
+    map(function(season_data) {
+      # Identify column types that have data
+      column_types <- names(season_data)
 
-            # Filter and extract non-null data frames
-            data_frames <- keep(
-                lapply(column_types, function(type) season_data[[type]]),
-                ~ !is.null(.)
-            )
+      # Filter and extract non-null data frames
+      data_frames <- keep(
+        lapply(column_types, function(type) season_data[[type]]),
+        ~ !is.null(.)
+      )
 
-            # If no data frames, return NULL
-            if (length(data_frames) == 0) return(NULL)
+      # If no data frames, return NULL
+      if (length(data_frames) == 0) {
+        return(NULL)
+      }
 
-            # Potential join columns
-            potential_join_columns <- c("game_id", "team_id", "player_id")
+      # Potential join columns
+      potential_join_columns <- c("game_id", "team_id", "player_id")
 
-            # Find actual join columns present in all data frames
-            actual_join_columns <- potential_join_columns[
-                potential_join_columns %in%
-                    Reduce(intersect, lapply(data_frames, names))
-            ]
+      # Find actual join columns present in all data frames
+      actual_join_columns <- potential_join_columns[
+        potential_join_columns %in%
+          Reduce(intersect, lapply(data_frames, names))
+      ]
 
-            # If no join columns found, return NULL
-            if (length(actual_join_columns) == 0) return(NULL)
+      # If no join columns found, return NULL
+      if (length(actual_join_columns) == 0) {
+        return(NULL)
+      }
 
-            # Reduce data frames using full_join
-            join_data_frames(data_frames, actual_join_columns)
-
-        }) %>%
-        # Remove NULL entries and name list elements
-        discard(is.null)
+      # Reduce data frames using full_join
+      join_data_frames(data_frames, actual_join_columns)
+    }) %>%
+    # Remove NULL entries and name list elements
+    discard(is.null)
 }
 
 #' Add Schedule Details Across Seasons
@@ -169,44 +172,44 @@ consolidate_stats <- function(data) {
 #' @return A list of data frames, each containing the calculated stats for a specific season.
 #' @export
 add_schedule_details <- function(data) {
-    # Check if input is a list
-    if (!is.list(data)) {
-        stop("Input must be a list of seasons, where each season contains a data frame.")
+  # Check if input is a list
+  if (!is.list(data)) {
+    stop("Input must be a list of seasons, where each season contains a data frame.")
+  }
+
+  # Calculate stats for each season
+  calc_metrics <- map(data, function(season_data) {
+    # Check if input is a data frame
+    if (!is.data.frame(season_data)) {
+      stop("Please run consolidate_stats() before adding schedule details.")
     }
 
-    # Calculate stats for each season
-    calc_metrics <- map(data, function(season_data) {
-        # Check if input is a data frame
-        if (!is.data.frame(season_data)) {
-            stop("Please run consolidate_stats() before adding schedule details.")
-        }
+    # Determine grouping columns
+    group_by_columns <- if ("player_id" %in% names(season_data)) {
+      c("season_year", "player_id")
+    } else {
+      c("season_year", "team_id")
+    }
 
-        # Determine grouping columns
-        group_by_columns <- if ("player_id" %in% names(season_data)) {
-            c("season_year", "player_id")
-        } else {
-            c("season_year", "team_id")
-        }
+    season_data %>%
+      arrange(game_date) %>%
+      group_by(across(all_of(group_by_columns))) %>%
+      mutate(
+        game_count = calc_game_count(),
+        days_rest = calc_days_rest(game_count, game_date),
+        days_next_game = calc_days_next_game(game_count, game_date),
+        is_b2b = calc_is_b2b(days_next_game, days_rest),
+        is_b2b_first = calc_is_b2b_first(days_next_game),
+        is_b2b_second = calc_is_b2b_second(days_rest)
+      ) %>%
+      ungroup() %>%
+      mutate(across(where(is.logical), ~ replace_na(., FALSE))) %>%
+      add_game_details() %>%
+      select(season_year:matchup, location, wl:ncol(.))
+  })
 
-        season_data %>%
-            arrange(game_date) %>%
-            group_by(across(all_of(group_by_columns))) %>%
-            mutate(
-                game_count = calc_game_count(),
-                days_rest = calc_days_rest(game_count, game_date),
-                days_next_game = calc_days_next_game(game_count, game_date),
-                is_b2b = calc_is_b2b(days_next_game, days_rest),
-                is_b2b_first = calc_is_b2b_first(days_next_game),
-                is_b2b_second = calc_is_b2b_second(days_rest)
-            ) %>%
-            ungroup() %>%
-            mutate(across(where(is.logical), ~ replace_na(., FALSE))) %>%
-            add_game_details() %>%
-            select(season_year:matchup, location, wl:ncol(.))
-    })
-
-    # Return the calculated stats
-    return(calc_metrics)
+  # Return the calculated stats
+  return(calc_metrics)
 }
 
 #' Clean NBA Stats Data
@@ -217,8 +220,10 @@ add_schedule_details <- function(data) {
 #' @param data A data frame containing raw NBA stats data.
 #' @return A cleaned data frame.
 clean_stats_cols <- function(data) {
-    data %>% select(-starts_with(c("e_", "sp_")),
-                  -ends_with(c("_rank", "_flag")), -contains("fantasy"))
+  data %>% select(
+    -starts_with(c("e_", "sp_")),
+    -ends_with(c("_rank", "_flag")), -contains("fantasy")
+  )
 }
 
 #' Get Available Measure Types for Team Stats
@@ -227,7 +232,7 @@ clean_stats_cols <- function(data) {
 #'
 #' @return A character vector of measure types.
 get_team_measure_types <- function() {
-    return(team_measure_types)
+  return(team_measure_types)
 }
 
 #' Get Available Measure Types for Player Stats
@@ -236,7 +241,7 @@ get_team_measure_types <- function() {
 #'
 #' @return A character vector of measure types.
 get_player_measure_types <- function() {
-    return(player_measure_types)
+  return(player_measure_types)
 }
 
 #' Get Data from a URL
@@ -248,17 +253,21 @@ get_player_measure_types <- function() {
 #' @param params Parameters to include in the request.
 #' @return The content of the HTTP response. The type of content depends on the response from the server.
 get_data <- function(url, headers = NULL, params = NULL) {
-    res <- httr::GET(url = url,
-                     httr::add_headers(.headers = headers),
-                     query = params)
+  res <- httr::GET(
+    url = url,
+    httr::add_headers(.headers = headers),
+    query = params
+  )
 
-    if (httr::http_status(res)$category != "Success") {
-        stop("Request failed with status: ", httr::http_status(res)$message)
-    }
+  if (httr::http_status(res)$category != "Success") {
+    stop("Request failed with status: ", httr::http_status(res)$message)
+  }
 
-    data <- res$content %>% rawToChar() %>% jsonlite::fromJSON(simplifyVector = T)
+  data <- res$content %>%
+    rawToChar() %>%
+    jsonlite::fromJSON(simplifyVector = T)
 
-    return(data)
+  return(data)
 }
 
 #' Get Data from a URL with no Parameters
@@ -269,16 +278,20 @@ get_data <- function(url, headers = NULL, params = NULL) {
 #' @param headers A named character vector of HTTP headers to include in the request. Default is `NULL`.
 #' @return The content of the HTTP response. The type of content depends on the response from the server.
 get_data_no_params <- function(url, headers = NULL) {
-    res <- httr::GET(url = url,
-                     httr::add_headers(.headers = headers))
+  res <- httr::GET(
+    url = url,
+    httr::add_headers(.headers = headers)
+  )
 
-    if (httr::http_status(res)$category != "Success") {
-        stop("Request failed with status: ", httr::http_status(res)$message)
-    }
+  if (httr::http_status(res)$category != "Success") {
+    stop("Request failed with status: ", httr::http_status(res)$message)
+  }
 
-    data <- res$content %>% rawToChar() %>% jsonlite::fromJSON(simplifyVector = T)
+  data <- res$content %>%
+    rawToChar() %>%
+    jsonlite::fromJSON(simplifyVector = T)
 
-    return(data)
+  return(data)
 }
 
 #' Generate NBA Player Headshot URL
@@ -288,7 +301,7 @@ get_data_no_params <- function(url, headers = NULL) {
 #' @param player_id A numeric or character vector representing the player's ID.
 #' @return A character vector containing the headshot URLs.
 get_player_headshot <- function(player_id) {
-    glue::glue("https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png")
+  glue::glue("https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png")
 }
 
 #' Generate NBA Team Logo URL
@@ -298,5 +311,5 @@ get_player_headshot <- function(player_id) {
 #' @param team_id A numeric or character vector representing the team's ID.
 #' @return A character vector containing the logo URLs.
 get_team_logo <- function(team_id) {
-    glue::glue("https://cdn.nba.com/logos/nba/{team_id}/primary/L/logo.svg")
+  glue::glue("https://cdn.nba.com/logos/nba/{team_id}/primary/L/logo.svg")
 }
