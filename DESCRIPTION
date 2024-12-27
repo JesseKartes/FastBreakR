@@ -1,0 +1,54 @@
+Package: FastBreakR
+Type: Package
+Title: NBA Data Fetching and Processing
+Version: 0.1.0
+Author: person("Jesse Kartes", "Author", email = "jesse.kartes@gmail.com", role = c("aut", "cre"))
+Maintainer: Jesse Kartes <jesse.kartes@gmail.com>
+Description: FastBreakR provides a seamless interface for fetching and processing
+    NBA data from the official NBA API. The package includes functions for
+    scraping team and player statistics, cleaning and transforming the data into
+    a tidy format and preparing it for analysis. Whether you're building
+    advanced models, visualizations, or simply exploring NBA stats, FastBreakR
+    makes it easy to access and work with up-to-date NBA data.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: false
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    dplyr,
+    lubridate,
+    stringr,
+    janitor,
+    tibble,
+    furrr,
+    purrr,
+    tidyr,
+    future,
+    glue,
+    httr,
+    jsonlite
+Collate:
+     utils.R
+     parameters.R
+     globals.R
+     measure_types.R
+     nba_dictionary.R
+     nba_schedule.R
+     nba_scores.R
+     nba_team_stats.R
+     nba_player_stats.R
+     nba_shots.R
+     nba_play_by_play.R
+     nba_win_probability.R
+     nba_fanduel.R
+     nba_standings.R
+     nba_box_scores.R
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+Depends:
+    R (>= 3.5)
