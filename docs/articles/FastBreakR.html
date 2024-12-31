@@ -29,13 +29,9 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="active nav-item"><a class="nav-link" href="../articles/FastBreakR.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/introduction.html">Introduction to FastBreakR</a></li>
-  </ul>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -58,8 +54,8 @@
       <h1>Introduction to FastBreakR</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/jaykay-15/FastBreakR/blob/HEAD/vignettes/introduction.Rmd" class="external-link"><code>vignettes/introduction.Rmd</code></a></small>
-      <div class="d-none name"><code>introduction.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/jaykay-15/FastBreakR/blob/HEAD/vignettes/FastBreakR.Rmd" class="external-link"><code>vignettes/FastBreakR.Rmd</code></a></small>
+      <div class="d-none name"><code>FastBreakR.Rmd</code></div>
     </div>
 
     
@@ -158,83 +154,83 @@ the <code>measure_type</code> argument within the
 <pre><code><span><span class="co">## Rows: 4,920</span></span>
 <span><span class="co">## Columns: 81</span></span>
 <span><span class="co">## $ season_year        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 202…</span></span>
-<span><span class="co">## $ team_id            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1610612755", "1610612738", "1610612744", "16106127…</span></span>
-<span><span class="co">## $ team_abbreviation  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "PHI", "BOS", "GSW", "LAL", "ORL", "DET", "IND", "W…</span></span>
-<span><span class="co">## $ team_name          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Philadelphia 76ers", "Boston Celtics", "Golden Sta…</span></span>
+<span><span class="co">## $ team_id            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1610612738", "1610612755", "1610612747", "16106127…</span></span>
+<span><span class="co">## $ team_abbreviation  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BOS", "PHI", "LAL", "GSW", "DET", "ORL", "IND", "W…</span></span>
+<span><span class="co">## $ team_name          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Boston Celtics", "Philadelphia 76ers", "Los Angele…</span></span>
 <span><span class="co">## $ game_id            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0022200001", "0022200001", "0022200002", "00222000…</span></span>
 <span><span class="co">## $ game_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-10-18, 2022-10-18, 2022-10-18, 2022-10-18, 20…</span></span>
-<span><span class="co">## $ matchup            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "PHI @ BOS", "BOS vs. PHI", "GSW vs. LAL", "LAL @ G…</span></span>
-<span><span class="co">## $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "away", "home", "home", "away", "away", "home", "ho…</span></span>
-<span><span class="co">## $ wl                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "L", "W", "W", "L", "L", "W", "L", "W", "L", "W", "…</span></span>
+<span><span class="co">## $ matchup            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BOS vs. PHI", "PHI @ BOS", "LAL @ GSW", "GSW vs. L…</span></span>
+<span><span class="co">## $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "home", "away", "away", "home", "home", "away", "ho…</span></span>
+<span><span class="co">## $ wl                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "W", "L", "L", "W", "W", "L", "L", "W", "L", "W", "…</span></span>
 <span><span class="co">## $ min                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,…</span></span>
-<span><span class="co">## $ fgm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 40, 46, 45, 40, 42, 40, 39, 42, 42, 45, 40, 50, 41,…</span></span>
-<span><span class="co">## $ fga                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 80, 82, 99, 94, 86, 94, 97, 92, 98, 90, 89, 102, 93…</span></span>
-<span><span class="co">## $ fg_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.500, 0.561, 0.455, 0.426, 0.488, 0.426, 0.402, 0.…</span></span>
-<span><span class="co">## $ fg3m               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13, 12, 16, 10, 11, 14, 15, 11, 9, 7, 10, 12, 13, 1…</span></span>
-<span><span class="co">## $ fg3a               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 34, 35, 45, 40, 30, 38, 42, 31, 35, 25, 33, 26, 36,…</span></span>
-<span><span class="co">## $ fg3_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.382, 0.343, 0.356, 0.250, 0.367, 0.368, 0.357, 0.…</span></span>
-<span><span class="co">## $ ftm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 22, 17, 19, 14, 19, 14, 19, 14, 20, 18, 18, 21,…</span></span>
-<span><span class="co">## $ fta                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 28, 28, 23, 25, 19, 24, 21, 24, 15, 24, 24, 25, 28,…</span></span>
-<span><span class="co">## $ ft_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.857, 0.786, 0.739, 0.760, 0.737, 0.792, 0.667, 0.…</span></span>
-<span><span class="co">## $ oreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 6, 11, 9, 10, 12, 12, 14, 15, 4, 9, 21, 12, 8, 1…</span></span>
-<span><span class="co">## $ dreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 27, 30, 37, 39, 38, 29, 30, 39, 39, 34, 30, 40, 34,…</span></span>
-<span><span class="co">## $ reb                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 31, 36, 48, 48, 48, 41, 42, 53, 54, 38, 39, 61, 46,…</span></span>
-<span><span class="co">## $ ast                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16, 24, 31, 23, 21, 31, 21, 21, 25, 30, 22, 31, 23,…</span></span>
-<span><span class="co">## $ tov                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 14, 11, 18, 22, 18, 13, 15, 17, 16, 9, 16, 13, 15, …</span></span>
-<span><span class="co">## $ stl                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8, 8, 11, 12, 5, 11, 7, 5, 4, 12, 10, 9, 12, 6, 15,…</span></span>
-<span><span class="co">## $ blk                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 4, 4, 5, 4, 5, 10, 3, 5, 10, 4, 6, 2, 4, 5, 5…</span></span>
-<span><span class="co">## $ blka               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 4, 4, 4, 5, 10, 5, 5, 3, 4, 10, 2, 6, 5, 4, 7…</span></span>
-<span><span class="co">## $ pf                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25, 24, 23, 18, 24, 21, 20, 19, 20, 18, 25, 21, 26,…</span></span>
-<span><span class="co">## $ pfd                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 25, 18, 23, 21, 24, 19, 20, 18, 20, 21, 25, 24,…</span></span>
-<span><span class="co">## $ pts                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 117, 126, 123, 109, 109, 113, 107, 114, 107, 117, 1…</span></span>
-<span><span class="co">## $ plus_minus         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -9, 9, 14, -14, -4, 4, -7, 7, -10, 10, -22, 22, 8, …</span></span>
-<span><span class="co">## $ off_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 119.4, 129.9, 107.0, 97.3, 106.9, 111.9, 102.9, 108…</span></span>
-<span><span class="co">## $ def_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 129.9, 119.4, 97.3, 107.0, 111.9, 106.9, 108.6, 102…</span></span>
-<span><span class="co">## $ net_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -10.5, 10.5, 9.6, -9.6, -5.0, 5.0, -5.7, 5.7, -9.4,…</span></span>
-<span><span class="co">## $ ast_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.400, 0.522, 0.689, 0.575, 0.500, 0.775, 0.538, 0.…</span></span>
-<span><span class="co">## $ ast_to             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.14, 2.18, 1.72, 1.05, 1.17, 2.38, 1.40, 1.24, 1.5…</span></span>
-<span><span class="co">## $ ast_ratio          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13.1, 18.5, 19.1, 15.4, 15.4, 20.8, 14.7, 14.7, 17.…</span></span>
-<span><span class="co">## $ oreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.190, 0.256, 0.281, 0.246, 0.277, 0.293, 0.290, 0.…</span></span>
-<span><span class="co">## $ dreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.744, 0.810, 0.754, 0.719, 0.707, 0.723, 0.647, 0.…</span></span>
-<span><span class="co">## $ reb_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.457, 0.543, 0.518, 0.482, 0.514, 0.486, 0.451, 0.…</span></span>
-<span><span class="co">## $ tm_tov_pct         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.143, 0.113, 0.157, 0.196, 0.176, 0.129, 0.144, 0.…</span></span>
-<span><span class="co">## $ efg_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.581, 0.634, 0.535, 0.479, 0.552, 0.500, 0.479, 0.…</span></span>
-<span><span class="co">## $ ts_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.634, 0.668, 0.564, 0.519, 0.578, 0.540, 0.504, 0.…</span></span>
+<span><span class="co">## $ fgm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 46, 40, 40, 45, 40, 42, 39, 42, 42, 45, 50, 40, 41,…</span></span>
+<span><span class="co">## $ fga                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 82, 80, 94, 99, 94, 86, 97, 92, 98, 90, 102, 89, 93…</span></span>
+<span><span class="co">## $ fg_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.561, 0.500, 0.426, 0.455, 0.426, 0.488, 0.402, 0.…</span></span>
+<span><span class="co">## $ fg3m               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 12, 13, 10, 16, 14, 11, 15, 11, 9, 7, 12, 10, 13, 1…</span></span>
+<span><span class="co">## $ fg3a               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 35, 34, 40, 45, 38, 30, 42, 31, 35, 25, 26, 33, 36,…</span></span>
+<span><span class="co">## $ fg3_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.343, 0.382, 0.250, 0.356, 0.368, 0.367, 0.357, 0.…</span></span>
+<span><span class="co">## $ ftm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 22, 24, 19, 17, 19, 14, 14, 19, 14, 20, 18, 18, 21,…</span></span>
+<span><span class="co">## $ fta                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 28, 28, 25, 23, 24, 19, 21, 24, 15, 24, 25, 24, 28,…</span></span>
+<span><span class="co">## $ ft_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.786, 0.857, 0.760, 0.739, 0.792, 0.737, 0.667, 0.…</span></span>
+<span><span class="co">## $ oreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6, 4, 9, 11, 12, 10, 12, 14, 15, 4, 21, 9, 12, 8, 1…</span></span>
+<span><span class="co">## $ dreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 30, 27, 39, 37, 29, 38, 30, 39, 39, 34, 40, 30, 34,…</span></span>
+<span><span class="co">## $ reb                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36, 31, 48, 48, 41, 48, 42, 53, 54, 38, 61, 39, 46,…</span></span>
+<span><span class="co">## $ ast                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 16, 23, 31, 31, 21, 21, 21, 25, 30, 31, 22, 23,…</span></span>
+<span><span class="co">## $ tov                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 11, 14, 22, 18, 13, 18, 15, 17, 16, 9, 13, 16, 15, …</span></span>
+<span><span class="co">## $ stl                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8, 8, 12, 11, 11, 5, 7, 5, 4, 12, 9, 10, 12, 6, 15,…</span></span>
+<span><span class="co">## $ blk                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 4, 4, 4, 5, 5, 10, 3, 5, 4, 10, 6, 2, 4, 5, 5…</span></span>
+<span><span class="co">## $ blka               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 4, 4, 5, 4, 10, 5, 5, 3, 10, 4, 2, 6, 5, 4, 7…</span></span>
+<span><span class="co">## $ pf                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 25, 18, 23, 21, 24, 20, 19, 20, 18, 21, 25, 26,…</span></span>
+<span><span class="co">## $ pfd                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25, 24, 23, 18, 24, 21, 19, 20, 18, 20, 25, 21, 24,…</span></span>
+<span><span class="co">## $ pts                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 126, 117, 109, 123, 113, 109, 107, 114, 107, 117, 1…</span></span>
+<span><span class="co">## $ plus_minus         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9, -9, -14, 14, 4, -4, -7, 7, -10, 10, 22, -22, 8, …</span></span>
+<span><span class="co">## $ off_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 129.9, 119.4, 97.3, 107.0, 111.9, 106.9, 102.9, 108…</span></span>
+<span><span class="co">## $ def_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 119.4, 129.9, 107.0, 97.3, 106.9, 111.9, 108.6, 102…</span></span>
+<span><span class="co">## $ net_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 10.5, -10.5, -9.6, 9.6, 5.0, -5.0, -5.7, 5.7, -9.4,…</span></span>
+<span><span class="co">## $ ast_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.522, 0.400, 0.575, 0.689, 0.775, 0.500, 0.538, 0.…</span></span>
+<span><span class="co">## $ ast_to             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2.18, 1.14, 1.05, 1.72, 2.38, 1.17, 1.40, 1.24, 1.5…</span></span>
+<span><span class="co">## $ ast_ratio          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 18.5, 13.1, 15.4, 19.1, 20.8, 15.4, 14.7, 14.7, 17.…</span></span>
+<span><span class="co">## $ oreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.256, 0.190, 0.246, 0.281, 0.293, 0.277, 0.290, 0.…</span></span>
+<span><span class="co">## $ dreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.810, 0.744, 0.719, 0.754, 0.723, 0.707, 0.647, 0.…</span></span>
+<span><span class="co">## $ reb_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.543, 0.457, 0.482, 0.518, 0.486, 0.514, 0.451, 0.…</span></span>
+<span><span class="co">## $ tm_tov_pct         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.113, 0.143, 0.196, 0.157, 0.129, 0.176, 0.144, 0.…</span></span>
+<span><span class="co">## $ efg_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.634, 0.581, 0.479, 0.535, 0.500, 0.552, 0.479, 0.…</span></span>
+<span><span class="co">## $ ts_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.668, 0.634, 0.519, 0.564, 0.540, 0.578, 0.504, 0.…</span></span>
 <span><span class="co">## $ pace               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 97.50, 97.50, 113.50, 113.50, 101.50, 101.50, 104.5…</span></span>
 <span><span class="co">## $ pace_per40         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 81.25, 81.25, 94.58, 94.58, 84.58, 84.58, 87.08, 87…</span></span>
-<span><span class="co">## $ poss               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 98, 97, 115, 112, 102, 101, 104, 105, 106, 106, 102…</span></span>
-<span><span class="co">## $ pie                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.434, 0.566, 0.548, 0.452, 0.475, 0.525, 0.424, 0.…</span></span>
-<span><span class="co">## $ fta_rate           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.350, 0.341, 0.232, 0.266, 0.221, 0.255, 0.216, 0.…</span></span>
-<span><span class="co">## $ opp_efg_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.634, 0.581, 0.479, 0.535, 0.500, 0.552, 0.516, 0.…</span></span>
-<span><span class="co">## $ opp_fta_rate       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.341, 0.350, 0.266, 0.232, 0.255, 0.221, 0.261, 0.…</span></span>
-<span><span class="co">## $ opp_tov_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.113, 0.143, 0.196, 0.157, 0.129, 0.176, 0.162, 0.…</span></span>
-<span><span class="co">## $ opp_oreb_pct       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.256, 0.190, 0.246, 0.281, 0.293, 0.277, 0.353, 0.…</span></span>
-<span><span class="co">## $ pts_off_tov        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 15, 22, 27, 17, 15, 24, 16, 10, 13, 28, 17, 26, 17,…</span></span>
-<span><span class="co">## $ pts_2nd_chance     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8, 4, 10, 4, 16, 16, 17, 14, 14, 8, 4, 36, 11, 15, …</span></span>
-<span><span class="co">## $ pts_fb             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2, 24, 17, 27, 23, 18, 21, 16, 10, 28, 18, 13, 8, 8…</span></span>
-<span><span class="co">## $ pts_paint          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 38, 44, 38, 60, 56, 46, 34, 58, 60, 56, 46, 62, 32,…</span></span>
-<span><span class="co">## $ opp_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 22, 15, 17, 27, 24, 15, 10, 16, 28, 13, 26, 17, 12,…</span></span>
-<span><span class="co">## $ opp_pts_2nd_chance <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 8, 4, 10, 16, 16, 14, 17, 8, 14, 36, 4, 15, 11, …</span></span>
-<span><span class="co">## $ opp_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 2, 27, 17, 18, 23, 16, 21, 28, 10, 13, 18, 8, 8…</span></span>
-<span><span class="co">## $ opp_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 44, 38, 60, 38, 46, 56, 58, 34, 56, 60, 62, 46, 48,…</span></span>
-<span><span class="co">## $ pct_fga_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.575, 0.573, 0.545, 0.574, 0.651, 0.596, 0.567, 0.…</span></span>
-<span><span class="co">## $ pct_fga_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.425, 0.427, 0.455, 0.426, 0.349, 0.404, 0.433, 0.…</span></span>
-<span><span class="co">## $ pct_pts_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.462, 0.540, 0.472, 0.550, 0.569, 0.460, 0.449, 0.…</span></span>
-<span><span class="co">## $ pct_pts_2pt_mr     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.137, 0.190, 0.163, 0.000, 0.055, 0.053, 0.131, 0.…</span></span>
-<span><span class="co">## $ pct_pts_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.333, 0.286, 0.390, 0.275, 0.303, 0.372, 0.421, 0.…</span></span>
-<span><span class="co">## $ pct_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.017, 0.190, 0.138, 0.248, 0.211, 0.159, 0.196, 0.…</span></span>
-<span><span class="co">## $ pct_pts_ft         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.205, 0.175, 0.138, 0.174, 0.128, 0.168, 0.131, 0.…</span></span>
-<span><span class="co">## $ pct_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.128, 0.175, 0.220, 0.156, 0.138, 0.212, 0.150, 0.…</span></span>
-<span><span class="co">## $ pct_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.325, 0.349, 0.309, 0.550, 0.514, 0.407, 0.318, 0.…</span></span>
-<span><span class="co">## $ pct_ast_2pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.333, 0.412, 0.655, 0.500, 0.452, 0.692, 0.458, 0.…</span></span>
-<span><span class="co">## $ pct_uast_2pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.667, 0.588, 0.345, 0.500, 0.548, 0.308, 0.542, 0.…</span></span>
-<span><span class="co">## $ pct_ast_3pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.538, 0.833, 0.750, 0.800, 0.636, 0.929, 0.667, 0.…</span></span>
-<span><span class="co">## $ pct_uast_3pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.462, 0.167, 0.250, 0.200, 0.364, 0.071, 0.333, 0.…</span></span>
-<span><span class="co">## $ pct_ast_fgm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.400, 0.522, 0.689, 0.575, 0.500, 0.775, 0.538, 0.…</span></span>
-<span><span class="co">## $ pct_uast_fgm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.600, 0.478, 0.311, 0.425, 0.500, 0.225, 0.462, 0.…</span></span>
+<span><span class="co">## $ poss               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 97, 98, 112, 115, 101, 102, 104, 105, 106, 106, 102…</span></span>
+<span><span class="co">## $ pie                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.566, 0.434, 0.452, 0.548, 0.525, 0.475, 0.424, 0.…</span></span>
+<span><span class="co">## $ fta_rate           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.341, 0.350, 0.266, 0.232, 0.255, 0.221, 0.216, 0.…</span></span>
+<span><span class="co">## $ opp_efg_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.581, 0.634, 0.535, 0.479, 0.552, 0.500, 0.516, 0.…</span></span>
+<span><span class="co">## $ opp_fta_rate       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.350, 0.341, 0.232, 0.266, 0.221, 0.255, 0.261, 0.…</span></span>
+<span><span class="co">## $ opp_tov_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.143, 0.113, 0.157, 0.196, 0.176, 0.129, 0.162, 0.…</span></span>
+<span><span class="co">## $ opp_oreb_pct       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.190, 0.256, 0.281, 0.246, 0.277, 0.293, 0.353, 0.…</span></span>
+<span><span class="co">## $ pts_off_tov        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 22, 15, 17, 27, 24, 15, 16, 10, 13, 28, 26, 17, 17,…</span></span>
+<span><span class="co">## $ pts_2nd_chance     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 8, 4, 10, 16, 16, 17, 14, 14, 8, 36, 4, 11, 15, …</span></span>
+<span><span class="co">## $ pts_fb             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 2, 27, 17, 18, 23, 21, 16, 10, 28, 13, 18, 8, 8…</span></span>
+<span><span class="co">## $ pts_paint          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 44, 38, 60, 38, 46, 56, 34, 58, 60, 56, 62, 46, 32,…</span></span>
+<span><span class="co">## $ opp_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 15, 22, 27, 17, 15, 24, 10, 16, 28, 13, 17, 26, 12,…</span></span>
+<span><span class="co">## $ opp_pts_2nd_chance <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8, 4, 10, 4, 16, 16, 14, 17, 8, 14, 4, 36, 15, 11, …</span></span>
+<span><span class="co">## $ opp_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2, 24, 17, 27, 23, 18, 16, 21, 28, 10, 18, 13, 8, 8…</span></span>
+<span><span class="co">## $ opp_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 38, 44, 38, 60, 56, 46, 58, 34, 56, 60, 46, 62, 48,…</span></span>
+<span><span class="co">## $ pct_fga_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.573, 0.575, 0.574, 0.545, 0.596, 0.651, 0.567, 0.…</span></span>
+<span><span class="co">## $ pct_fga_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.427, 0.425, 0.426, 0.455, 0.404, 0.349, 0.433, 0.…</span></span>
+<span><span class="co">## $ pct_pts_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.540, 0.462, 0.550, 0.472, 0.460, 0.569, 0.449, 0.…</span></span>
+<span><span class="co">## $ pct_pts_2pt_mr     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.190, 0.137, 0.000, 0.163, 0.053, 0.055, 0.131, 0.…</span></span>
+<span><span class="co">## $ pct_pts_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.286, 0.333, 0.275, 0.390, 0.372, 0.303, 0.421, 0.…</span></span>
+<span><span class="co">## $ pct_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.190, 0.017, 0.248, 0.138, 0.159, 0.211, 0.196, 0.…</span></span>
+<span><span class="co">## $ pct_pts_ft         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.175, 0.205, 0.174, 0.138, 0.168, 0.128, 0.131, 0.…</span></span>
+<span><span class="co">## $ pct_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.175, 0.128, 0.156, 0.220, 0.212, 0.138, 0.150, 0.…</span></span>
+<span><span class="co">## $ pct_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.349, 0.325, 0.550, 0.309, 0.407, 0.514, 0.318, 0.…</span></span>
+<span><span class="co">## $ pct_ast_2pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.412, 0.333, 0.500, 0.655, 0.692, 0.452, 0.458, 0.…</span></span>
+<span><span class="co">## $ pct_uast_2pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.588, 0.667, 0.500, 0.345, 0.308, 0.548, 0.542, 0.…</span></span>
+<span><span class="co">## $ pct_ast_3pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.833, 0.538, 0.800, 0.750, 0.929, 0.636, 0.667, 0.…</span></span>
+<span><span class="co">## $ pct_uast_3pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.167, 0.462, 0.200, 0.250, 0.071, 0.364, 0.333, 0.…</span></span>
+<span><span class="co">## $ pct_ast_fgm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.522, 0.400, 0.575, 0.689, 0.775, 0.500, 0.538, 0.…</span></span>
+<span><span class="co">## $ pct_uast_fgm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.478, 0.600, 0.425, 0.311, 0.225, 0.500, 0.462, 0.…</span></span>
 <span><span class="co">## $ game_count         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
 <span><span class="co">## $ days_rest          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 1…</span></span>
-<span><span class="co">## $ days_next_game     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, …</span></span>
+<span><span class="co">## $ days_next_game     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, …</span></span>
 <span><span class="co">## $ is_b2b             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span>
 <span><span class="co">## $ is_b2b_first       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span>
 <span><span class="co">## $ is_b2b_second      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span></code></pre>
@@ -265,10 +261,12 @@ across stat categories automatically removed for easier analysis.</p>
 <pre><code><span><span class="co">## Fetching 5 games in 1 batches</span></span></code></pre>
 <pre><code><span><span class="co">## Fetching batch 1/1: games</span></span>
 <span><span class="co">## 0022300401 to 0022300405</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Error fetching data for Game ID 0022300404:</span></span>
+<span><span class="co">## In index: 2.</span></span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display a glimpse of the box score data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">box_scores</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Rows: 140</span></span>
+<pre><code><span><span class="co">## Rows: 113</span></span>
 <span><span class="co">## Columns: 61</span></span>
 <span><span class="co">## $ game_id                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0022300401", "0022300401", "00223…</span></span>
 <span><span class="co">## $ location                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "away", "away", "away", "away", "a…</span></span>
@@ -352,13 +350,13 @@ set of games, using the <strong><code><a href="../reference/nba_play_by_play.htm
 function. This example demonstrates how to fetch data for a list of game
 IDs.</p>
 <p>Let’s get play-by-play data for that same set of game IDs.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fetch the play-by-play data for the same games</span></span>
 <span><span class="va">play_by_play_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nba_play_by_play.html">nba_play_by_play</a></span><span class="op">(</span><span class="va">games</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fetching 5 games in 1 batches</span></span></code></pre>
 <pre><code><span><span class="co">## Fetching batch 1/1: games</span></span>
 <span><span class="co">## 0022300401 to 0022300405</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display a glimpse of the play-by-play data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">play_by_play_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 2,344</span></span>

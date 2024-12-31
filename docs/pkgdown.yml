@@ -2,8 +2,8 @@ pandoc: '3.2'
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  introduction: introduction.html
-last_built: 2024-12-31T03:00Z
+  FastBreakR: FastBreakR.html
+last_built: 2024-12-31T04:17Z
 urls:
   reference: https://jaykay-15.github.io/FastBreakR/reference
   article: https://jaykay-15.github.io/FastBreakR/articles
