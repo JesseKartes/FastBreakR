@@ -197,24 +197,6 @@ clean_stats_cols <- function(data) {
   )
 }
 
-#' Get Available Measure Types for Team Stats
-#'
-#' Returns a vector of available measure types for team stats.
-#'
-#' @return A character vector of measure types.
-get_team_measure_types <- function() {
-  return(team_measure_types)
-}
-
-#' Get Available Measure Types for Player Stats
-#'
-#' Returns a vector of available measure types for player stats.
-#'
-#' @return A character vector of measure types.
-get_player_measure_types <- function() {
-  return(player_measure_types)
-}
-
 #' Get Data from a URL
 #'
 #' Makes an HTTP GET request to the specified URL and retrieves the content.
