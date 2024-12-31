@@ -7,17 +7,17 @@
 consolidate_stats(data)
 }
 \arguments{
-\item{data}{A named list where each element represents a season. Each season
-contains a list of data frames for various statistical categories.}
+\item{data}{A list of data frames. Each data frame corresponds to a season
+and contains various statistical categories.}
 }
 \value{
-A named list of consolidated data frames, one for each season.
-Seasons with no valid data or common join columns are excluded.
+A consolidated data frame containing all the input data,
+or NULL if no valid join columns are found.
 }
 \description{
-To be used on the output of \code{nba_team_stats()} or \code{nba_player_stats()}.
-Consolidates data frames within each NBA season by performing joins using
-\code{full_join}, ensuring that only unique columns from each data frame are
-included in the final result. It removes any columns that already exist in
+To be used on a list of data frames representing various NBA seasons.
+Consolidates the data frames by performing joins using \code{full_join},
+ensuring that only unique columns from each data frame are included
+in the final result. It removes any columns that already exist in
 the preceding data frames.
 }

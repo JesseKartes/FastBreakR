@@ -21,14 +21,14 @@ nba_play_by_play <- function(game_ids, batch_size = 100, pause_seconds = 15) {
   )
   num_batches <- length(batched_games)
 
-  message(glue::glue("Processing {total_games} games in {num_batches} batches"))
+  message(glue::glue("Fetching {total_games} games in {num_batches} batches"))
 
   future::plan(future::multisession)
 
   # Process each batch sequentially with parallel handling within batches
   results <- map_dfr(seq_along(batched_games), function(batch_num) {
     batch_games <- batched_games[[batch_num]]
-    message(glue::glue("Processing batch {batch_num}/{num_batches}: games
+    message(glue::glue("Fetching batch {batch_num}/{num_batches}: games
                        {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
     # Fetch data in parallel for the current batch

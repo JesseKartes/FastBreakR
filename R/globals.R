@@ -10,5 +10,20 @@ utils::globalVariables(c(
   "process_team_games", "pts", "score", "season_year", "shot_attempted_flag",
   "shot_distance", "shot_made_flag", "shot_type", "shot_zone_basic",
   "teamName", "team_abbreviation", "team_city", "team_id", "team_name",
-  "timeoutsRemaining", "wl", "statistics"
+  "timeoutsRemaining", "wl", "statistics",
+  "event_index", "eventmsgactiontype", "eventmsgactiontype.x",
+  "eventmsgactiontype.y", "eventmsgtype", "eventmsgtype.x", "eventmsgtype.y",
+  "eventnum", "fg_and_one", "ft_end_id", "ft_id", "ft_start_id", "group_id",
+  "heave", "homedescription.x", "homedescription.y", "lineup_after",
+  "lineup_after_away", "lineup_after_home", "lineup_away", "lineup_before_away",
+  "lineup_before_home", "lineup_home", "lineup_initial", "lineup_initial_away",
+  "lineup_initial_home", "name_player", "pctimestring", "player1_id",
+  "player1_name", "player1_team_abbreviation", "player1_team_id",
+  "player2_name", "player2_team_abbreviation", "player3_name", "player_in",
+  "player_out", "possession", "possession.x", "possession.y", "scoremargin",
+  "secs_left_quarter", "secs_passed_game", "shot_pts_away", "shot_pts_home",
+  "start_poss", "team_location", "team_player", "video_available_flag",
+  "visitordescription.x", "visitordescription.y", "wctimestring",
+  "missing_starters", "home_corrections", "visitor_corrections", "delete_rows",
+  "corrections", "data", "min_sec"
 ))

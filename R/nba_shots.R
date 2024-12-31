@@ -1,38 +1,47 @@
 #' Get NBA Shots
 #'
 #' This function gets NBA shot data for the specified seasons and
-#' returns a list where each season contains two data frames: `shots` and
-#' `league_avg`. Function pauses for five seconds after each season to prevent
-#' timeout issues.
+#' returns a data frame. Function pauses for five seconds after each season to
+#' prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
 #' NBA shot data.
-#' @param season_type A character string specifying the type of season
-#' (e.g., "Regular Season").
-#' @return A named list where each element is a list containing two data frames:
-#' `shots` and `league_avg`.
+#' @param season_type A character string specifying the type of season. Valid
+#' options include:
+#' \itemize{
+#'   \item \strong{"Pre Season"} - Pre Season games.
+#'   \item \strong{"Regular Season"} - Regular Season games.
+#'   \item \strong{"Playoffs"} - Playoff games.
+#'   \item \strong{"All Star"} - All Star games.
+#'   \item \strong{"IST"} - NBA Cup games.
+#'   \item \strong{"PlayIn"} - Play In games.
+#' }
+#' @param return_nested A logical value. If FALSE (default), returns a single
+#' combined data frame for all seasons.If TRUE, returns a list of data frames,
+#' one for each season.
+#' @return A named a data frame containing NBA shots data for the specified
+#' seasons.
 #' @export
-nba_shots <- function(seasons, season_type = "Regular Season") {
+nba_shots <- function(seasons,
+                      season_type = "Regular Season",
+                      return_nested = FALSE) {
   if (!is.numeric(seasons) || length(seasons) == 0) {
     stop("The 'seasons' parameter must be a non-empty numeric vector.")
   }
 
-  results <- map(seq_along(seasons), function(i) {
+  results <- map_dfr(seq_along(seasons), function(i) {
     season <- seasons[i]
-    message(glue::glue("Processing season {season} ({i}/{length(seasons)})"))
+    message(glue::glue("Fetching season {season} ({i}/{length(seasons)})"))
 
     # Try to fetch and process data for the season
     shots_data <- tryCatch(
       {
         data <- fetch_shots_data(season, season_type)
 
-        list(
-          shots = data$shots_data,
-          league_avg = data$league_data
-        )
+        data <- data$shots_data
       },
       error = function(e) {
-        message(glue::glue("Error processing season {season}: {e$message}"))
+        message(glue::glue("Error fetching season {season}: {e$message}"))
         return(NULL) # Return NULL if an error occurs
       }
     )
@@ -40,7 +49,7 @@ nba_shots <- function(seasons, season_type = "Regular Season") {
     # Pause after processing each season unless it's the last
     if (i < length(seasons)) {
       message(glue::glue(
-        "Pausing for 5 seconds before processing the next season..."
+        "Pausing for 5 seconds before fetching the next season..."
       ))
       Sys.sleep(5)
     }
@@ -48,8 +57,86 @@ nba_shots <- function(seasons, season_type = "Regular Season") {
     return(shots_data)
   })
 
-  # Name the list elements by season
-  names(results) <- glue::glue("season_{seasons}") %>% as.character()
+  # Return nested results (list of data frames)
+  if (return_nested) {
+    results_list <- split(results, results$season_year)
+    names(results_list) <- glue::glue("season_{seasons}") %>% as.character()
+
+    return(results_list)
+  }
+
+  # If return_nested is FALSE (default), return a combined data frame
+  return(results)
+}
+
+#' Get League Average NBA Shots
+#'
+#' This function gets league average NBA shot data for the specified seasons and
+#' returns a data frame. Function pauses for five seconds after each season to
+#' prevent timeout issues.
+#'
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
+#' NBA shot data.
+#' @param season_type A character string specifying the type of season. Valid
+#' options include:
+#' \itemize{
+#'   \item \strong{"Pre Season"} - Pre Season games.
+#'   \item \strong{"Regular Season"} - Regular Season games.
+#'   \item \strong{"Playoffs"} - Playoff games.
+#'   \item \strong{"All Star"} - All Star games.
+#'   \item \strong{"IST"} - NBA Cup games.
+#'   \item \strong{"PlayIn"} - Play In games.
+#' }
+#' @param return_nested A logical value. If FALSE (default), returns a single
+#' combined data frame for all seasons.If TRUE, returns a list of data frames,
+#' one for each season.
+#' @return A named a data frame containing league average NBA shots data for the
+#' specified seasons.
+#' @export
+nba_shots_league_avg <- function(seasons,
+                                 season_type = "Regular Season",
+                                 return_nested = FALSE) {
+  if (!is.numeric(seasons) || length(seasons) == 0) {
+    stop("The 'seasons' parameter must be a non-empty numeric vector.")
+  }
+
+  results <- map_dfr(seq_along(seasons), function(i) {
+    season <- seasons[i]
+    message(glue::glue("Fetching season {season} ({i}/{length(seasons)})"))
+
+    # Try to fetch and process data for the season
+    shots_data <- tryCatch(
+      {
+        data <- fetch_shots_data(season, season_type)
+
+        data <- data$league_data
+      },
+      error = function(e) {
+        message(glue::glue("Error fetching season {season}: {e$message}"))
+        return(NULL) # Return NULL if an error occurs
+      }
+    )
+
+    # Pause after processing each season unless it's the last
+    if (i < length(seasons)) {
+      message(glue::glue(
+        "Pausing for 5 seconds before fetching the next season..."
+      ))
+      Sys.sleep(5)
+    }
+
+    return(shots_data)
+  })
+
+  # Return nested results (list of data frames)
+  if (return_nested) {
+    results_list <- split(results, results$season_year)
+    names(results_list) <- glue::glue("season_{seasons}") %>% as.character()
+
+    return(results_list)
+  }
+
+  # If return_nested is FALSE (default), return a combined data frame
   return(results)
 }
 
@@ -79,7 +166,10 @@ fetch_shots_data <- function(season, season_type) {
     as_tibble() %>%
     set_names(shots_column_names) %>%
     clean_names() %>%
-    mutate(season_year = season)
+    mutate(
+      season_year = season,
+      game_date = as_date(game_date, format = "%Y%m%d")
+    )
 
   league_column_names <- data$resultSets$headers[[2]] %>%
     as.character()
@@ -97,7 +187,9 @@ fetch_shots_data <- function(season, season_type) {
   )
 }
 
-#' Process NBA Shots Data
+#' Process NBA Shots Data (function under development)
+#'
+#' This function is currently in development and not exported.
 #'
 #' To be used on the output of `nba_shots()`. Processes shot and league average
 #' data frames within each NBA season. Applies transformations to prepare the
@@ -107,7 +199,6 @@ fetch_shots_data <- function(season, season_type) {
 #' contains a list with two data frames: `shots` and `league_avg`.
 #' @return A named list of processed data frames for each season. Transforms the
 #' data to prepare for analysis.
-#' @export
 process_shots <- function(data) {
   # Check if input is a list
   if (!is.list(data)) {
@@ -116,7 +207,6 @@ process_shots <- function(data) {
   }
 
   data %>%
-    # Use map to process each season
     map(function(season_data) {
       # Validate that the season contains both required data frames
       if (!all(c("shots", "league_avg") %in% names(season_data))) {
@@ -131,7 +221,7 @@ process_shots <- function(data) {
       # Process shots data
       processed_shots <- shots %>%
         mutate(
-          loc_x = as.numeric(loc_x) / 10,
+          loc_x = -as.numeric(loc_x) / 10,
           loc_y = as.numeric(loc_y) / 10 + 5.25,
           shot_distance = as.numeric(shot_distance),
           shot_made_numeric = as.numeric(shot_made_flag),

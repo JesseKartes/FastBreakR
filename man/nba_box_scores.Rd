@@ -4,9 +4,11 @@
 \alias{nba_box_scores}
 \title{Get NBA Box Scores}
 \usage{
-nba_box_scores(measure_types, game_ids, batch_size = 100, pause_seconds = 15)
+nba_box_scores(game_ids, measure_types, batch_size = 100, pause_seconds = 15)
 }
 \arguments{
+\item{game_ids}{A character vector of game IDs.}
+
 \item{measure_types}{A character vector of selected box score options.
 Each option corresponds to an entry in \code{box_score_types}. Valid options
 include:
@@ -21,8 +23,6 @@ include:
 \item \strong{"Defensive"} - Box score with defensive statistics.
 \item \strong{"Hustle"} - Box score with hustle statistics.
 }}
-
-\item{game_ids}{A character vector of game IDs.}
 
 \item{batch_size}{Number of requests before pausing (default: 100)}
 

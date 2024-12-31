@@ -7,6 +7,9 @@
 <!-- badges: end -->
 
 FastBreakR is a fast and efficient R package for working with NBA data.
+With a robust set of core tools, the package is fully functional and
+continually evolving, with new features regularly added to enhance its
+capabilities.
 
 ## Installation
 
@@ -17,15 +20,20 @@ You can install the development version of FastBreakR from GitHub with:
 pak::pak("JayKay-15/FastBreakR")
 ```
 
-## Key Features
+## Core Features
 
-- **Easy-to-use functions** for fetching and processing various types of
-  NBA data, including game scores, team statistics, shot data and play
-  by play data.
-- **Modular design** that seamlessly integrates NBA data into your
-  analysis pipeline.
-- **Integration with `tidyverse`**, enabling effortless manipulation,
-  analysis, and visualization of NBA data.
+- **Speed and Efficiency**: Optimized to process large data requests
+  rapidly, FastBreakR includes built-in mechanisms like rate-limiting
+  pauses to ensure smooth operation while adhering to NBA API
+  constraints.
+- **Data Consolidation**: Seamlessly merges multiple statistical
+  categories into a single, unified dataset while automatically
+  eliminating duplicate columns, ensuring a cleaner and more organized
+  output for analysis.
+- **Consistent and Tidy Naming**: Column names are cleaned and
+  standardized while staying consistent with NBA naming conventions.
+- **User-Friendly Design**: Functions are intuitive, making it easy to
+  fetch and manipulate data.
 
 ## Example
 

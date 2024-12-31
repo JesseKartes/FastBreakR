@@ -1,24 +1,35 @@
 #' Get NBA Standings Data
 #'
-#' This function gets NBA standings data for a single or multiple seasons
-#' and returns it as a list of data frames.
+#' This function gets NBA standings as a data frame for a single or multiple
+#' seasons.
 #'
 #' @param seasons A numeric vector of seasons for which to get the standings
 #' data.
-#' @return A named list of data frames, each containing the NBA standings data
-#' for the specified seasons.
+#' @param return_nested A logical value. If FALSE (default), returns a single
+#' combined data frame for all seasons. If TRUE, returns a list of
+#' data frames, one for each season.
+#' @return A data frame containing the NBA standings data for the specified
+#' seasons.
 #' @export
-nba_standings <- function(seasons) {
+nba_standings <- function(seasons, return_nested = FALSE) {
   if (!is.numeric(seasons) || length(seasons) == 0) {
     stop("The 'seasons' parameter must be a non-empty numeric vector.")
   }
 
-  results <- map(seasons, function(year) {
+  results <- map_dfr(seasons, function(year) {
     all_standings <- fetch_standings(year)
     return(all_standings)
   })
 
-  names(results) <- as.character(paste0("season_", seasons))
+  # Return nested results (list of data frames)
+  if (return_nested) {
+    results_list <- split(results, results$season_year)
+    names(results_list) <- glue::glue("season_{seasons}") %>% as.character()
+
+    return(results_list)
+  }
+
+  # If return_nested is FALSE (default), return a combined data frame
   return(results)
 }
 

@@ -7,20 +7,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Welcome to the FastBreakR package! FastBreakR is a fast, efficient, and clean way to fetch data from the NBA API. Designed for analysts, modelers, and basketball enthusiasts, FastBreakR simplifies the process of acquiring, consolidating, and analyzing NBA statistics. While the package is already functional with its core set of tools, it remains under development, and new features are continually being added.
+Welcome to the FastBreakR package! Designed for simplicity, speed, and consistency, FastBreakR makes it easy to fetch and analyze NBA data. With a robust set of core tools, the package is fully functional and continually evolving, with new features regularly added to enhance its capabilities.
+
+## Core Features
+
+- **Speed and Efficiency**: Optimized to process large data requests rapidly, FastBreakR includes built-in mechanisms like rate-limiting pauses to ensure smooth operation while adhering to NBA API constraints.
+- **Data Consolidation**: Seamlessly merges multiple statistical categories into a single, unified dataset while automatically eliminating duplicate columns, ensuring a cleaner and more organized output for analysis.
+- **Consistent and Tidy Naming**: Column names are cleaned and standardized while staying consistent with NBA naming conventions.
+- **User-Friendly Design**: Functions are intuitive, making it easy to fetch and manipulate data.
+
+## FastBreakR in Action
+
+FastBreakR provides tools to fetch everything from play-by-play data to advanced player stats. Its modular design ensures it can fit into any analysis pipeline, whether you're building predictive models, exploring shot tendencies, or analyzing team lineups.
 
 This vignette introduces some the primary functions of FastBreakR, demonstrating their capabilities and providing examples to help you get started.
-
-## Key Features
-
-- **Easy-to-use functions** for fetching and processing various types of NBA data,
-including game scores, team statistics, shot data and play by play data.
-- **Modular design** that seamlessly integrates NBA data into your analysis pipeline.
-- **Integration with `tidyverse`**, enabling effortless manipulation, analysis, and visualization of NBA data.
-
-## FastBreakR: Built for Efficiency and Flexibility
-
-FastBreakR is designed to be both efficient and flexible. It’s user-friendly for beginners while offering advanced capabilities for experienced users who want to dive deeper into NBA statistics. Whether you're building a sports analytics app, conducting research, or simply exploring basketball data, FastBreakR is your go-to solution.
 
 ## Prerequisites
 Before you start, ensure you have installed the FastBreakR package and its dependencies. You can install FastBreakR directly from GitHub:
@@ -35,7 +35,7 @@ install.packages("dplyr")
 
 ## Getting Started
 
-To get started with FastBreakR, simply load the package:
+To get started with FastBreakR, simply load the package along with `dplyr` to streamline your data analysis workflow:
 
 ```{r, load packages}
 # Load the FastBreakR package
@@ -45,7 +45,7 @@ library(dplyr, warn.conflicts = FALSE)
 
 ## Fetching Team Stats
 
-The **`nba_team_stats()`** function retrieves NBA team statistics for the seasons you specify. The output is a list, where each element corresponds to a season and contains five data frames with various stat types, including:
+The **`nba_team_stats()`** function fetches NBA team statistics for specified seasons. By default, it retrieves data for all the following measure types, while automatically removing duplicate columns from the merged categories:
 
 - Traditional Stats
 - Advanced Stats
@@ -53,86 +53,64 @@ The **`nba_team_stats()`** function retrieves NBA team statistics for the season
 - Miscellaneous Stats
 - Scoring Stats
 
+If you only need one or a few specific stat categories, simply use the `measure_type` argument within the **`nba_team_stats()`** function.
 
 ```{r, team stats}
 # Fetch team stats for the 2022-2023 & 2023-2024 regular season
 team_stats <- nba_team_stats(2023:2024, season_type = "Regular Season")
 
-# Display a glimpse of the advanced stats for the 2024 season
-glimpse(team_stats$season_2024$Advanced)
+# Display a glimpse of the team stats data
+glimpse(team_stats)
 ```
-
-Once you have the data, you can analyze it as is or consolidate it using additional package functions.
-
-## Additional Functions for Cleaning and Processing Data
-
-Once you've fetched the data, you might want to clean and process it further to meet your analysis requirements. MambaNBA provides functions such as **`consolidate_stats()`** and **`add_schedule_details()`** to help you with these tasks.
-
-For example, you can consolidate team stats and calculate additional metrics based on the schedule:
-
-```{r, process team stats}
-# Process team stats using the data from scrape_nba_team_stats()
-team_stats_processed <- team_stats %>%
-  consolidate_stats() %>% # Consolidates stats into one data frame
-  add_schedule_details() # Calculates additional schedule metrics
-
-# Display a glimpse of the processed data
-glimpse(team_stats_processed$season_2024)
-```
-
-**`consolidate_stats()`**: This function combines data from multiple statistical categories (e.g., basic, advanced, scoring) into a single data frame for easier analysis.
-
-**`add_schedule_details()`**: This function calculates metrics related to a team's schedule, such as back-to-back games, rest days, and more.
-
-These functions are particularly useful for cleaning, transforming, and preparing the data for deeper insights or more advanced modeling.
 
 ## Fetching Box Scores
 
-The **`nba_box_scores()`** function allows you to fetch detailed box score data for specified games and stat categories. The output is a data frame with all duplicate columns between
-stat categories removed.
+Now that we have a data frame with team-level stats, let’s dive deeper and retrieve box scores for the Christmas Day games in 2023. Using our `team_stats` data frame, we can filter and extract the game IDs we need.
+
+The **`nba_box_scores()`** function fetches detailed box score data for specified games and stat categories. The resulting data frame is clean and consolidated, with duplicate columns across stat categories automatically removed for easier analysis.
 
 ```{r, fetch box scores, error = FALSE}
-# Here, we're fetching play-by-play data for a subset of game IDs
-games <- team_stats_processed$season_2024 %>%
+# Here, we're getting the game_ids we need
+games <- team_stats %>%
   filter(game_date == "2023-12-25") %>%
   pull(game_id) %>%
   unique()
 
-# Fetching Traditional and Miscellaneous box scores
+# Fetching Traditional and Hustle box scores
 box_scores <- nba_box_scores(
-  measure_types = c("Traditional", "Misc"),
+  measure_types = c("Traditional", "Scoring", "Hustle"),
   game_ids = games
 )
 
-# Display a glimpse of the processed data
+# Display a glimpse of the box score data
 glimpse(box_scores)
 ```
+
+Nice! Now we have a data frame containing traditional stats, along with detailed scoring stats such as mid-range points and points off turnovers. Additionally, we’ve incorporated hustle stats like deflections and charges drawn, giving us a comprehensive view of the game’s performance. This enriched dataset allows for deeper insights into team and player contributions across different aspects of the game.
 
 ## Fetching Play-by-Play Data with Rate Limiting
 
 Fetching play-by-play data from the NBA can be resource-intensive, especially when requesting data for many games in quick succession. To ensure that your requests don't result in timeouts or errors due to rate limiting, FastBreakR incorporates an automatic rate-limiting mechanism.
 
-Below is an example of how to fetch play-by-play data for a specific set of games, using the **`nba_play_by_play()`** function. This example demonstrates how to fetch data for a list of game IDs, while respecting rate limits to avoid overloading the server.
+Below is an example of how to fetch play-by-play data for a specific set of games, using the **`nba_play_by_play()`** function. This example demonstrates how to fetch data for a list of game IDs.
+
+Let's get play-by-play data for that same set of game IDs.
 
 ```{r, fetch play by play}
 # Fetch the play-by-play data for the same games
 play_by_play_data <- nba_play_by_play(games)
 
-# Display a glimpse of the fetched data
+# Display a glimpse of the play-by-play data
 glimpse(play_by_play_data)
 ```
 
-In this example:
-
-- We fetch play-by-play data for a small subset of game IDs (from game_list).
-- The **`scrape_nba_play_by_play()`** function handles the rate-limiting process automatically, ensuring the requests are spaced out to avoid server timeouts.
-- The returned data is a dataframe containing the play-by-play events for the games, which you can analyze or visualize further.
+Great! Now we've got raw play-by-play data for a small subset of games. This data is ready to be analyzed or visualized further. Stay tuned—new functions are being developed to make these tasks even easier, simplifying the process and enhancing your ability to derive insights from the data!
 
 ## Conclusion
 
-FastBreakR is your go-to tool for NBA data analysis, offering a robust and growing set of features. Whether you are creating models, performing analyses, or exploring trends, this package streamlines the process, enabling you to focus on insights instead of data fetching.
+FastBreakR is your go-to tool for NBA data analysis, providing a powerful and expanding set of features. Whether you're building models, conducting analyses, or exploring trends, this package simplifies the process, helping you access the data you need more quickly and efficiently.
 
-Stay tuned for updates as we continue to expand and improve FastBreakR. Happy analyzing!
+Check back for updates as we continue to expand and improve FastBreakR. Happy analyzing!
 
 
 

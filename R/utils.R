@@ -114,113 +114,73 @@ join_data_frames <- function(data_frames, join_columns) {
 
 #' Consolidate NBA Statistics
 #'
-#' To be used on the output of `nba_team_stats()` or `nba_player_stats()`.
-#' Consolidates data frames within each NBA season by performing joins using
-#' `full_join`, ensuring that only unique columns from each data frame are
-#' included in the final result. It removes any columns that already exist in
+#' To be used on a list of data frames representing various NBA seasons.
+#' Consolidates the data frames by performing joins using `full_join`,
+#' ensuring that only unique columns from each data frame are included
+#' in the final result. It removes any columns that already exist in
 #' the preceding data frames.
 #'
-#' @param data A named list where each element represents a season. Each season
-#'   contains a list of data frames for various statistical categories.
-#' @return A named list of consolidated data frames, one for each season.
-#' Seasons with no valid data or common join columns are excluded.
-#' @export
+#' @param data A list of data frames. Each data frame corresponds to a season
+#' and contains various statistical categories.
+#' @return A consolidated data frame containing all the input data,
+#' or NULL if no valid join columns are found.
 consolidate_stats <- function(data) {
-  # Check if input is a list
-  if (!is.list(data)) {
-    stop("Input must be a list of seasons, where each season contains a
-         data frame.")
+  # Check if input is a list of data frames
+  if (!all(map_lgl(data, ~ is.data.frame(.)))) {
+    stop("Input must be a list of data frames.")
+  }
+
+  # Potential join columns
+  potential_join_columns <- c("game_id", "team_id", "player_id")
+
+  # Find actual join columns present in all data frames
+  actual_join_columns <- potential_join_columns[
+    potential_join_columns %in%
+      Reduce(intersect, lapply(data, names))
+  ]
+
+  # If no join columns found, return NULL
+  if (length(actual_join_columns) == 0) {
+    return(NULL)
+  }
+
+  # Use the existing join_data_frames() function
+  consolidated_data <- join_data_frames(data, actual_join_columns)
+
+  return(consolidated_data)
+}
+
+#' Add Schedule Details
+#'
+#' This function calculates schedule details (such as back-to-back games,
+#' rest days, etc.) for NBA data.
+#'
+#' @param data A data frame containing NBA stats for teams (must include columns
+#' such as `season_year`, `team_id`, `game_date`, etc.).
+#' @return A data frame containing the details for the corresponding season.
+add_schedule_details <- function(data) {
+  # Determine grouping columns
+  group_by_columns <- if ("player_id" %in% names(data)) {
+    c("season_year", "player_id")
+  } else {
+    c("season_year", "team_id")
   }
 
   data %>%
-    # Use map to process each season
-    map(function(season_data) {
-      # Identify column types that have data
-      column_types <- names(season_data)
-
-      # Filter and extract non-null data frames
-      data_frames <- keep(
-        lapply(column_types, function(type) season_data[[type]]),
-        ~ !is.null(.)
-      )
-
-      # If no data frames, return NULL
-      if (length(data_frames) == 0) {
-        return(NULL)
-      }
-
-      # Potential join columns
-      potential_join_columns <- c("game_id", "team_id", "player_id")
-
-      # Find actual join columns present in all data frames
-      actual_join_columns <- potential_join_columns[
-        potential_join_columns %in%
-          Reduce(intersect, lapply(data_frames, names))
-      ]
-
-      # If no join columns found, return NULL
-      if (length(actual_join_columns) == 0) {
-        return(NULL)
-      }
-
-      # Reduce data frames using full_join
-      join_data_frames(data_frames, actual_join_columns)
-    }) %>%
-    # Remove NULL entries and name list elements
-    discard(is.null)
-}
-
-#' Add Schedule Details Across Seasons
-#'
-#' To be used only after `consolidate_stats()`.
-#' This function calculates schedule details (such as back-to-back games,
-#' rest days, etc.) for each team across multiple NBA seasons.
-#' @param data A list where each element is a season's data frame containing NBA
-#' stats for teams (must include columns such as
-#' `season_year`, `team_id`, `game_date`, etc.).
-#' @return A list of data frames, each containing the calculated stats for a
-#' specific season.
-#' @export
-add_schedule_details <- function(data) {
-  # Check if input is a list
-  if (!is.list(data)) {
-    stop("Input must be a list of seasons, where each season contains a
-         data frame.")
-  }
-
-  # Calculate stats for each season
-  calc_metrics <- map(data, function(season_data) {
-    # Check if input is a data frame
-    if (!is.data.frame(season_data)) {
-      stop("Please run consolidate_stats() before adding schedule details.")
-    }
-
-    # Determine grouping columns
-    group_by_columns <- if ("player_id" %in% names(season_data)) {
-      c("season_year", "player_id")
-    } else {
-      c("season_year", "team_id")
-    }
-
-    season_data %>%
-      arrange(game_date) %>%
-      group_by(across(all_of(group_by_columns))) %>%
-      mutate(
-        game_count = calc_game_count(),
-        days_rest = calc_days_rest(game_count, game_date),
-        days_next_game = calc_days_next_game(game_count, game_date),
-        is_b2b = calc_is_b2b(days_next_game, days_rest),
-        is_b2b_first = calc_is_b2b_first(days_next_game),
-        is_b2b_second = calc_is_b2b_second(days_rest)
-      ) %>%
-      ungroup() %>%
-      mutate(across(where(is.logical), ~ replace_na(., FALSE))) %>%
-      add_game_details() %>%
-      select(season_year:matchup, location, wl:ncol(.))
-  })
-
-  # Return the calculated stats
-  return(calc_metrics)
+    arrange(game_date) %>%
+    group_by(across(all_of(group_by_columns))) %>%
+    mutate(
+      game_count = calc_game_count(),
+      days_rest = calc_days_rest(game_count, game_date),
+      days_next_game = calc_days_next_game(game_count, game_date),
+      is_b2b = calc_is_b2b(days_next_game, days_rest),
+      is_b2b_first = calc_is_b2b_first(days_next_game),
+      is_b2b_second = calc_is_b2b_second(days_rest)
+    ) %>%
+    ungroup() %>%
+    mutate(across(where(is.logical), ~ replace_na(., FALSE))) %>%
+    add_game_details() %>%
+    select(season_year:matchup, location, wl:ncol(.))
 }
 
 #' Clean NBA Stats Data
@@ -329,4 +289,35 @@ get_player_headshot <- function(player_id) {
 #' @return A character vector containing the logo URLs.
 get_team_logo <- function(team_id) {
   glue::glue("https://cdn.nba.com/logos/nba/{team_id}/primary/L/logo.svg")
+}
+
+#' Convert Time String to Seconds
+#'
+#' Converts a time string (in MM:SS format) into seconds.
+#'
+#' @param time_str A string in "MM:SS" format.
+#' @return A numeric value representing the time in seconds.
+convert_to_seconds <- function(time_str) {
+  time_parts <- do.call(rbind, strsplit(time_str, ":"))
+  minutes <- as.numeric(time_parts[, 1])
+  seconds <- as.numeric(time_parts[, 2])
+  return((minutes * 60) + seconds)
+}
+
+#' Calculate Seconds Passed in Game
+#'
+#' Calculates the total seconds passed in the game based on time and period.
+#'
+#' @param time_str A string representing the time in the current period.
+#' @param period An integer representing the period.
+#' @return A numeric value representing the total seconds passed in the game.
+seconds_passed <- function(time_str, period) {
+  period_seconds <- 720
+  time_remaining <- convert_to_seconds(time_str)
+  secs_passed_current_period <- ifelse(period %in% 1:4,
+    period_seconds - time_remaining,
+    300 - time_remaining
+  )
+  seconds_in_previous_periods <- (as.numeric(period) - 1) * period_seconds
+  return(seconds_in_previous_periods + secs_passed_current_period)
 }

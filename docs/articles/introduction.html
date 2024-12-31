@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FastBreakR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,39 +64,44 @@
 
     
     
-<p>Welcome to the FastBreakR package! FastBreakR is a fast, efficient,
-and clean way to fetch data from the NBA API. Designed for analysts,
-modelers, and basketball enthusiasts, FastBreakR simplifies the process
-of acquiring, consolidating, and analyzing NBA statistics. While the
-package is already functional with its core set of tools, it remains
-under development, and new features are continually being added.</p>
-<p>This vignette introduces some the primary functions of FastBreakR,
-demonstrating their capabilities and providing examples to help you get
-started.</p>
+<p>Welcome to the FastBreakR package! Designed for simplicity, speed,
+and consistency, FastBreakR makes it easy to fetch and analyze NBA data.
+With a robust set of core tools, the package is fully functional and
+continually evolving, with new features regularly added to enhance its
+capabilities.</p>
 <div class="section level2">
-<h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
+<h2 id="core-features">Core Features<a class="anchor" aria-label="anchor" href="#core-features"></a>
 </h2>
 <ul>
 <li>
-<strong>Easy-to-use functions</strong> for fetching and processing
-various types of NBA data, including game scores, team statistics, shot
-data and play by play data.</li>
+<strong>Speed and Efficiency</strong>: Optimized to process large
+data requests rapidly, FastBreakR includes built-in mechanisms like
+rate-limiting pauses to ensure smooth operation while adhering to NBA
+API constraints.</li>
 <li>
-<strong>Modular design</strong> that seamlessly integrates NBA data
-into your analysis pipeline.</li>
+<strong>Data Consolidation</strong>: Seamlessly merges multiple
+statistical categories into a single, unified dataset while
+automatically eliminating duplicate columns, ensuring a cleaner and more
+organized output for analysis.</li>
 <li>
-<strong>Integration with <code>tidyverse</code></strong>, enabling
-effortless manipulation, analysis, and visualization of NBA data.</li>
+<strong>Consistent and Tidy Naming</strong>: Column names are
+cleaned and standardized while staying consistent with NBA naming
+conventions.</li>
+<li>
+<strong>User-Friendly Design</strong>: Functions are intuitive,
+making it easy to fetch and manipulate data.</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="fastbreakr-built-for-efficiency-and-flexibility">FastBreakR: Built for Efficiency and Flexibility<a class="anchor" aria-label="anchor" href="#fastbreakr-built-for-efficiency-and-flexibility"></a>
+<h2 id="fastbreakr-in-action">FastBreakR in Action<a class="anchor" aria-label="anchor" href="#fastbreakr-in-action"></a>
 </h2>
-<p>FastBreakR is designed to be both efficient and flexible. It’s
-user-friendly for beginners while offering advanced capabilities for
-experienced users who want to dive deeper into NBA statistics. Whether
-you’re building a sports analytics app, conducting research, or simply
-exploring basketball data, FastBreakR is your go-to solution.</p>
+<p>FastBreakR provides tools to fetch everything from play-by-play data
+to advanced player stats. Its modular design ensures it can fit into any
+analysis pipeline, whether you’re building predictive models, exploring
+shot tendencies, or analyzing team lineups.</p>
+<p>This vignette introduces some the primary functions of FastBreakR,
+demonstrating their capabilities and providing examples to help you get
+started.</p>
 </div>
 <div class="section level2">
 <h2 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
@@ -114,7 +119,8 @@ GitHub:</p>
 <div class="section level2">
 <h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
-<p>To get started with FastBreakR, simply load the package:</p>
+<p>To get started with FastBreakR, simply load the package along with
+<code>dplyr</code> to streamline your data analysis workflow:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the FastBreakR package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jaykay-15.github.io/FastBreakR">FastBreakR</a></span><span class="op">)</span></span></code></pre></div>
@@ -126,10 +132,10 @@ GitHub:</p>
 <div class="section level2">
 <h2 id="fetching-team-stats">Fetching Team Stats<a class="anchor" aria-label="anchor" href="#fetching-team-stats"></a>
 </h2>
-<p>The <strong><code><a href="../reference/nba_team_stats.html">nba_team_stats()</a></code></strong> function retrieves
-NBA team statistics for the seasons you specify. The output is a list,
-where each element corresponds to a season and contains five data frames
-with various stat types, including:</p>
+<p>The <strong><code><a href="../reference/nba_team_stats.html">nba_team_stats()</a></code></strong> function fetches
+NBA team statistics for specified seasons. By default, it retrieves data
+for all the following measure types, while automatically removing
+duplicate columns from the merged categories:</p>
 <ul>
 <li>Traditional Stats</li>
 <li>Advanced Stats</li>
@@ -137,224 +143,201 @@ with various stat types, including:</p>
 <li>Miscellaneous Stats</li>
 <li>Scoring Stats</li>
 </ul>
+<p>If you only need one or a few specific stat categories, simply use
+the <code>measure_type</code> argument within the
+<strong><code><a href="../reference/nba_team_stats.html">nba_team_stats()</a></code></strong> function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fetch team stats for the 2022-2023 &amp; 2023-2024 regular season</span></span>
 <span><span class="va">team_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nba_team_stats.html">nba_team_stats</a></span><span class="op">(</span><span class="fl">2023</span><span class="op">:</span><span class="fl">2024</span>, season_type <span class="op">=</span> <span class="st">"Regular Season"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Processing season 2023 (1/2)</span></span></code></pre>
-<pre><code><span><span class="co">## Pausing for 5 seconds before processing the next season...</span></span></code></pre>
-<pre><code><span><span class="co">## Processing season 2024 (2/2)</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching season 2023 (1/2)</span></span></code></pre>
+<pre><code><span><span class="co">## Pausing for 5 seconds before fetching the next season...</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching season 2024 (2/2)</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Display a glimpse of the advanced stats for the 2024 season</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">team_stats</span><span class="op">$</span><span class="va">season_2024</span><span class="op">$</span><span class="va">Advanced</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Rows: 2,460</span></span>
-<span><span class="co">## Columns: 25</span></span>
-<span><span class="co">## $ season_year       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2023-24", "2023-24", "2023-24", "2023-24", "2023-24…</span></span>
-<span><span class="co">## $ team_id           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1610612747", "1610612743", "1610612744", "161061275…</span></span>
-<span><span class="co">## $ team_abbreviation <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "LAL", "DEN", "GSW", "PHX", "ATL", "CHA", "WAS", "IN…</span></span>
-<span><span class="co">## $ team_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Los Angeles Lakers", "Denver Nuggets", "Golden Stat…</span></span>
-<span><span class="co">## $ game_id           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0022300061", "0022300061", "0022300062", "002230006…</span></span>
-<span><span class="co">## $ game_date         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2023-10-24, 2023-10-24, 2023-10-24, 2023-10-24, 202…</span></span>
-<span><span class="co">## $ matchup           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "LAL @ DEN", "DEN vs. LAL", "GSW vs. PHX", "PHX @ GS…</span></span>
-<span><span class="co">## $ wl                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "L", "W", "L", "W", "L", "W", "L", "W", "L", "W", "W…</span></span>
-<span><span class="co">## $ min               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, …</span></span>
-<span><span class="co">## $ off_rating        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 111.5, 125.3, 102.0, 106.9, 105.8, 111.5, 109.1, 128…</span></span>
-<span><span class="co">## $ def_rating        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 125.3, 111.5, 106.9, 102.0, 111.5, 105.8, 128.8, 109…</span></span>
-<span><span class="co">## $ net_rating        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -13.8, 13.8, -5.0, 5.0, -5.8, 5.8, -19.7, 19.7, -5.3…</span></span>
-<span><span class="co">## $ ast_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.561, 0.604, 0.528, 0.548, 0.615, 0.791, 0.636, 0.6…</span></span>
-<span><span class="co">## $ ast_to            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.92, 2.42, 1.73, 1.21, 2.00, 1.79, 2.00, 3.17, 2.18…</span></span>
-<span><span class="co">## $ ast_ratio         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16.8, 21.2, 13.1, 15.9, 16.7, 22.4, 18.5, 23.0, 16.6…</span></span>
-<span><span class="co">## $ oreb_pct          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.346, 0.289, 0.358, 0.396, 0.276, 0.326, 0.232, 0.3…</span></span>
-<span><span class="co">## $ dreb_pct          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.711, 0.654, 0.604, 0.642, 0.674, 0.724, 0.686, 0.7…</span></span>
-<span><span class="co">## $ reb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.515, 0.485, 0.467, 0.533, 0.452, 0.548, 0.449, 0.5…</span></span>
-<span><span class="co">## $ tm_tov_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.125, 0.126, 0.108, 0.188, 0.115, 0.183, 0.127, 0.1…</span></span>
-<span><span class="co">## $ efg_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.511, 0.604, 0.406, 0.500, 0.446, 0.564, 0.505, 0.6…</span></span>
-<span><span class="co">## $ ts_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.541, 0.618, 0.459, 0.527, 0.512, 0.595, 0.552, 0.6…</span></span>
-<span><span class="co">## $ pace              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 95.5, 95.5, 101.5, 101.5, 104.0, 104.0, 110.5, 110.5…</span></span>
-<span><span class="co">## $ pace_per40        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 79.58, 79.58, 84.58, 84.58, 86.67, 86.67, 92.08, 92.…</span></span>
-<span><span class="co">## $ poss              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 96, 95, 102, 101, 104, 104, 110, 111, 97, 96, 96, 95…</span></span>
-<span><span class="co">## $ pie               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.421, 0.579, 0.436, 0.564, 0.451, 0.549, 0.428, 0.5…</span></span></code></pre>
-<p>Once you have the data, you can analyze it as is or consolidate it
-using additional package functions.</p>
-</div>
-<div class="section level2">
-<h2 id="additional-functions-for-cleaning-and-processing-data">Additional Functions for Cleaning and Processing Data<a class="anchor" aria-label="anchor" href="#additional-functions-for-cleaning-and-processing-data"></a>
-</h2>
-<p>Once you’ve fetched the data, you might want to clean and process it
-further to meet your analysis requirements. MambaNBA provides functions
-such as <strong><code><a href="../reference/consolidate_stats.html">consolidate_stats()</a></code></strong> and
-<strong><code><a href="../reference/add_schedule_details.html">add_schedule_details()</a></code></strong> to help you with
-these tasks.</p>
-<p>For example, you can consolidate team stats and calculate additional
-metrics based on the schedule:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Process team stats using the data from scrape_nba_team_stats()</span></span>
-<span><span class="va">team_stats_processed</span> <span class="op">&lt;-</span> <span class="va">team_stats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/consolidate_stats.html">consolidate_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Consolidates stats into one data frame</span></span>
-<span>  <span class="fu"><a href="../reference/add_schedule_details.html">add_schedule_details</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Calculates additional schedule metrics</span></span>
-<span></span>
-<span><span class="co"># Display a glimpse of the processed data</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">team_stats_processed</span><span class="op">$</span><span class="va">season_2024</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Rows: 2,460</span></span>
+<code class="sourceCode R"><span><span class="co"># Display a glimpse of the team stats data</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">team_stats</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Rows: 4,920</span></span>
 <span><span class="co">## Columns: 81</span></span>
-<span><span class="co">## $ season_year        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 202…</span></span>
-<span><span class="co">## $ team_id            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1610612747", "1610612743", "1610612744", "16106127…</span></span>
-<span><span class="co">## $ team_abbreviation  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "LAL", "DEN", "GSW", "PHX", "ATL", "CHA", "WAS", "I…</span></span>
-<span><span class="co">## $ team_name          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Los Angeles Lakers", "Denver Nuggets", "Golden Sta…</span></span>
-<span><span class="co">## $ game_id            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0022300061", "0022300061", "0022300062", "00223000…</span></span>
-<span><span class="co">## $ game_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2023-10-24, 2023-10-24, 2023-10-24, 2023-10-24, 20…</span></span>
-<span><span class="co">## $ matchup            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "LAL @ DEN", "DEN vs. LAL", "GSW vs. PHX", "PHX @ G…</span></span>
-<span><span class="co">## $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "away", "home", "home", "away", "away", "home", "aw…</span></span>
-<span><span class="co">## $ wl                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "L", "W", "L", "W", "L", "W", "L", "W", "L", "W", "…</span></span>
+<span><span class="co">## $ season_year        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 202…</span></span>
+<span><span class="co">## $ team_id            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1610612755", "1610612738", "1610612744", "16106127…</span></span>
+<span><span class="co">## $ team_abbreviation  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "PHI", "BOS", "GSW", "LAL", "ORL", "DET", "IND", "W…</span></span>
+<span><span class="co">## $ team_name          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Philadelphia 76ers", "Boston Celtics", "Golden Sta…</span></span>
+<span><span class="co">## $ game_id            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0022200001", "0022200001", "0022200002", "00222000…</span></span>
+<span><span class="co">## $ game_date          <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-10-18, 2022-10-18, 2022-10-18, 2022-10-18, 20…</span></span>
+<span><span class="co">## $ matchup            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "PHI @ BOS", "BOS vs. PHI", "GSW vs. LAL", "LAL @ G…</span></span>
+<span><span class="co">## $ location           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "away", "home", "home", "away", "away", "home", "ho…</span></span>
+<span><span class="co">## $ wl                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "L", "W", "W", "L", "L", "W", "L", "W", "L", "W", "…</span></span>
 <span><span class="co">## $ min                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,…</span></span>
-<span><span class="co">## $ fgm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 41, 48, 36, 42, 39, 43, 44, 56, 36, 37, 42, 32, 42,…</span></span>
-<span><span class="co">## $ fga                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 90, 91, 101, 95, 93, 86, 96, 107, 97, 77, 87, 79, 8…</span></span>
-<span><span class="co">## $ fg_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.456, 0.527, 0.356, 0.442, 0.419, 0.500, 0.458, 0.…</span></span>
-<span><span class="co">## $ fg3m               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 10, 14, 10, 11, 5, 11, 9, 20, 18, 12, 9, 12, 9, 17,…</span></span>
-<span><span class="co">## $ fg3a               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 29, 34, 43, 33, 29, 37, 24, 43, 41, 39, 34, 34, 27,…</span></span>
-<span><span class="co">## $ fg3_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.345, 0.412, 0.233, 0.333, 0.172, 0.297, 0.375, 0.…</span></span>
-<span><span class="co">## $ ftm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 15, 9, 22, 13, 27, 19, 23, 11, 14, 22, 23, 10, 20, …</span></span>
-<span><span class="co">## $ fta                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 20, 12, 28, 17, 33, 26, 29, 12, 26, 26, 26, 16, 26,…</span></span>
-<span><span class="co">## $ ft_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.750, 0.750, 0.786, 0.765, 0.818, 0.731, 0.793, 0.…</span></span>
-<span><span class="co">## $ oreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13, 9, 18, 17, 12, 12, 11, 10, 17, 7, 17, 7, 13, 9,…</span></span>
-<span><span class="co">## $ dreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 31, 33, 31, 43, 30, 39, 34, 41, 30, 39, 40, 24, 37,…</span></span>
-<span><span class="co">## $ reb                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 44, 42, 49, 60, 42, 51, 45, 51, 47, 46, 57, 31, 50,…</span></span>
-<span><span class="co">## $ ast                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 23, 29, 19, 23, 24, 34, 28, 38, 24, 18, 19, 19, 30,…</span></span>
-<span><span class="co">## $ tov                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 12, 12, 11, 19, 12, 19, 14, 12, 11, 13, 16, 19, 18,…</span></span>
-<span><span class="co">## $ stl                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5, 9, 11, 5, 12, 5, 6, 10, 9, 6, 8, 6, 6, 10, 11, 3…</span></span>
-<span><span class="co">## $ blk                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 6, 6, 7, 1, 3, 9, 8, 0, 11, 6, 3, 6, 6, 3, 13, 9…</span></span>
-<span><span class="co">## $ blka               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6, 4, 7, 6, 3, 1, 8, 9, 11, 0, 3, 6, 6, 6, 13, 3, 1…</span></span>
-<span><span class="co">## $ pf                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 18, 15, 23, 22, 19, 21, 11, 23, 22, 22, 20, 24, 16,…</span></span>
-<span><span class="co">## $ pfd                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 15, 18, 22, 23, 21, 19, 23, 11, 22, 22, 24, 20, 23,…</span></span>
-<span><span class="co">## $ pts                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 107, 119, 104, 108, 110, 116, 120, 143, 104, 108, 1…</span></span>
-<span><span class="co">## $ plus_minus         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -12, 12, -4, 4, -6, 6, -23, 23, -4, 4, 30, -30, -1,…</span></span>
-<span><span class="co">## $ off_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 111.5, 125.3, 102.0, 106.9, 105.8, 111.5, 109.1, 12…</span></span>
-<span><span class="co">## $ def_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 125.3, 111.5, 106.9, 102.0, 111.5, 105.8, 128.8, 10…</span></span>
-<span><span class="co">## $ net_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -13.8, 13.8, -5.0, 5.0, -5.8, 5.8, -19.7, 19.7, -5.…</span></span>
-<span><span class="co">## $ ast_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.561, 0.604, 0.528, 0.548, 0.615, 0.791, 0.636, 0.…</span></span>
-<span><span class="co">## $ ast_to             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.92, 2.42, 1.73, 1.21, 2.00, 1.79, 2.00, 3.17, 2.1…</span></span>
-<span><span class="co">## $ ast_ratio          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16.8, 21.2, 13.1, 15.9, 16.7, 22.4, 18.5, 23.0, 16.…</span></span>
-<span><span class="co">## $ oreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.346, 0.289, 0.358, 0.396, 0.276, 0.326, 0.232, 0.…</span></span>
-<span><span class="co">## $ dreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.711, 0.654, 0.604, 0.642, 0.674, 0.724, 0.686, 0.…</span></span>
-<span><span class="co">## $ reb_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.515, 0.485, 0.467, 0.533, 0.452, 0.548, 0.449, 0.…</span></span>
-<span><span class="co">## $ tm_tov_pct         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.125, 0.126, 0.108, 0.188, 0.115, 0.183, 0.127, 0.…</span></span>
-<span><span class="co">## $ efg_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.511, 0.604, 0.406, 0.500, 0.446, 0.564, 0.505, 0.…</span></span>
-<span><span class="co">## $ ts_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.541, 0.618, 0.459, 0.527, 0.512, 0.595, 0.552, 0.…</span></span>
-<span><span class="co">## $ pace               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 95.5, 95.5, 101.5, 101.5, 104.0, 104.0, 110.5, 110.…</span></span>
-<span><span class="co">## $ pace_per40         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 79.58, 79.58, 84.58, 84.58, 86.67, 86.67, 92.08, 92…</span></span>
-<span><span class="co">## $ poss               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 96, 95, 102, 101, 104, 104, 110, 111, 97, 96, 96, 9…</span></span>
-<span><span class="co">## $ pie                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.421, 0.579, 0.436, 0.564, 0.451, 0.549, 0.428, 0.…</span></span>
-<span><span class="co">## $ fta_rate           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.222, 0.132, 0.277, 0.179, 0.355, 0.302, 0.302, 0.…</span></span>
-<span><span class="co">## $ opp_efg_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.604, 0.511, 0.500, 0.406, 0.564, 0.446, 0.617, 0.…</span></span>
-<span><span class="co">## $ opp_fta_rate       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.132, 0.222, 0.179, 0.277, 0.302, 0.355, 0.112, 0.…</span></span>
-<span><span class="co">## $ opp_tov_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.126, 0.125, 0.188, 0.108, 0.183, 0.115, 0.108, 0.…</span></span>
-<span><span class="co">## $ opp_oreb_pct       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.289, 0.346, 0.396, 0.358, 0.326, 0.276, 0.314, 0.…</span></span>
-<span><span class="co">## $ pts_off_tov        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 18, 20, 22, 9, 17, 12, 14, 22, 11, 14, 23, 14, 16, …</span></span>
-<span><span class="co">## $ pts_2nd_chance     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 17, 20, 27, 14, 14, 12, 11, 20, 4, 19, 10, 10, 1…</span></span>
-<span><span class="co">## $ pts_fb             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 20, 20, 11, 13, 19, 17, 22, 32, 7, 18, 5, 11, 24, 2…</span></span>
-<span><span class="co">## $ pts_paint          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 58, 52, 44, 48, 58, 56, 68, 60, 24, 42, 54, 32, 56,…</span></span>
-<span><span class="co">## $ opp_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 20, 18, 9, 22, 12, 17, 22, 14, 14, 11, 14, 23, 26, …</span></span>
-<span><span class="co">## $ opp_pts_2nd_chance <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 17, 4, 27, 20, 14, 14, 11, 12, 4, 20, 10, 19, 13, 1…</span></span>
-<span><span class="co">## $ opp_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 20, 20, 13, 11, 17, 19, 32, 22, 18, 7, 11, 5, 21, 2…</span></span>
-<span><span class="co">## $ opp_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 52, 58, 48, 44, 56, 58, 60, 68, 42, 24, 32, 54, 50,…</span></span>
-<span><span class="co">## $ pct_fga_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.678, 0.626, 0.574, 0.653, 0.688, 0.570, 0.750, 0.…</span></span>
-<span><span class="co">## $ pct_fga_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.322, 0.374, 0.426, 0.347, 0.312, 0.430, 0.250, 0.…</span></span>
-<span><span class="co">## $ pct_pts_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.579, 0.571, 0.500, 0.574, 0.618, 0.552, 0.583, 0.…</span></span>
-<span><span class="co">## $ pct_pts_2pt_mr     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.037, 0.134, 0.077, 0.130, 0.091, 0.069, 0.017, 0.…</span></span>
-<span><span class="co">## $ pct_pts_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.280, 0.353, 0.288, 0.306, 0.136, 0.284, 0.225, 0.…</span></span>
-<span><span class="co">## $ pct_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.187, 0.168, 0.106, 0.120, 0.173, 0.147, 0.183, 0.…</span></span>
-<span><span class="co">## $ pct_pts_ft         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.140, 0.076, 0.212, 0.120, 0.245, 0.164, 0.192, 0.…</span></span>
-<span><span class="co">## $ pct_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.168, 0.168, 0.212, 0.083, 0.155, 0.103, 0.117, 0.…</span></span>
-<span><span class="co">## $ pct_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.542, 0.437, 0.423, 0.444, 0.527, 0.483, 0.567, 0.…</span></span>
-<span><span class="co">## $ pct_ast_2pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.419, 0.559, 0.462, 0.387, 0.559, 0.719, 0.571, 0.…</span></span>
-<span><span class="co">## $ pct_uast_2pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.581, 0.441, 0.538, 0.613, 0.441, 0.281, 0.429, 0.…</span></span>
-<span><span class="co">## $ pct_ast_3pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.000, 0.714, 0.700, 1.000, 1.000, 1.000, 0.889, 0.…</span></span>
-<span><span class="co">## $ pct_uast_3pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.000, 0.286, 0.300, 0.000, 0.000, 0.000, 0.111, 0.…</span></span>
-<span><span class="co">## $ pct_ast_fgm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.561, 0.604, 0.528, 0.548, 0.615, 0.791, 0.636, 0.…</span></span>
-<span><span class="co">## $ pct_uast_fgm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.439, 0.396, 0.472, 0.452, 0.385, 0.209, 0.364, 0.…</span></span>
+<span><span class="co">## $ fgm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 40, 46, 45, 40, 42, 40, 39, 42, 42, 45, 40, 50, 41,…</span></span>
+<span><span class="co">## $ fga                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 80, 82, 99, 94, 86, 94, 97, 92, 98, 90, 89, 102, 93…</span></span>
+<span><span class="co">## $ fg_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.500, 0.561, 0.455, 0.426, 0.488, 0.426, 0.402, 0.…</span></span>
+<span><span class="co">## $ fg3m               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13, 12, 16, 10, 11, 14, 15, 11, 9, 7, 10, 12, 13, 1…</span></span>
+<span><span class="co">## $ fg3a               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 34, 35, 45, 40, 30, 38, 42, 31, 35, 25, 33, 26, 36,…</span></span>
+<span><span class="co">## $ fg3_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.382, 0.343, 0.356, 0.250, 0.367, 0.368, 0.357, 0.…</span></span>
+<span><span class="co">## $ ftm                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 22, 17, 19, 14, 19, 14, 19, 14, 20, 18, 18, 21,…</span></span>
+<span><span class="co">## $ fta                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 28, 28, 23, 25, 19, 24, 21, 24, 15, 24, 24, 25, 28,…</span></span>
+<span><span class="co">## $ ft_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.857, 0.786, 0.739, 0.760, 0.737, 0.792, 0.667, 0.…</span></span>
+<span><span class="co">## $ oreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 6, 11, 9, 10, 12, 12, 14, 15, 4, 9, 21, 12, 8, 1…</span></span>
+<span><span class="co">## $ dreb               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 27, 30, 37, 39, 38, 29, 30, 39, 39, 34, 30, 40, 34,…</span></span>
+<span><span class="co">## $ reb                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 31, 36, 48, 48, 48, 41, 42, 53, 54, 38, 39, 61, 46,…</span></span>
+<span><span class="co">## $ ast                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16, 24, 31, 23, 21, 31, 21, 21, 25, 30, 22, 31, 23,…</span></span>
+<span><span class="co">## $ tov                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 14, 11, 18, 22, 18, 13, 15, 17, 16, 9, 16, 13, 15, …</span></span>
+<span><span class="co">## $ stl                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8, 8, 11, 12, 5, 11, 7, 5, 4, 12, 10, 9, 12, 6, 15,…</span></span>
+<span><span class="co">## $ blk                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 4, 4, 5, 4, 5, 10, 3, 5, 10, 4, 6, 2, 4, 5, 5…</span></span>
+<span><span class="co">## $ blka               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 3, 4, 4, 4, 5, 10, 5, 5, 3, 4, 10, 2, 6, 5, 4, 7…</span></span>
+<span><span class="co">## $ pf                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25, 24, 23, 18, 24, 21, 20, 19, 20, 18, 25, 21, 26,…</span></span>
+<span><span class="co">## $ pfd                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 25, 18, 23, 21, 24, 19, 20, 18, 20, 21, 25, 24,…</span></span>
+<span><span class="co">## $ pts                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 117, 126, 123, 109, 109, 113, 107, 114, 107, 117, 1…</span></span>
+<span><span class="co">## $ plus_minus         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -9, 9, 14, -14, -4, 4, -7, 7, -10, 10, -22, 22, 8, …</span></span>
+<span><span class="co">## $ off_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 119.4, 129.9, 107.0, 97.3, 106.9, 111.9, 102.9, 108…</span></span>
+<span><span class="co">## $ def_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 129.9, 119.4, 97.3, 107.0, 111.9, 106.9, 108.6, 102…</span></span>
+<span><span class="co">## $ net_rating         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -10.5, 10.5, 9.6, -9.6, -5.0, 5.0, -5.7, 5.7, -9.4,…</span></span>
+<span><span class="co">## $ ast_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.400, 0.522, 0.689, 0.575, 0.500, 0.775, 0.538, 0.…</span></span>
+<span><span class="co">## $ ast_to             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.14, 2.18, 1.72, 1.05, 1.17, 2.38, 1.40, 1.24, 1.5…</span></span>
+<span><span class="co">## $ ast_ratio          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13.1, 18.5, 19.1, 15.4, 15.4, 20.8, 14.7, 14.7, 17.…</span></span>
+<span><span class="co">## $ oreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.190, 0.256, 0.281, 0.246, 0.277, 0.293, 0.290, 0.…</span></span>
+<span><span class="co">## $ dreb_pct           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.744, 0.810, 0.754, 0.719, 0.707, 0.723, 0.647, 0.…</span></span>
+<span><span class="co">## $ reb_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.457, 0.543, 0.518, 0.482, 0.514, 0.486, 0.451, 0.…</span></span>
+<span><span class="co">## $ tm_tov_pct         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.143, 0.113, 0.157, 0.196, 0.176, 0.129, 0.144, 0.…</span></span>
+<span><span class="co">## $ efg_pct            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.581, 0.634, 0.535, 0.479, 0.552, 0.500, 0.479, 0.…</span></span>
+<span><span class="co">## $ ts_pct             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.634, 0.668, 0.564, 0.519, 0.578, 0.540, 0.504, 0.…</span></span>
+<span><span class="co">## $ pace               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 97.50, 97.50, 113.50, 113.50, 101.50, 101.50, 104.5…</span></span>
+<span><span class="co">## $ pace_per40         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 81.25, 81.25, 94.58, 94.58, 84.58, 84.58, 87.08, 87…</span></span>
+<span><span class="co">## $ poss               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 98, 97, 115, 112, 102, 101, 104, 105, 106, 106, 102…</span></span>
+<span><span class="co">## $ pie                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.434, 0.566, 0.548, 0.452, 0.475, 0.525, 0.424, 0.…</span></span>
+<span><span class="co">## $ fta_rate           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.350, 0.341, 0.232, 0.266, 0.221, 0.255, 0.216, 0.…</span></span>
+<span><span class="co">## $ opp_efg_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.634, 0.581, 0.479, 0.535, 0.500, 0.552, 0.516, 0.…</span></span>
+<span><span class="co">## $ opp_fta_rate       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.341, 0.350, 0.266, 0.232, 0.255, 0.221, 0.261, 0.…</span></span>
+<span><span class="co">## $ opp_tov_pct        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.113, 0.143, 0.196, 0.157, 0.129, 0.176, 0.162, 0.…</span></span>
+<span><span class="co">## $ opp_oreb_pct       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.256, 0.190, 0.246, 0.281, 0.293, 0.277, 0.353, 0.…</span></span>
+<span><span class="co">## $ pts_off_tov        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 15, 22, 27, 17, 15, 24, 16, 10, 13, 28, 17, 26, 17,…</span></span>
+<span><span class="co">## $ pts_2nd_chance     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8, 4, 10, 4, 16, 16, 17, 14, 14, 8, 4, 36, 11, 15, …</span></span>
+<span><span class="co">## $ pts_fb             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2, 24, 17, 27, 23, 18, 21, 16, 10, 28, 18, 13, 8, 8…</span></span>
+<span><span class="co">## $ pts_paint          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 38, 44, 38, 60, 56, 46, 34, 58, 60, 56, 46, 62, 32,…</span></span>
+<span><span class="co">## $ opp_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 22, 15, 17, 27, 24, 15, 10, 16, 28, 13, 26, 17, 12,…</span></span>
+<span><span class="co">## $ opp_pts_2nd_chance <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 8, 4, 10, 16, 16, 14, 17, 8, 14, 36, 4, 15, 11, …</span></span>
+<span><span class="co">## $ opp_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24, 2, 27, 17, 18, 23, 16, 21, 28, 10, 13, 18, 8, 8…</span></span>
+<span><span class="co">## $ opp_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 44, 38, 60, 38, 46, 56, 58, 34, 56, 60, 62, 46, 48,…</span></span>
+<span><span class="co">## $ pct_fga_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.575, 0.573, 0.545, 0.574, 0.651, 0.596, 0.567, 0.…</span></span>
+<span><span class="co">## $ pct_fga_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.425, 0.427, 0.455, 0.426, 0.349, 0.404, 0.433, 0.…</span></span>
+<span><span class="co">## $ pct_pts_2pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.462, 0.540, 0.472, 0.550, 0.569, 0.460, 0.449, 0.…</span></span>
+<span><span class="co">## $ pct_pts_2pt_mr     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.137, 0.190, 0.163, 0.000, 0.055, 0.053, 0.131, 0.…</span></span>
+<span><span class="co">## $ pct_pts_3pt        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.333, 0.286, 0.390, 0.275, 0.303, 0.372, 0.421, 0.…</span></span>
+<span><span class="co">## $ pct_pts_fb         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.017, 0.190, 0.138, 0.248, 0.211, 0.159, 0.196, 0.…</span></span>
+<span><span class="co">## $ pct_pts_ft         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.205, 0.175, 0.138, 0.174, 0.128, 0.168, 0.131, 0.…</span></span>
+<span><span class="co">## $ pct_pts_off_tov    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.128, 0.175, 0.220, 0.156, 0.138, 0.212, 0.150, 0.…</span></span>
+<span><span class="co">## $ pct_pts_paint      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.325, 0.349, 0.309, 0.550, 0.514, 0.407, 0.318, 0.…</span></span>
+<span><span class="co">## $ pct_ast_2pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.333, 0.412, 0.655, 0.500, 0.452, 0.692, 0.458, 0.…</span></span>
+<span><span class="co">## $ pct_uast_2pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.667, 0.588, 0.345, 0.500, 0.548, 0.308, 0.542, 0.…</span></span>
+<span><span class="co">## $ pct_ast_3pm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.538, 0.833, 0.750, 0.800, 0.636, 0.929, 0.667, 0.…</span></span>
+<span><span class="co">## $ pct_uast_3pm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.462, 0.167, 0.250, 0.200, 0.364, 0.071, 0.333, 0.…</span></span>
+<span><span class="co">## $ pct_ast_fgm        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.400, 0.522, 0.689, 0.575, 0.500, 0.775, 0.538, 0.…</span></span>
+<span><span class="co">## $ pct_uast_fgm       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.600, 0.478, 0.311, 0.425, 0.500, 0.225, 0.462, 0.…</span></span>
 <span><span class="co">## $ game_count         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
 <span><span class="co">## $ days_rest          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 1…</span></span>
-<span><span class="co">## $ days_next_game     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, …</span></span>
+<span><span class="co">## $ days_next_game     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, …</span></span>
 <span><span class="co">## $ is_b2b             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span>
 <span><span class="co">## $ is_b2b_first       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span>
 <span><span class="co">## $ is_b2b_second      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span></code></pre>
-<p><strong><code><a href="../reference/consolidate_stats.html">consolidate_stats()</a></code></strong>: This function
-combines data from multiple statistical categories (e.g., basic,
-advanced, scoring) into a single data frame for easier analysis.</p>
-<p><strong><code><a href="../reference/add_schedule_details.html">add_schedule_details()</a></code></strong>: This function
-calculates metrics related to a team’s schedule, such as back-to-back
-games, rest days, and more.</p>
-<p>These functions are particularly useful for cleaning, transforming,
-and preparing the data for deeper insights or more advanced
-modeling.</p>
 </div>
 <div class="section level2">
 <h2 id="fetching-box-scores">Fetching Box Scores<a class="anchor" aria-label="anchor" href="#fetching-box-scores"></a>
 </h2>
-<p>The <strong><code><a href="../reference/nba_box_scores.html">nba_box_scores()</a></code></strong> function allows
-you to fetch detailed box score data for specified games and stat
-categories. The output is a data frame with all duplicate columns
-between stat categories removed.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Here, we're fetching play-by-play data for a subset of game IDs</span></span>
-<span><span class="va">games</span> <span class="op">&lt;-</span> <span class="va">team_stats_processed</span><span class="op">$</span><span class="va">season_2024</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<p>Now that we have a data frame with team-level stats, let’s dive
+deeper and retrieve box scores for the Christmas Day games in 2023.
+Using our <code>team_stats</code> data frame, we can filter and extract
+the game IDs we need.</p>
+<p>The <strong><code><a href="../reference/nba_box_scores.html">nba_box_scores()</a></code></strong> function fetches
+detailed box score data for specified games and stat categories. The
+resulting data frame is clean and consolidated, with duplicate columns
+across stat categories automatically removed for easier analysis.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Here, we're getting the game_ids we need</span></span>
+<span><span class="va">games</span> <span class="op">&lt;-</span> <span class="va">team_stats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">game_date</span> <span class="op">==</span> <span class="st">"2023-12-25"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">game_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Fetching Traditional and Miscellaneous box scores</span></span>
+<span><span class="co"># Fetching Traditional and Hustle box scores</span></span>
 <span><span class="va">box_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nba_box_scores.html">nba_box_scores</a></span><span class="op">(</span></span>
-<span>  measure_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Traditional"</span>, <span class="st">"Misc"</span><span class="op">)</span>,</span>
+<span>  measure_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Traditional"</span>, <span class="st">"Scoring"</span>, <span class="st">"Hustle"</span><span class="op">)</span>,</span>
 <span>  game_ids <span class="op">=</span> <span class="va">games</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Processing 5 games in 1 batches</span></span></code></pre>
-<pre><code><span><span class="co">## Processing batch 1/1: games</span></span>
+<pre><code><span><span class="co">## Fetching 5 games in 1 batches</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching batch 1/1: games</span></span>
 <span><span class="co">## 0022300401 to 0022300405</span></span></code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Display a glimpse of the processed data</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Display a glimpse of the box score data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">box_scores</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 140</span></span>
-<span><span class="co">## Columns: 41</span></span>
-<span><span class="co">## $ game_id                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0022300401", "0022300401", "0022300401", "0…</span></span>
-<span><span class="co">## $ location                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "away", "away", "away", "away", "away", "awa…</span></span>
-<span><span class="co">## $ team_id                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1610612749, 1610612749, 1610612749, 16106127…</span></span>
-<span><span class="co">## $ person_id                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 203507, 203114, 201572, 1627736, 203081, 162…</span></span>
-<span><span class="co">## $ first_name                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Giannis", "Khris", "Brook", "Malik", "Damia…</span></span>
-<span><span class="co">## $ family_name               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Antetokounmpo", "Middleton", "Lopez", "Beas…</span></span>
-<span><span class="co">## $ name_i                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "G. Antetokounmpo", "K. Middleton", "B. Lope…</span></span>
-<span><span class="co">## $ player_slug               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "giannis-antetokounmpo", "khris-middleton", …</span></span>
-<span><span class="co">## $ position                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F", "F", "C", "G", "G", "", "", "", "", "",…</span></span>
-<span><span class="co">## $ comment                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", "", "", "DNP…</span></span>
-<span><span class="co">## $ jersey_num                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", "", "", "", …</span></span>
-<span><span class="co">## $ minutes                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "38:39", "33:03", "26:44", "19:12", "37:50",…</span></span>
-<span><span class="co">## $ field_goals_made          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 13, 10, 5, 0, 10, 5, 1, 0, 0, 1, 0, 0, 0, 0,…</span></span>
-<span><span class="co">## $ field_goals_attempted     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 24, 20, 9, 2, 21, 11, 4, 2, 0, 2, 0, 0, 0, 0…</span></span>
-<span><span class="co">## $ field_goals_percentage    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.542, 0.500, 0.556, 0.000, 0.476, 0.455, 0.…</span></span>
-<span><span class="co">## $ three_pointers_made       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 4, 2, 0, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 2,…</span></span>
-<span><span class="co">## $ three_pointers_attempted  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 9, 6, 1, 13, 4, 4, 1, 0, 2, 0, 0, 0, 0, 5…</span></span>
-<span><span class="co">## $ three_pointers_percentage <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.500, 0.444, 0.333, 0.000, 0.308, 0.000, 0.…</span></span>
-<span><span class="co">## $ free_throws_made          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5, 0, 2, 0, 8, 2, 0, 2, 0, 0, 0, 0, 0, 0, 3,…</span></span>
-<span><span class="co">## $ free_throws_attempted     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 9, 0, 2, 0, 9, 2, 0, 2, 0, 0, 0, 0, 0, 0, 4,…</span></span>
-<span><span class="co">## $ free_throws_percentage    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.556, 0.000, 1.000, 0.000, 0.889, 1.000, 0.…</span></span>
-<span><span class="co">## $ rebounds_offensive        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5, 0, 2, 0, 0, 5, 4, 1, 0, 0, 0, 0, 0, 0, 1,…</span></span>
-<span><span class="co">## $ rebounds_defensive        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 8, 2, 4, 3, 1, 4, 3, 1, 1, 0, 0, 0, 0, 0, 5,…</span></span>
-<span><span class="co">## $ rebounds_total            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 13, 2, 6, 3, 1, 9, 7, 2, 1, 0, 0, 0, 0, 0, 6…</span></span>
-<span><span class="co">## $ assists                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 6, 6, 1, 2, 8, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1,…</span></span>
-<span><span class="co">## $ steals                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1,…</span></span>
-<span><span class="co">## $ blocks                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</span></span>
-<span><span class="co">## $ turnovers                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 2, 0, 0, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3,…</span></span>
-<span><span class="co">## $ fouls_personal            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4, 4, 2, 2, 2, 4, 3, 2, 0, 0, 0, 0, 0, 0, 3,…</span></span>
-<span><span class="co">## $ points                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 32, 24, 14, 0, 32, 12, 3, 2, 0, 3, 0, 0, 0, …</span></span>
-<span><span class="co">## $ plus_minus_points         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -5, 9, -6, -10, -6, -3, -13, -4, 4, -1, 0, 0…</span></span>
-<span><span class="co">## $ points_off_turnovers      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6,…</span></span>
-<span><span class="co">## $ points_second_chance      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5, 4, 0, 0, 6, 6, 0, 2, 0, 0, 0, 0, 0, 0, 7,…</span></span>
-<span><span class="co">## $ points_fast_break         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 5, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 6,…</span></span>
-<span><span class="co">## $ points_paint              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 22, 6, 6, 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 1…</span></span>
-<span><span class="co">## $ opp_points_off_turnovers  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 12, 8, 8, 6, 14, 8, 8, 6, 0, 0, 0, 0, 0, 0, …</span></span>
-<span><span class="co">## $ opp_points_second_chance  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 13, 13, 15, 13, 15, 2, 2, 2, 0, 0, 0, 0, 0, …</span></span>
-<span><span class="co">## $ opp_points_fast_break     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 17, 8, 12, 4, 19, 17, 19, 13, 2, 4, 0, 0, 0,…</span></span>
-<span><span class="co">## $ opp_points_paint          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 58, 38, 40, 24, 62, 46, 46, 32, 4, 10, 0, 0,…</span></span>
-<span><span class="co">## $ blocks_against            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,…</span></span>
-<span><span class="co">## $ fouls_drawn               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 6, 2, 1, 1, 5, 2, 0, 1, 0, 0, 0, 0, 0, 0, 3,…</span></span></code></pre>
+<span><span class="co">## Columns: 61</span></span>
+<span><span class="co">## $ game_id                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0022300401", "0022300401", "00223…</span></span>
+<span><span class="co">## $ location                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "away", "away", "away", "away", "a…</span></span>
+<span><span class="co">## $ team_id                             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1610612749, 1610612749, 1610612749…</span></span>
+<span><span class="co">## $ person_id                           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 203507, 203114, 201572, 1627736, 2…</span></span>
+<span><span class="co">## $ first_name                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Giannis", "Khris", "Brook", "Mali…</span></span>
+<span><span class="co">## $ family_name                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Antetokounmpo", "Middleton", "Lop…</span></span>
+<span><span class="co">## $ name_i                              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "G. Antetokounmpo", "K. Middleton"…</span></span>
+<span><span class="co">## $ player_slug                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "giannis-antetokounmpo", "khris-mi…</span></span>
+<span><span class="co">## $ position                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F", "F", "C", "G", "G", "", "", "…</span></span>
+<span><span class="co">## $ comment                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", ""…</span></span>
+<span><span class="co">## $ jersey_num                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", ""…</span></span>
+<span><span class="co">## $ minutes                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "38:39", "33:03", "26:44", "19:12"…</span></span>
+<span><span class="co">## $ field_goals_made                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 13, 10, 5, 0, 10, 5, 1, 0, 0, 1, 0…</span></span>
+<span><span class="co">## $ field_goals_attempted               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 24, 20, 9, 2, 21, 11, 4, 2, 0, 2, …</span></span>
+<span><span class="co">## $ field_goals_percentage              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.542, 0.500, 0.556, 0.000, 0.476,…</span></span>
+<span><span class="co">## $ three_pointers_made                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 4, 2, 0, 4, 0, 1, 0, 0, 1, 0, 0…</span></span>
+<span><span class="co">## $ three_pointers_attempted            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 9, 6, 1, 13, 4, 4, 1, 0, 2, 0, …</span></span>
+<span><span class="co">## $ three_pointers_percentage           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.500, 0.444, 0.333, 0.000, 0.308,…</span></span>
+<span><span class="co">## $ free_throws_made                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5, 0, 2, 0, 8, 2, 0, 2, 0, 0, 0, 0…</span></span>
+<span><span class="co">## $ free_throws_attempted               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 9, 0, 2, 0, 9, 2, 0, 2, 0, 0, 0, 0…</span></span>
+<span><span class="co">## $ free_throws_percentage              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.556, 0.000, 1.000, 0.000, 0.889,…</span></span>
+<span><span class="co">## $ rebounds_offensive                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5, 0, 2, 0, 0, 5, 4, 1, 0, 0, 0, 0…</span></span>
+<span><span class="co">## $ rebounds_defensive                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 8, 2, 4, 3, 1, 4, 3, 1, 1, 0, 0, 0…</span></span>
+<span><span class="co">## $ rebounds_total                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 13, 2, 6, 3, 1, 9, 7, 2, 1, 0, 0, …</span></span>
+<span><span class="co">## $ assists                             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 6, 6, 1, 2, 8, 0, 1, 1, 0, 1, 0, 0…</span></span>
+<span><span class="co">## $ steals                              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0…</span></span>
+<span><span class="co">## $ blocks                              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0…</span></span>
+<span><span class="co">## $ turnovers                           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 2, 0, 0, 4, 3, 0, 0, 0, 0, 0, 0…</span></span>
+<span><span class="co">## $ fouls_personal                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4, 4, 2, 2, 2, 4, 3, 2, 0, 0, 0, 0…</span></span>
+<span><span class="co">## $ points                              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 32, 24, 14, 0, 32, 12, 3, 2, 0, 3,…</span></span>
+<span><span class="co">## $ plus_minus_points                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -5, 9, -6, -10, -6, -3, -13, -4, 4…</span></span>
+<span><span class="co">## $ percentage_field_goals_attempted2pt <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.917, 0.550, 0.333, 0.500, 0.381,…</span></span>
+<span><span class="co">## $ percentage_field_goals_attempted3pt <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.083, 0.450, 0.667, 0.500, 0.619,…</span></span>
+<span><span class="co">## $ percentage_points2pt                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.750, 0.500, 0.429, 0.000, 0.375,…</span></span>
+<span><span class="co">## $ percentage_points_midrange2pt       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.063, 0.250, 0.000, 0.000, 0.125,…</span></span>
+<span><span class="co">## $ percentage_points3pt                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.094, 0.500, 0.429, 0.000, 0.375,…</span></span>
+<span><span class="co">## $ percentage_points_fast_break        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.063, 0.208, 0.000, 0.000, 0.000,…</span></span>
+<span><span class="co">## $ percentage_points_free_throw        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.156, 0.000, 0.143, 0.000, 0.250,…</span></span>
+<span><span class="co">## $ percentage_points_off_turnovers     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.125, 0.208, 0.000, 0.000, 0.063,…</span></span>
+<span><span class="co">## $ percentage_points_paint             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.688, 0.250, 0.429, 0.000, 0.250,…</span></span>
+<span><span class="co">## $ percentage_assisted2pt              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.667, 0.833, 1.000, 0.000, 0.000,…</span></span>
+<span><span class="co">## $ percentage_unassisted2pt            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.333, 0.167, 0.000, 0.000, 1.000,…</span></span>
+<span><span class="co">## $ percentage_assisted3pt              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.00, 1.00, 1.00, 0.00, 0.25, 0.00…</span></span>
+<span><span class="co">## $ percentage_unassisted3pt            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.00, 0.00, 0.00, 0.00, 0.75, 0.00…</span></span>
+<span><span class="co">## $ percentage_assisted_fgm             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.615, 0.900, 1.000, 0.000, 0.100,…</span></span>
+<span><span class="co">## $ percentage_unassisted_fgm           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.385, 0.100, 0.000, 0.000, 0.900,…</span></span>
+<span><span class="co">## $ contested_shots                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 7, 5, 21, 3, 2, 7, 2, 1, 1, 0, <span style="color: #BB0000;">NA</span>,…</span></span>
+<span><span class="co">## $ contested_shots2pt                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5, 3, 19, 2, 1, 5, 1, 1, 1, 0, <span style="color: #BB0000;">NA</span>,…</span></span>
+<span><span class="co">## $ contested_shots3pt                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 2, 2, 1, 1, 2, 1, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ deflections                         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 2, 2, 0, 2, 1, 2, 2, 1, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ charges_drawn                       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ screen_assists                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 7, 0, 2, 0, 0, 0, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ screen_assist_points                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 17, 0, 5, 0, 0, 0, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>,…</span></span>
+<span><span class="co">## $ loose_balls_recovered_offensive     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ loose_balls_recovered_defensive     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ loose_balls_recovered_total         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 1, 1, 0, 1, 2, 1, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ offensive_box_outs                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 0, 2, 0, 0, 2, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ defensive_box_outs                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ box_out_player_team_rebounds        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 1, 2, 0, 0, 2, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ box_out_player_rebounds             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 1, 2, 0, 0, 2, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span>
+<span><span class="co">## $ box_outs                            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 1, 2, 0, 0, 2, 0, 0, 0, 0, <span style="color: #BB0000;">NA</span>, …</span></span></code></pre>
+<p>Nice! Now we have a data frame containing traditional stats, along
+with detailed scoring stats such as mid-range points and points off
+turnovers. Additionally, we’ve incorporated hustle stats like
+deflections and charges drawn, giving us a comprehensive view of the
+game’s performance. This enriched dataset allows for deeper insights
+into team and player contributions across different aspects of the
+game.</p>
 </div>
 <div class="section level2">
 <h2 id="fetching-play-by-play-data-with-rate-limiting">Fetching Play-by-Play Data with Rate Limiting<a class="anchor" aria-label="anchor" href="#fetching-play-by-play-data-with-rate-limiting"></a>
@@ -367,15 +350,16 @@ mechanism.</p>
 <p>Below is an example of how to fetch play-by-play data for a specific
 set of games, using the <strong><code><a href="../reference/nba_play_by_play.html">nba_play_by_play()</a></code></strong>
 function. This example demonstrates how to fetch data for a list of game
-IDs, while respecting rate limits to avoid overloading the server.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+IDs.</p>
+<p>Let’s get play-by-play data for that same set of game IDs.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fetch the play-by-play data for the same games</span></span>
 <span><span class="va">play_by_play_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nba_play_by_play.html">nba_play_by_play</a></span><span class="op">(</span><span class="va">games</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Processing 5 games in 1 batches</span></span></code></pre>
-<pre><code><span><span class="co">## Processing batch 1/1: games</span></span>
+<pre><code><span><span class="co">## Fetching 5 games in 1 batches</span></span></code></pre>
+<pre><code><span><span class="co">## Fetching batch 1/1: games</span></span>
 <span><span class="co">## 0022300401 to 0022300405</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Display a glimpse of the fetched data</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Display a glimpse of the play-by-play data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">play_by_play_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 2,344</span></span>
 <span><span class="co">## Columns: 34</span></span>
@@ -413,25 +397,21 @@ IDs, while respecting rate limits to avoid overloading the server.</p>
 <span><span class="co">## $ player3_team_nickname     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, "Bucks", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>,…</span></span>
 <span><span class="co">## $ player3_team_abbreviation <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>, "MIL", <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">NA</span>, <span style="color: #BB0000;">N</span>…</span></span>
 <span><span class="co">## $ video_available_flag      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0", "1", "1", "1", "1", "1", "1", "1", "1",…</span></span></code></pre>
-<p>In this example:</p>
-<ul>
-<li>We fetch play-by-play data for a small subset of game IDs (from
-game_list).</li>
-<li>The <strong><code>scrape_nba_play_by_play()</code></strong> function
-handles the rate-limiting process automatically, ensuring the requests
-are spaced out to avoid server timeouts.</li>
-<li>The returned data is a dataframe containing the play-by-play events
-for the games, which you can analyze or visualize further.</li>
-</ul>
+<p>Great! Now we’ve got raw play-by-play data for a small subset of
+games. This data is ready to be analyzed or visualized further. Stay
+tuned—new functions are being developed to make these tasks even easier,
+simplifying the process and enhancing your ability to derive insights
+from the data!</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
-<p>FastBreakR is your go-to tool for NBA data analysis, offering a
-robust and growing set of features. Whether you are creating models,
-performing analyses, or exploring trends, this package streamlines the
-process, enabling you to focus on insights instead of data fetching.</p>
-<p>Stay tuned for updates as we continue to expand and improve
+<p>FastBreakR is your go-to tool for NBA data analysis, providing a
+powerful and expanding set of features. Whether you’re building models,
+conducting analyses, or exploring trends, this package simplifies the
+process, helping you access the data you need more quickly and
+efficiently.</p>
+<p>Check back for updates as we continue to expand and improve
 FastBreakR. Happy analyzing!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

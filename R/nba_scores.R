@@ -3,20 +3,34 @@
 #' This function gets NBA scores for the specified seasons. Function pauses for
 #' five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to scrape
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
 #' NBA scores.
-#' @param season_type A character string specifying the type of season
-#' (e.g., "Regular Season").
-#' @return A data frame containing the NBA scores and related statistics.
+#' @param season_type A character string specifying the type of season. Valid
+#' options include:
+#' \itemize{
+#'   \item \strong{"Pre Season"} - Pre Season games.
+#'   \item \strong{"Regular Season"} - Regular Season games.
+#'   \item \strong{"Playoffs"} - Playoff games.
+#'   \item \strong{"All Star"} - All Star games.
+#'   \item \strong{"IST"} - NBA Cup games.
+#'   \item \strong{"PlayIn"} - Play In games.
+#' }
+#' @param return_nested A logical value. If FALSE (default), returns a single
+#' combined data frame for all seasons.If TRUE, returns a list of data frames,
+#' one for each season.
+#' @return A data frame containing the NBA scores data for the specified
+#' seasons.
 #' @export
-nba_scores <- function(seasons, season_type = "Regular Season") {
+nba_scores <- function(seasons,
+                       season_type = "Regular Season",
+                       return_nested = FALSE) {
   if (!is.numeric(seasons) || length(seasons) == 0) {
     stop("The 'seasons' parameter must be a non-empty numeric vector.")
   }
 
-  results <- map(seq_along(seasons), function(i) {
+  results <- map_dfr(seq_along(seasons), function(i) {
     season <- seasons[i]
-    message(glue::glue("Processing season {season} ({i}/{length(seasons)})"))
+    message(glue::glue("Fetching season {season} ({i}/{length(seasons)})"))
 
     # Fetch data for the current season
     season_data <- tryCatch(
@@ -33,7 +47,7 @@ nba_scores <- function(seasons, season_type = "Regular Season") {
         join_scores(all_stats, team_games, opp_team_games)
       },
       error = function(e) {
-        message(glue::glue("Error processing season {season}: {e$message}"))
+        message(glue::glue("Error fetching season {season}: {e$message}"))
         return(tibble()) # Return an empty tibble on error
       }
     )
@@ -41,7 +55,7 @@ nba_scores <- function(seasons, season_type = "Regular Season") {
     # Pause after processing each season unless it's the last
     if (i < length(seasons)) {
       message(glue::glue(
-        "Pausing for 5 seconds before processing the next season..."
+        "Pausing for 5 seconds before fetching the next season..."
       ))
       Sys.sleep(5)
     }
@@ -49,7 +63,15 @@ nba_scores <- function(seasons, season_type = "Regular Season") {
     return(season_data)
   })
 
-  names(results) <- glue::glue("season_{seasons}") %>% as.character()
+  # Return nested results (list of data frames)
+  if (return_nested) {
+    results_list <- split(results, results$season_year)
+    names(results_list) <- glue::glue("season_{seasons}") %>% as.character()
+
+    return(results_list)
+  }
+
+  # If return_nested is FALSE (default), return a combined data frame
   return(results)
 }
 

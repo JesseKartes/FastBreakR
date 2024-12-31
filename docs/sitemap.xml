@@ -5,8 +5,12 @@
 <url><loc>https://jaykay-15.github.io/FastBreakR/articles/introduction.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/authors.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/index.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/add_event_info.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/add_game_details.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/add_pbp_points.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/add_pbp_possessions.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/add_schedule_details.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/add_team_names.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/box_score_types.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/calc_days_next_game.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/calc_days_rest.html</loc></url>
@@ -15,8 +19,10 @@
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/calc_is_b2b_first.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/calc_is_b2b_second.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/clean_stats_cols.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/combine_and_add_players.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/combine_team_and_opp_scores.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/consolidate_stats.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/convert_to_seconds.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/fetch_box_score.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/fetch_fanduel_data.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/fetch_nba_schedule.html</loc></url>
@@ -43,9 +49,11 @@
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/get_player_measure_types.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/get_team_logo.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/get_team_measure_types.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/identify_fg_and_one.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/index.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/join_data_frames.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/join_scores.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/make_pbp_corrections.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_box_scores.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_box_scores_matchups.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_fanduel.html</loc></url>
@@ -56,12 +64,16 @@
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_schedule.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_scores.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_shots.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_shots_league_avg.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_standings.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_team_dictionary.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_team_logo.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_team_stats.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/nba_win_probability.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/pbp_lineups.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/pbp_process_lineups.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/player_measure_types.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/players_in_events.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/process_nba_schedule.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/process_opp_all_stats.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/process_opp_team_games.html</loc></url>
@@ -70,6 +82,10 @@
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/process_team_games.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/process_team_measures.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/process_win_probability_data.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/seconds_passed.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/subs_in_quarter.html</loc></url>
 <url><loc>https://jaykay-15.github.io/FastBreakR/reference/team_measure_types.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/track_pbp_lineups.html</loc></url>
+<url><loc>https://jaykay-15.github.io/FastBreakR/reference/track_subs_and_lineups.html</loc></url>
 </urlset>
 
