@@ -47,7 +47,6 @@ Collate:
      nba_fanduel.R
      nba_standings.R
      nba_box_scores.R
-     process_pbp.R
 Suggests:
     testthat,
     knitr,
