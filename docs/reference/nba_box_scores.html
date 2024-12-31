@@ -13,7 +13,7 @@ timeout issues."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">FastBreakR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,14 +51,18 @@ timeout issues.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nba_box_scores</span><span class="op">(</span><span class="va">measure_types</span>, <span class="va">game_ids</span>, batch_size <span class="op">=</span> <span class="fl">100</span>, pause_seconds <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nba_box_scores</span><span class="op">(</span><span class="va">game_ids</span>, <span class="va">measure_types</span>, batch_size <span class="op">=</span> <span class="fl">100</span>, pause_seconds <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-measure-types">measure_types<a class="anchor" aria-label="anchor" href="#arg-measure-types"></a></dt>
+<dl><dt id="arg-game-ids">game_ids<a class="anchor" aria-label="anchor" href="#arg-game-ids"></a></dt>
+<dd><p>A character vector of game IDs.</p></dd>
+
+
+<dt id="arg-measure-types">measure_types<a class="anchor" aria-label="anchor" href="#arg-measure-types"></a></dt>
 <dd><p>A character vector of selected box score options.
 Each option corresponds to an entry in <code>box_score_types</code>. Valid options
 include:</p><ul><li><p><strong>"Traditional"</strong> - Box score with traditional statistics.</p></li>
@@ -71,10 +75,6 @@ include:</p><ul><li><p><strong>"Traditional"</strong> - Box score with tradition
 <li><p><strong>"Defensive"</strong> - Box score with defensive statistics.</p></li>
 <li><p><strong>"Hustle"</strong> - Box score with hustle statistics.</p></li>
 </ul></dd>
-
-
-<dt id="arg-game-ids">game_ids<a class="anchor" aria-label="anchor" href="#arg-game-ids"></a></dt>
-<dd><p>A character vector of game IDs.</p></dd>
 
 
 <dt id="arg-batch-size">batch_size<a class="anchor" aria-label="anchor" href="#arg-batch-size"></a></dt>

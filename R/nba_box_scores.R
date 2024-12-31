@@ -60,6 +60,7 @@ box_score_types <- list(
 #' Creates batches of `game_ids` and pauses between batches to avoid
 #' timeout issues.
 #'
+#' @param game_ids A character vector of game IDs.
 #' @param measure_types A character vector of selected box score options.
 #' Each option corresponds to an entry in `box_score_types`. Valid options
 #' include:
@@ -74,15 +75,14 @@ box_score_types <- list(
 #'   \item \strong{"Defensive"} - Box score with defensive statistics.
 #'   \item \strong{"Hustle"} - Box score with hustle statistics.
 #' }
-#' @param game_ids A character vector of game IDs.
 #' @param batch_size Number of requests before pausing (default: 100)
 #' @param pause_seconds Number of seconds to pause between batches (default: 15)
 #'
 #' @return A data frame containing box score data for the selected games and
 #' measure types.
 #' @export
-nba_box_scores <- function(measure_types,
-                           game_ids,
+nba_box_scores <- function(game_ids,
+                           measure_types,
                            batch_size = 100,
                            pause_seconds = 15) {
   # Validate user choices
@@ -127,14 +127,14 @@ nba_box_scores_matchups <- function(game_ids,
   )
   num_batches <- length(batched_games)
 
-  message(glue::glue("Processing {total_games} games in {num_batches} batches"))
+  message(glue::glue("Fetching {total_games} games in {num_batches} batches"))
 
   future::plan(future::multisession)
 
   # Process each batch sequentially with parallel handling within batches
   results <- map_dfr(seq_along(batched_games), function(batch_num) {
     batch_games <- batched_games[[batch_num]]
-    message(glue::glue("Processing batch {batch_num}/{num_batches}: games
+    message(glue::glue("Fetching batch {batch_num}/{num_batches}: games
                        {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
     # Fetch data in parallel for the current batch
@@ -233,14 +233,14 @@ fetch_box_score <- function(measure_type,
   )
   num_batches <- length(batched_games)
 
-  message(glue::glue("Processing {total_games} games in {num_batches} batches"))
+  message(glue::glue("Fetching {total_games} games in {num_batches} batches"))
 
   future::plan(future::multisession)
 
   # Process each batch sequentially
   results <- map_dfr(seq_along(batched_games), function(batch_num) {
     batch_games <- batched_games[[batch_num]]
-    message(glue::glue("Processing batch {batch_num}/{num_batches}: games
+    message(glue::glue("Fetching batch {batch_num}/{num_batches}: games
                        {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
     # Process each game in the current batch

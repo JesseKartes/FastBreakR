@@ -2,7 +2,7 @@
 % Please edit documentation in R/nba_shots.R
 \name{process_shots}
 \alias{process_shots}
-\title{Process NBA Shots Data}
+\title{Process NBA Shots Data (function under development)}
 \usage{
 process_shots(data)
 }
@@ -15,6 +15,9 @@ A named list of processed data frames for each season. Transforms the
 data to prepare for analysis.
 }
 \description{
+This function is currently in development and not exported.
+}
+\details{
 To be used on the output of \code{nba_shots()}. Processes shot and league average
 data frames within each NBA season. Applies transformations to prepare the
 data for analysis.

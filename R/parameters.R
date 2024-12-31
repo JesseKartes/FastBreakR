@@ -75,7 +75,7 @@ generate_params_stats <- function(year, measure_type, season_type) {
     `Rank` = "N",
     `Season` = season,
     `SeasonSegment` = "",
-    `SeasonType` = str_to_title(season_type),
+    `SeasonType` = season_type,
     `ShotClockRange` = "",
     `VsConference` = "",
     `VsDivision` = ""

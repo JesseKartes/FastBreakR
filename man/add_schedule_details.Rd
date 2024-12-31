@@ -2,21 +2,18 @@
 % Please edit documentation in R/utils.R
 \name{add_schedule_details}
 \alias{add_schedule_details}
-\title{Add Schedule Details Across Seasons}
+\title{Add Schedule Details}
 \usage{
 add_schedule_details(data)
 }
 \arguments{
-\item{data}{A list where each element is a season's data frame containing NBA
-stats for teams (must include columns such as
-\code{season_year}, \code{team_id}, \code{game_date}, etc.).}
+\item{data}{A data frame containing NBA stats for teams (must include columns
+such as \code{season_year}, \code{team_id}, \code{game_date}, etc.).}
 }
 \value{
-A list of data frames, each containing the calculated stats for a
-specific season.
+A data frame containing the details for the corresponding season.
 }
 \description{
-To be used only after \code{consolidate_stats()}.
 This function calculates schedule details (such as back-to-back games,
-rest days, etc.) for each team across multiple NBA seasons.
+rest days, etc.) for NBA data.
 }
