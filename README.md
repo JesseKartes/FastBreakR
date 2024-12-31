@@ -17,7 +17,7 @@ You can install the development version of FastBreakR from GitHub with:
 
 ``` r
 # install.packages("pak")
-pak::pak("JayKay-15/FastBreakR")
+pak::pak("JesseKartes/FastBreakR")
 ```
 
 ## Core Features
@@ -50,7 +50,7 @@ scores <- nba_scores(2025, season_type = "Regular Season")
 ## Documentation
 
 Full Documentation:
-<https://jaykay-15.github.io/FastBreakR/reference/index.html>
+<https://jessekartes.github.io/FastBreakR/reference/index.html>
 
 For any questions, suggestions, or issues, feel free to open an issue on
 GitHub.

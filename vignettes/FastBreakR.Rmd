@@ -29,7 +29,7 @@ Before you start, ensure you have installed the FastBreakR package and its depen
 # Install from GitHub
 
 # install.packages("pak")
-pak::pak("JayKay-15/FastBreakR")
+pak::pak("JesseKartes/FastBreakR")
 install.packages("dplyr")
 ```
 
