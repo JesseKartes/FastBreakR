@@ -6,6 +6,8 @@
 #' @export
 nba_player_dictionary <- function() {
   player_dictionary <- fetch_player_dictionary_data()
+  player_dictionary <- player_dictionary %>%
+    mutate(headshot_url = nba_player_headshot(person_id))
 
   return(player_dictionary)
 }

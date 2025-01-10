@@ -53,7 +53,7 @@ nba_team_stats <- function(seasons,
     nba_final <- tryCatch(
       {
         all_data_list <- map(measure_types, function(measure_type) {
-          fetch_team_stats(season, measure_type, season_type)
+          fetch_team_stats(season, season_type, measure_type)
         })
 
         if (!is.null(all_data_list)) {
@@ -100,17 +100,17 @@ nba_team_stats <- function(seasons,
 #' all measure types.
 #'
 #' @param season A numeric value representing the season (e.g., 2024).
-#' @param measure_type A character string specifying the measure type
-#' (e.g., "Base").
 #' @param season_type A character string specifying the type of season
 #' (e.g., "Regular Season").
+#' @param measure_type A character string specifying the measure type
+#' (e.g., "Base").
 #' @return A data frame with cleaned NBA team stats.
-fetch_team_stats <- function(season, measure_type, season_type) {
+fetch_team_stats <- function(season, season_type, measure_type) {
   headers <- generate_headers_stats()
 
   url <- "https://stats.nba.com/stats/teamgamelogs"
 
-  params <- generate_params_stats(season, measure_type, season_type)
+  params <- generate_params_stats(season, season_type, measure_type)
 
   data <- get_data(url, headers, params)
 

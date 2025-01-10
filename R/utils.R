@@ -273,6 +273,30 @@ get_team_logo <- function(team_id) {
   glue::glue("https://cdn.nba.com/logos/nba/{team_id}/primary/L/logo.svg")
 }
 
+#' Get Current Season
+#'
+#' This function returns the current season in the format "YYYY-YY".
+#' The season is determined based on the current date:
+#' - If the current date is before July 1st of the current year,
+#' the season is "previous year - current year".
+#' - If the current date is after or on July 1st,
+#' the season is "current year - next year".
+#'
+#' @return A character string representing the current season.
+get_current_season <- function() {
+  current_year <- as.integer(format(Sys.Date(), "%Y"))
+  current_date <- Sys.Date()
+
+  # Logic to determine the season
+  if (current_date < as.Date(paste(current_year, "-07-01", sep = ""))) {
+    season <- paste(current_year - 1, "-", substr(current_year, 3, 4), sep = "")
+  } else {
+    season <- paste(current_year, "-", substr(current_year + 1, 3, 4), sep = "")
+  }
+
+  return(season)
+}
+
 #' Convert Time String to Seconds
 #'
 #' Converts a time string (in MM:SS format) into seconds.
@@ -302,4 +326,19 @@ seconds_passed <- function(time_str, period) {
   )
   seconds_in_previous_periods <- (as.numeric(period) - 1) * period_seconds
   return(seconds_in_previous_periods + secs_passed_current_period)
+}
+
+#' NBA Player Lookup
+#'
+#' This function retrieves a simplified player dictionary from the NBA API,
+#' including player IDs and full names.
+#'
+#' @return A tibble with person_id and player_name.
+nba_player_lookup <- function() {
+  nba_player_dictionary() %>%
+    mutate(player_name = paste(player_first_name,
+      player_last_name,
+      sep = " "
+    )) %>%
+    select(person_id, player_name)
 }
