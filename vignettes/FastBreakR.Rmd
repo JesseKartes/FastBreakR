@@ -55,7 +55,7 @@ The **`nba_team_stats()`** function fetches NBA team statistics for specified se
 
 If you only need one or a few specific stat categories, simply use the `measure_type` argument within the **`nba_team_stats()`** function.
 
-```{r, team stats}
+```{r, team stats, cache=TRUE}
 # Fetch team stats for the 2022-2023 & 2023-2024 regular season
 team_stats <- nba_team_stats(2023:2024, season_type = "Regular Season")
 
@@ -69,7 +69,7 @@ Now that we have a data frame with team-level stats, let’s dive deeper and ret
 
 The **`nba_box_scores()`** function fetches detailed box score data for specified games and stat categories. The resulting data frame is clean and consolidated, with duplicate columns across stat categories automatically removed for easier analysis.
 
-```{r, fetch box scores, error = FALSE}
+```{r, fetch box scores, cache=TRUE}
 # Here, we're getting the game_ids we need
 games <- team_stats %>%
   filter(game_date == "2023-12-25") %>%
@@ -96,7 +96,7 @@ Below is an example of how to fetch play-by-play data for a specific set of game
 
 Let's get play-by-play data for that same set of game IDs.
 
-```{r, fetch play by play}
+```{r, fetch play by play, cache=TRUE}
 # Fetch the play-by-play data for the same games
 play_by_play_data <- nba_play_by_play(games)
 
