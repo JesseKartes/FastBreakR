@@ -4,16 +4,16 @@
 \alias{fetch_team_stats}
 \title{Fetch NBA Team Stats from API}
 \usage{
-fetch_team_stats(season, measure_type, season_type)
+fetch_team_stats(season, season_type, measure_type)
 }
 \arguments{
 \item{season}{A numeric value representing the season (e.g., 2024).}
 
-\item{measure_type}{A character string specifying the measure type
-(e.g., "Base").}
-
 \item{season_type}{A character string specifying the type of season
 (e.g., "Regular Season").}
+
+\item{measure_type}{A character string specifying the measure type
+(e.g., "Base").}
 }
 \value{
 A data frame with cleaned NBA team stats.

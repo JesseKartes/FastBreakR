@@ -16,7 +16,7 @@ nba_player_stats(
 NBA player stats.}
 
 \item{season_type}{A character string specifying the type of season
-(default = "Regular Season). Valid options include:
+(default = "Regular Season"). Valid options include:
 \itemize{
 \item \strong{"Pre Season"} - Pre Season games.
 \item \strong{"Regular Season"} - Regular Season games.

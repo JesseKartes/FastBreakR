@@ -49,10 +49,10 @@ generate_headers_stats <- function() {
 #' This function generates query parameters for the API request.
 #'
 #' @param year The season year for which to generate parameters.
-#' @param measure_type The measure type for the API request.
 #' @param season_type The season type for the API request.
+#' @param measure_type The measure type for the API request.
 #' @return A named list of query parameters.
-generate_params_stats <- function(year, measure_type, season_type) {
+generate_params_stats <- function(year, season_type, measure_type) {
   year <- (year - 1)
   season <- sprintf("%d-%02d", year, (year + 1) %% 100)
   params <- list(
@@ -207,7 +207,7 @@ generate_params_player_dict <- function() {
     `Height` = "",
     `Historical` = "1",
     `LeagueID` = "00",
-    `Season` = "2024-25",
+    `Season` = get_current_season(),
     `SeasonType` = "Regular Season",
     `TeamID` = "0",
     `Weight` = ""
@@ -224,7 +224,112 @@ generate_params_player_dict <- function() {
 generate_params_team_dict <- function() {
   team_params <- list(
     `LeagueID` = "00",
-    `Season` = "2024-25"
+    `Season` = get_current_season()
   )
   return(team_params)
+}
+
+#' Generate Query Parameters for Player Career API Requests
+#'
+#' This function generates the query parameters required for fetching the
+#' NBA player's career page
+#'
+#' @param player_id The player id for which to generate parameters.
+#' @param per_mode A character string representing the aggregation method
+#' @return A named list of query parameters.
+generate_params_career <- function(player_id, per_mode = "PerGame") {
+  career_params <- list(
+    `LeagueID` = "00",
+    `PerMode` = per_mode,
+    `PlayerID` = player_id
+  )
+  return(career_params)
+}
+
+#' Generate Query Parameters for Player Splits API Requests
+#'
+#' This function generates the query parameters required for fetching the
+#' NBA player's splits page
+#'
+#' @param year The season year for which to generate parameters.
+#' @param season_type The season type for the API request.
+#' @param measure_type The measure type for the API request.
+#' @param player_id The player id for which to generate parameters.
+#' @param per_mode A character string representing the aggregation method
+#' @return A named list of query parameters.
+generate_params_splits <- function(year,
+                                   season_type = "Regular Season",
+                                   measure_type = "Base",
+                                   player_id,
+                                   per_mode = "PerGame") {
+  year <- (year - 1)
+  season <- sprintf("%d-%02d", year, (year + 1) %% 100)
+  splits_params <- list(
+    DateFrom = "",
+    DateTo = "",
+    GameSegment = "",
+    ISTRound = "",
+    LastNGames = "0",
+    LeagueID = "00",
+    Location = "",
+    MeasureType = measure_type, # input
+    Month = "0",
+    OpponentTeamID = "0",
+    Outcome = "",
+    PORound = "0",
+    PaceAdjust = "N",
+    PerMode = per_mode, # input
+    Period = "0",
+    PlayerID = player_id, # input
+    PlusMinus = "N",
+    Rank = "N",
+    Season = season, # input
+    SeasonSegment = "",
+    SeasonType = season_type, # input
+    ShotClockRange = "",
+    Split = "general",
+    VsConference = "",
+    VsDivision = ""
+  )
+  return(splits_params)
+}
+
+#' Generate Query Parameters for Player Profile Stats API Requests
+#'
+#' This function generates the query parameters required for fetching the
+#' NBA player's profile stats page
+#'
+#' @param season_type The season type for the API request.
+#' @param player_id The player id for which to generate parameters.
+#' @param per_mode A character string representing the aggregation method
+#' @return A named list of query parameters.
+generate_params_profile <- function(season_type = "Regular Season",
+                                    player_id,
+                                    per_mode = "PerGame") {
+  profile_params <- list(
+    DateFrom = "",
+    DateTo = "",
+    GameSegment = "",
+    LastNGames = "0",
+    LeagueID = "00",
+    Location = "",
+    MeasureType = "Base",
+    Month = "0",
+    OpponentTeamID = "0",
+    Outcome = "",
+    PORound = "0",
+    PaceAdjust = "N",
+    PerMode = per_mode, # input
+    Period = "0",
+    PlayerID = player_id, # input
+    PlusMinus = "N",
+    Rank = "N",
+    Season = get_current_season(),
+    SeasonSegment = "",
+    SeasonType = season_type, # input
+    ShotClockRange = "",
+    VsConference = "",
+    VsDivision = ""
+  )
+  return(profile_params)
 }

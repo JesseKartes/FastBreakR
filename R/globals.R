@@ -25,5 +25,9 @@ utils::globalVariables(c(
   "start_poss", "team_location", "team_player", "video_available_flag",
   "visitordescription.x", "visitordescription.y", "wctimestring",
   "missing_starters", "home_corrections", "visitor_corrections", "delete_rows",
-  "corrections", "data", "min_sec"
+  "corrections", "data", "min_sec", "person_id", "display_first_last",
+  "birthdate", "school", "country", "height", "weight", "season_exp", "jersey",
+  "position", "from_year", "to_year", "draft_year", "draft_round",
+  "draft_number", "height_inches", "name", "player_first_name",
+  "player_last_name", "player_name"
 ))

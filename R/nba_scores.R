@@ -88,7 +88,7 @@ fetch_nba_scores <- function(season, season_type) {
 
   url <- "https://stats.nba.com/stats/teamgamelogs"
 
-  params <- generate_params_stats(season, "Base", season_type)
+  params <- generate_params_stats(season, season_type, "Base")
 
   data <- get_data(url, headers, params)
 

@@ -15,6 +15,13 @@ export(nba_team_dictionary)
 export(nba_player_dictionary)
 export(nba_team_logo)
 export(nba_player_headshot)
+export(nba_profile_info)
+export(nba_profile_stats)
+export(nba_career_splits)
+export(nba_player_highs)
+export(nba_career_stats)
+export(nba_career_rankings)
+export(nba_player_awards)
 
 # Import functions from other packages
 import(dplyr)

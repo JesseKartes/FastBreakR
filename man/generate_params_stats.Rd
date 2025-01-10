@@ -4,14 +4,14 @@
 \alias{generate_params_stats}
 \title{Generate Query Parameters for Stats API Requests}
 \usage{
-generate_params_stats(year, measure_type, season_type)
+generate_params_stats(year, season_type, measure_type)
 }
 \arguments{
 \item{year}{The season year for which to generate parameters.}
 
-\item{measure_type}{The measure type for the API request.}
-
 \item{season_type}{The season type for the API request.}
+
+\item{measure_type}{The measure type for the API request.}
 }
 \value{
 A named list of query parameters.
