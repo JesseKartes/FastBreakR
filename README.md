@@ -44,7 +44,7 @@ This is a basic example which shows you how to get scores for the
 library(FastBreakR)
 
 scores <- nba_scores(2025, season_type = "Regular Season")
-#> Processing season 2025 (1/1)
+#> Fetching season 2025 (1/1)
 ```
 
 ## Documentation
