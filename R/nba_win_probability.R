@@ -45,7 +45,7 @@ nba_win_probability <- function(game_ids,
         error = function(e) {
           message(glue::glue("Error fetching data for Game ID {.x}:
                              {e$message}"))
-          return(tibble())
+          return(tibble::tibble())
         }
       )
     })
@@ -72,9 +72,9 @@ nba_win_probability <- function(game_ids,
 fetch_win_probability_data <- function(game_id) {
   headers <- generate_headers_stats()
   url <- glue::glue(
-    "https://stats.nba.com/stats/winprobabilitypbp?GameID={game_id}
-      &StartPeriod=0&EndPeriod=12&StartRange=0&EndRange=12&RangeType=1
-      &Runtype=each%20second"
+    "https://stats.nba.com/stats/winprobabilitypbp?GameID={game_id}",
+      "&StartPeriod=0&EndPeriod=12&StartRange=0&EndRange=12&RangeType=1",
+      "&Runtype=each%20second"
   )
 
   data <- get_data_no_params(url, headers)
@@ -95,7 +95,7 @@ fetch_win_probability_data <- function(game_id) {
     set_names(metadata_columns) %>%
     clean_names()
 
-  list(data = data_dt, metadata = metadata_dt)
+  return(list(data = data_dt, metadata = metadata_dt))
 }
 
 #' Process Win Probability Play-by-Play Data
