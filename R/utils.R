@@ -310,6 +310,18 @@ convert_to_seconds <- function(time_str) {
   return((minutes * 60) + seconds)
 }
 
+#' Convert Minutes to Minutes:Seconds
+#'
+#' Converts a time numeric into minutes and seconds (in MM:SS format).
+#'
+#' @param time_numeric A numeric value.
+#' @return A string value in "MM:SS" format.
+convert_to_minutes_seconds <- function(time_numeric) {
+    minutes <- floor(time_numeric)
+    seconds <- round((time_numeric - minutes) * 60)
+    sprintf("%d:%02d", minutes, seconds)
+}
+
 #' Calculate Seconds Passed in Game
 #'
 #' Calculates the total seconds passed in the game based on time and period.
@@ -342,3 +354,75 @@ nba_player_lookup <- function() {
     )) %>%
     select(person_id, player_name)
 }
+
+#' Get Team Colors for Active NBA Teams
+#'
+#' Fetches and processes team color information for all active NBA teams
+#'
+#' @return A tibble with columns for team ID, abbreviation, city, name, and
+#' primary/secondary/tertiary colors.
+#' @export
+nba_team_colors <- function() {
+
+    url <- "https://stats.nba.com/js/data/ptsd/stats_ptsd.js"
+
+    content <- tryCatch(
+        {
+            suppressWarnings(readLines(url))
+        },
+        error = function(e) {
+            stop("Failed to retrieve data from the URL. Please check the URL or your connection.")
+        }
+    )
+
+    json <- tryCatch(
+        {
+            jsonlite::fromJSON(
+                gsub("var stats_ptsd =|;", "", paste(content, collapse = "\n")),
+                flatten = TRUE,
+                simplifyDataFrame = TRUE
+            )
+        },
+        error = function(e) {
+            stop("Failed to parse JSON data. Please check the structure of the content.")
+        }
+    )
+
+    team_colors <- map_dfr(
+        json$data$teams,
+        ~ .x %>%
+            set_names(c(
+                "team_id",
+                "team_abbreviation",
+                "team_slug",
+                "team_city",
+                "team_name",
+                "conference_id",
+                "division_id",
+                "is_non_nba_team",
+                "end_year",
+                "league_id",
+                "team_color"
+            )) %>%
+            as_tibble()
+    ) %>%
+    filter(division_id != 0) %>%
+    select(team_id, team_abbreviation, team_city, team_name, team_color) %>%
+    group_by(team_id, team_abbreviation, team_city, team_name) %>%
+    mutate(color_index = dplyr::row_number()) %>%
+    pivot_wider(
+        names_from = color_index,
+        values_from = team_color,
+        names_prefix = "team_color_"
+    ) %>%
+    rename(
+        primary_color = team_color_1,
+        secondary_color = team_color_2,
+        tertiary_color = team_color_3
+    ) %>%
+    arrange(team_id)
+
+    return(team_colors)
+}
+
+
