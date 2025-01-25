@@ -73,8 +73,8 @@ fetch_win_probability_data <- function(game_id) {
   headers <- generate_headers_stats()
   url <- glue::glue(
     "https://stats.nba.com/stats/winprobabilitypbp?GameID={game_id}",
-      "&StartPeriod=0&EndPeriod=12&StartRange=0&EndRange=12&RangeType=1",
-      "&Runtype=each%20second"
+    "&StartPeriod=0&EndPeriod=12&StartRange=0&EndRange=12&RangeType=1",
+    "&Runtype=each%20second"
   )
 
   data <- get_data_no_params(url, headers)

@@ -29,5 +29,12 @@ utils::globalVariables(c(
   "birthdate", "school", "country", "height", "weight", "season_exp", "jersey",
   "position", "from_year", "to_year", "draft_year", "draft_round",
   "draft_number", "height_inches", "name", "player_first_name",
-  "player_last_name", "player_name"
+  "player_last_name", "player_name",
+  "ast", "blk", "color_index", "division_id", "dreb", "dreb_opp", "drtg",
+  "fg3_pct", "fg3a", "fg3m", "foul", "ft_pct", "fta", "ftm", "homedescription",
+  "lineup", "lineup_changed", "lineup_index", "lineup_pts", "minutes_played",
+  "opp_lineup", "oreb", "oreb_opp", "ortg", "person2type", "poss", "poss_opp",
+  "prev_lineup", "pts_opp", "reb", "starter", "stl", "team_color",
+  "team_color_1", "team_color_2", "team_color_3", "time_played",
+  "total_minutes", "total_seconds", "tov", "usage_pct", "visitordescription"
 ))
