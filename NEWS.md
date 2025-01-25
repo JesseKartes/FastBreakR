@@ -1,3 +1,12 @@
+## [0.1.3] - 2025-01-25
+### Added
+- Play-by-play functions:
+- `pbp_lineups()`
+- `pbp_box_scores()`
+- `nba_players()`
+- `get_team_colors()`
+- Minor bug fix in the `nba_win_probability()` function
+
 ## [0.1.2] - 2025-01-10
 ### Added
 - Player profile functions:

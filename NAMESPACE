@@ -40,4 +40,5 @@ import(zoo)
 # Import functions from base packages (if needed)
 importFrom(stats, na.omit)
 importFrom(utils, head)
+importFrom(utils, tail)
 

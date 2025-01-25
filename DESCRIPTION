@@ -1,7 +1,7 @@
 Package: FastBreakR
 Type: Package
 Title: NBA Data Fetching and Processing
-Version: 0.1.2
+Version: 0.1.3
 Author: person("Jesse Kartes", "Author", email = "jesse.kartes@gmail.com", role = c("aut", "cre"))
 Maintainer: Jesse Kartes <jesse.kartes@gmail.com>
 Description: FastBreakR provides a seamless interface for fetching and processing
