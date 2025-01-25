@@ -11,7 +11,6 @@ add_pbp_possessions(data)
 }
 \value{
 A data frame with possessions added to lineups for all play-by-play
-data
 }
 \description{
 This function processes play-by-play data to add possessions to lineup data.
