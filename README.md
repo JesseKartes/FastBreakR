@@ -6,6 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+<img src="man/figures/fastbreakr_logo.png" width="350" align="right" />
+
 FastBreakR is a fast and efficient R package for working with NBA data.
 With a robust set of core tools, the package is fully functional and
 continually evolving, with new features regularly added to enhance its
