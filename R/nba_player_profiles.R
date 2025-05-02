@@ -221,7 +221,6 @@ process_profile_data <- function(data) {
   return(profile_stats)
 }
 
-
 #### NBA Player Splits Data ----
 
 #' Get Player Splits
@@ -322,14 +321,13 @@ process_splits_data <- function(data) {
         data.frame(stringsAsFactors = FALSE) %>%
         as_tibble() %>%
         set_names(as.character(data$resultSets$headers[[i]])) %>%
-        janitor::clean_names() %>%
+        clean_names() %>%
         clean_stats_cols()
     },
     .id = "name"
   ) %>%
     mutate(name = data$resultSets$name[as.numeric(name)])
 }
-
 
 #### NBA Player Career Data ----
 
@@ -393,7 +391,6 @@ nba_career_stats <- function(player_id, per_mode = "PerGame") {
 
   return(results)
 }
-
 
 #' Get Player Career Rankings
 #'
@@ -460,8 +457,8 @@ process_career_data <- function(data) {
       dt <- dt %>%
         data.frame(stringsAsFactors = FALSE) %>%
         as_tibble() %>%
-        purrr::set_names(column_names) %>%
-        janitor::clean_names() %>%
+        set_names(column_names) %>%
+        clean_names() %>%
         clean_stats_cols()
 
       profile_career_list[[as.character(data$resultSets$name[i])]] <- dt
@@ -470,7 +467,6 @@ process_career_data <- function(data) {
 
   return(profile_career_list)
 }
-
 
 #### NBA Player Awards Data ----
 

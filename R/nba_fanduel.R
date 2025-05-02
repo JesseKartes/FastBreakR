@@ -21,14 +21,14 @@ nba_fanduel <- function(game_ids, batch_size = 100, pause_seconds = 15) {
   )
   num_batches <- length(batched_games)
 
-  message(glue::glue("Fetching {total_games} games in {num_batches} batches"))
+  message(glue("Fetching {total_games} games in {num_batches} batches"))
 
-  future::plan(future::multisession)
+  plan(multisession)
 
   # Process each batch sequentially with parallel handling within batches
   results <- map_dfr(seq_along(batched_games), function(batch_num) {
     batch_games <- batched_games[[batch_num]]
-    message(glue::glue("Fetching batch {batch_num}/{num_batches}: games
+    message(glue("Fetching batch {batch_num}/{num_batches}: games
                        {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
     # Fetch data in parallel for the current batch
@@ -38,7 +38,7 @@ nba_fanduel <- function(game_ids, batch_size = 100, pause_seconds = 15) {
           fetch_fanduel_data(.x)
         },
         error = function(e) {
-          message(glue::glue("Error fetching data for Game ID {.x}:
+          message(glue("Error fetching data for Game ID {.x}:
                              {e$message}"))
           return(tibble())
         }
@@ -47,7 +47,7 @@ nba_fanduel <- function(game_ids, batch_size = 100, pause_seconds = 15) {
 
     # Pause after processing a batch unless it's the last batch
     if (batch_num < num_batches) {
-      message(glue::glue("Pausing for {pause_seconds} seconds..."))
+      message(glue("Pausing for {pause_seconds} seconds..."))
       Sys.sleep(pause_seconds)
     }
 

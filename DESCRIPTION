@@ -1,8 +1,9 @@
 Package: FastBreakR
 Type: Package
 Title: NBA Data Fetching and Processing
-Version: 0.1.3
-Author: person("Jesse Kartes", "Author", email = "jesse.kartes@gmail.com", role = c("aut", "cre"))
+Version: 0.1.4
+Author: person("Jesse Kartes", "Author", email = "jesse.kartes@gmail.com", 
+                role = c("aut", "cre"))
 Maintainer: Jesse Kartes <jesse.kartes@gmail.com>
 Description: FastBreakR provides a seamless interface for fetching and processing
     NBA data from the official NBA API. The package includes functions for
@@ -19,18 +20,21 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
     dplyr,
-    lubridate,
-    stringr,
-    janitor,
-    tibble,
-    furrr,
-    purrr,
     tidyr,
+    purrr,
+    ggplot2,
+    stringr,
+    lubridate,
+    tibble,
+    janitor,
+    furrr,
     future,
     glue,
     httr,
     jsonlite,
-    zoo
+    rvest,
+    zoo,
+    plotly
 Collate:
      utils.R
      parameters.R
@@ -48,11 +52,15 @@ Collate:
      nba_standings.R
      nba_box_scores.R
      nba_player_profiles.R
-     process_pbp.R
+     nba_player_news.R
+     pbp_processing.R
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    pkgdown,
+    goodpractice,
+    lintr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Depends:

@@ -127,14 +127,14 @@ nba_box_scores_matchups <- function(game_ids,
   )
   num_batches <- length(batched_games)
 
-  message(glue::glue("Fetching {total_games} games in {num_batches} batches"))
+  message(glue("Fetching {total_games} games in {num_batches} batches"))
 
-  future::plan(future::multisession)
+  plan(multisession)
 
   # Process each batch sequentially with parallel handling within batches
   results <- map_dfr(seq_along(batched_games), function(batch_num) {
     batch_games <- batched_games[[batch_num]]
-    message(glue::glue("Fetching batch {batch_num}/{num_batches}: games
+    message(glue("Fetching batch {batch_num}/{num_batches}: games
                        {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
     # Fetch data in parallel for the current batch
@@ -181,7 +181,7 @@ nba_box_scores_matchups <- function(game_ids,
           return(matchups_df)
         },
         error = function(e) {
-          message(glue::glue("Error fetching data for Game ID {.x}:
+          message(glue("Error fetching data for Game ID {.x}:
                              {e$message}"))
           return(tibble())
         }
@@ -190,7 +190,7 @@ nba_box_scores_matchups <- function(game_ids,
 
     # Pause after processing a batch unless it's the last batch
     if (batch_num < num_batches) {
-      message(glue::glue("Pausing for {pause_seconds} seconds..."))
+      message(glue("Pausing for {pause_seconds} seconds..."))
       Sys.sleep(pause_seconds)
     }
 
@@ -214,11 +214,6 @@ nba_box_scores_matchups <- function(game_ids,
 #'
 #' @return A data frame containing the box score data for the specified
 #' game IDs.
-#'
-#' @importFrom future plan
-#' @importFrom future multisession
-#' @importFrom dplyr bind_rows mutate select left_join
-#' @importFrom janitor clean_names
 fetch_box_score <- function(measure_type,
                             game_ids,
                             batch_size = 100,
@@ -233,14 +228,14 @@ fetch_box_score <- function(measure_type,
   )
   num_batches <- length(batched_games)
 
-  message(glue::glue("Fetching {total_games} games in {num_batches} batches"))
+  message(glue("Fetching {total_games} games in {num_batches} batches"))
 
-  future::plan(future::multisession)
+  plan(multisession)
 
   # Process each batch sequentially
   results <- map_dfr(seq_along(batched_games), function(batch_num) {
     batch_games <- batched_games[[batch_num]]
-    message(glue::glue("Fetching batch {batch_num}/{num_batches}: games
+    message(glue("Fetching batch {batch_num}/{num_batches}: games
                        {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
     # Process each game in the current batch
@@ -301,7 +296,7 @@ fetch_box_score <- function(measure_type,
           base_data
         },
         error = function(e) {
-          message(glue::glue("Error fetching data for Game ID {game_id}:
+          message(glue("Error fetching data for Game ID {game_id}:
                              {e$message}"))
           return(tibble())
         }
@@ -310,7 +305,7 @@ fetch_box_score <- function(measure_type,
 
     # Pause after processing a batch unless it's the last batch
     if (batch_num < num_batches) {
-      message(glue::glue("Pausing for {pause_seconds} seconds..."))
+      message(glue("Pausing for {pause_seconds} seconds..."))
       Sys.sleep(pause_seconds)
     }
 

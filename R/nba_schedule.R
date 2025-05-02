@@ -72,7 +72,7 @@ process_nba_schedule <- function(data) {
     list(away_schedule, home_schedule)
   })
 
-  schedule_df <- bind_rows(purrr::flatten(schedule_list))
+  schedule_df <- bind_rows(flatten(schedule_list))
 
   nba_schedule <- schedule_df %>%
     clean_names() %>%

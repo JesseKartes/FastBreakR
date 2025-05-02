@@ -30,7 +30,7 @@ nba_scores <- function(seasons,
 
   results <- map_dfr(seq_along(seasons), function(i) {
     season <- seasons[i]
-    message(glue::glue("Fetching season {season} ({i}/{length(seasons)})"))
+    message(glue("Fetching season {season} ({i}/{length(seasons)})"))
 
     # Fetch data for the current season
     season_data <- tryCatch(
@@ -47,14 +47,14 @@ nba_scores <- function(seasons,
         join_scores(all_stats, team_games, opp_team_games)
       },
       error = function(e) {
-        message(glue::glue("Error fetching season {season}: {e$message}"))
+        message(glue("Error fetching season {season}: {e$message}"))
         return(tibble()) # Return an empty tibble on error
       }
     )
 
     # Pause after processing each season unless it's the last
     if (i < length(seasons)) {
-      message(glue::glue(
+      message(glue(
         "Pausing for 5 seconds before fetching the next season..."
       ))
       Sys.sleep(5)
@@ -66,7 +66,7 @@ nba_scores <- function(seasons,
   # Return nested results (list of data frames)
   if (return_nested) {
     results_list <- split(results, results$season_year)
-    names(results_list) <- glue::glue("season_{seasons}") %>% as.character()
+    names(results_list) <- glue("season_{seasons}") %>% as.character()
 
     return(results_list)
   }

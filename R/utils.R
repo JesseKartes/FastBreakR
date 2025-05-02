@@ -208,19 +208,19 @@ clean_stats_cols <- function(data) {
 #' @return The content of the HTTP response. The type of content depends on the
 #' response from the server.
 get_data <- function(url, headers = NULL, params = NULL) {
-  res <- httr::GET(
+  res <- GET(
     url = url,
-    httr::add_headers(.headers = headers),
+    add_headers(.headers = headers),
     query = params
   )
 
-  if (httr::http_status(res)$category != "Success") {
-    stop("Request failed with status: ", httr::http_status(res)$message)
+  if (http_status(res)$category != "Success") {
+    stop("Request failed with status: ", http_status(res)$message)
   }
 
   data <- res$content %>%
     rawToChar() %>%
-    jsonlite::fromJSON(simplifyVector = TRUE)
+    fromJSON(simplifyVector = TRUE)
 
   return(data)
 }
@@ -235,18 +235,18 @@ get_data <- function(url, headers = NULL, params = NULL) {
 #' @return The content of the HTTP response. The type of content depends on the
 #' response from the server.
 get_data_no_params <- function(url, headers = NULL) {
-  res <- httr::GET(
+  res <- GET(
     url = url,
-    httr::add_headers(.headers = headers)
+    add_headers(.headers = headers)
   )
 
-  if (httr::http_status(res)$category != "Success") {
-    stop("Request failed with status: ", httr::http_status(res)$message)
+  if (http_status(res)$category != "Success") {
+    stop("Request failed with status: ", http_status(res)$message)
   }
 
   data <- res$content %>%
     rawToChar() %>%
-    jsonlite::fromJSON(simplifyVector = TRUE)
+    fromJSON(simplifyVector = TRUE)
 
   return(data)
 }
@@ -258,7 +258,7 @@ get_data_no_params <- function(url, headers = NULL) {
 #' @param player_id A numeric or character vector representing the player's ID.
 #' @return A character vector containing the headshot URLs.
 get_player_headshot <- function(player_id) {
-  glue::glue(
+  glue(
     "https://cdn.nba.com/headshots/nba/latest/1040x760/{player_id}.png"
   )
 }
@@ -270,7 +270,7 @@ get_player_headshot <- function(player_id) {
 #' @param team_id A numeric or character vector representing the team's ID.
 #' @return A character vector containing the logo URLs.
 get_team_logo <- function(team_id) {
-  glue::glue("https://cdn.nba.com/logos/nba/{team_id}/primary/L/logo.svg")
+  glue("https://cdn.nba.com/logos/nba/{team_id}/primary/L/logo.svg")
 }
 
 #' Get Current Season
@@ -377,7 +377,7 @@ nba_team_colors <- function() {
 
   json <- tryCatch(
     {
-      jsonlite::fromJSON(
+      fromJSON(
         gsub("var stats_ptsd =|;", "", paste(content, collapse = "\n")),
         flatten = TRUE,
         simplifyDataFrame = TRUE
@@ -410,7 +410,7 @@ nba_team_colors <- function() {
     filter(division_id != 0) %>%
     select(team_id, team_abbreviation, team_city, team_name, team_color) %>%
     group_by(team_id, team_abbreviation, team_city, team_name) %>%
-    mutate(color_index = dplyr::row_number()) %>%
+    mutate(color_index = row_number()) %>%
     pivot_wider(
       names_from = color_index,
       values_from = team_color,

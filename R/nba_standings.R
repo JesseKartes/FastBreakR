@@ -24,7 +24,7 @@ nba_standings <- function(seasons, return_nested = FALSE) {
   # Return nested results (list of data frames)
   if (return_nested) {
     results_list <- split(results, results$season_year)
-    names(results_list) <- glue::glue("season_{seasons}") %>% as.character()
+    names(results_list) <- glue("season_{seasons}") %>% as.character()
 
     return(results_list)
   }

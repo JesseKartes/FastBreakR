@@ -2,23 +2,19 @@
 % Please edit documentation in R/nba_shots.R
 \name{process_shots}
 \alias{process_shots}
-\title{Process NBA Shots Data (function under development)}
+\title{Process NBA Shots Data}
 \usage{
 process_shots(data)
 }
 \arguments{
-\item{data}{A named list where each element represents a season. Each season
-contains a list with two data frames: \code{shots} and \code{league_avg}.}
+\item{data}{A named list or data frame with shots or league average data.}
 }
 \value{
-A named list of processed data frames for each season. Transforms the
-data to prepare for analysis.
+A named list or data frame, whichever was provided as input.
 }
 \description{
-This function is currently in development and not exported.
-}
-\details{
-To be used on the output of \code{nba_shots()}. Processes shot and league average
-data frames within each NBA season. Applies transformations to prepare the
-data for analysis.
+To be used on the output of \code{nba_shots()} or \code{nba_shots_league_avg()} within
+the \code{nba_shot_chart()} function.
+Processes shot and league average data within each NBA season.
+Applies transformations to prepare the data for analysis and visualization.
 }

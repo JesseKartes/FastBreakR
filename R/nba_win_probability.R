@@ -25,14 +25,14 @@ nba_win_probability <- function(game_ids,
   )
   num_batches <- length(batched_games)
 
-  message(glue::glue("Fetching {total_games} games in {num_batches} batches"))
+  message(glue("Fetching {total_games} games in {num_batches} batches"))
 
-  future::plan(future::multisession)
+  plan(multisession)
 
   # Process each batch sequentially with rate limiting
   results <- map_dfr(seq_along(batched_games), function(batch_num) {
     batch_games <- batched_games[[batch_num]]
-    message(glue::glue("Fetching batch {batch_num}/{num_batches}: games
+    message(glue("Fetching batch {batch_num}/{num_batches}: games
                        {batch_games[1]} to {batch_games[length(batch_games)]}"))
 
     # Fetch data in parallel for the current batch
@@ -43,16 +43,16 @@ nba_win_probability <- function(game_ids,
           process_win_probability_data(raw_data$data, raw_data$metadata)
         },
         error = function(e) {
-          message(glue::glue("Error fetching data for Game ID {.x}:
+          message(glue("Error fetching data for Game ID {.x}:
                              {e$message}"))
-          return(tibble::tibble())
+          return(tibble())
         }
       )
     })
 
     # Pause after processing a batch unless it's the last batch
     if (batch_num < num_batches) {
-      message(glue::glue("Pausing for {pause_seconds} seconds..."))
+      message(glue("Pausing for {pause_seconds} seconds..."))
       Sys.sleep(pause_seconds)
     }
 
@@ -71,7 +71,7 @@ nba_win_probability <- function(game_ids,
 #' @return A list containing the raw play-by-play data and metadata as tibbles.
 fetch_win_probability_data <- function(game_id) {
   headers <- generate_headers_stats()
-  url <- glue::glue(
+  url <- glue(
     "https://stats.nba.com/stats/winprobabilitypbp?GameID={game_id}",
     "&StartPeriod=0&EndPeriod=12&StartRange=0&EndRange=12&RangeType=1",
     "&Runtype=each%20second"

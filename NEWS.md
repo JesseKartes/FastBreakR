@@ -1,3 +1,18 @@
+## [0.1.4] - 2025-05-01
+### Added
+- Play-by-play and Shot Chart functions updates:
+- `pbp_lineups()`
+- `pbp_box_scores_lineup()`
+- `pbp_box_scores_lineup_matchups()`
+- `pbp_box_scores_player()`
+- `nba_player_news()`
+- `pbp_box_scores_player()`
+- `nba_shot_chart()`
+- PBP functions to quickly process lineup and player level box scores
+- Shot chart functions to quickly process and display shot location data
+- Updates to dependencies
+- Minor updates to code across functions for improved readability
+
 ## [0.1.3] - 2025-01-25
 ### Added
 - Play-by-play functions:
