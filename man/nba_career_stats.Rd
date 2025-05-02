@@ -15,6 +15,6 @@ nba_career_stats(player_id, per_mode = "PerGame")
 A tibble with all career totals
 }
 \description{
-This function gets the player's regular season, post-season, all-star, and
-preseason career totals.
+This function gets the player's regular season, post-season, all-star, and preseason career
+totals.
 }

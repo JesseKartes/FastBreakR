@@ -4,3 +4,7 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^data-raw$
+^__MACOSX$
+^\.lintr$
+^doc$
+^Meta$

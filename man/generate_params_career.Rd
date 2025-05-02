@@ -15,6 +15,5 @@ generate_params_career(player_id, per_mode = "PerGame")
 A named list of query parameters.
 }
 \description{
-This function generates the query parameters required for fetching the
-NBA player's career page
+This function generates the query parameters required for fetching the NBA player's career page.
 }

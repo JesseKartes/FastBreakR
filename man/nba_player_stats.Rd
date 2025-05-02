@@ -12,11 +12,10 @@ nba_player_stats(
 )
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to fetch
-NBA player stats.}
+\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to fetch NBA player stats.}
 
-\item{season_type}{A character string specifying the type of season
-(default = "Regular Season"). Valid options include:
+\item{season_type}{A character string specifying the type of season (default = "Regular Season").
+Valid options include:
 \itemize{
 \item \strong{"Pre Season"} - Pre Season games.
 \item \strong{"Regular Season"} - Regular Season games.
@@ -27,7 +26,8 @@ NBA player stats.}
 }}
 
 \item{measure_types}{A character vector specifying the types of stats
-(default = NULL (all measure types)). Valid options include:
+(default = NULL (all measure types)).
+Valid options include:
 \itemize{
 \item \strong{"Base"} - Traditional stats.
 \item \strong{"Advanced"} - Advanced stats.
@@ -36,16 +36,13 @@ NBA player stats.}
 \item \strong{"Scoring"} - Scoring stats.
 }}
 
-\item{return_nested}{A logical value. If FALSE (default), returns a single
-combined data frame for all seasons.If TRUE, returns a list of data frames,
-one for each season.}
+\item{return_nested}{A logical value. If FALSE (default), returns a single combined data frame
+for all seasons. If TRUE, returns a list of data frames, one for each season.}
 }
 \value{
-A  data frame containing player level stats for specified seasons and
-measure types.
+A  data frame containing player level stats for specified seasons and measure types.
 }
 \description{
-This function gets NBA player stats for the specified seasons returning a
-data frame. Function pauses for five seconds after each season to prevent
-timeout issues.
+This function gets NBA player stats for the specified seasons returning a data frame.
+Function pauses for five seconds after each season to prevent timeout issues.
 }

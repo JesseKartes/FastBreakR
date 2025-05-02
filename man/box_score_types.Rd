@@ -7,20 +7,18 @@
 \format{
 A list where each element is a named list with:
 \describe{
-\item{\code{endpoint}}{A character string representing the API endpoint to
-fetch data for that box score type.}
-\item{\code{list_name}}{A character string representing the list name in
-the response data. This is used to access the corresponding data from the
-API response.}
+\item{\code{endpoint}}{A character string representing the API endpoint to fetch data for that
+box score type.}
+\item{\code{list_name}}{A character string representing the list name in the response data.
+This is used to access the corresponding data from the API response.}
 }
 }
 \usage{
 box_score_types
 }
 \description{
-A list of box score options available for fetching data from the NBA Stats
-API. Each entry in the list corresponds
-to a different type of box score data, with the associated API endpoint and
-the name of the list in the returned data.
+A list of box score options available for fetching data from the NBA Stats API.
+Each entry in the list corresponds to a different type of box score data, with the associated
+API endpoint and the name of the list in the returned data.
 }
 \keyword{datasets}

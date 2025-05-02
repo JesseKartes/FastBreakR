@@ -29,12 +29,10 @@ include:
 \item{pause_seconds}{Number of seconds to pause between batches (default: 15)}
 }
 \value{
-A data frame containing box score data for the selected games and
-measure types.
+A data frame containing box score data for the selected games and measure types.
 }
 \description{
-This function gets NBA box score data for the specified \code{game_ids}, returning
-a data frame with all selected \code{measure_types}.
-Creates batches of \code{game_ids} and pauses between batches to avoid
-timeout issues.
+This function gets NBA box score data for the specified \code{game_ids}, returning a data frame with
+all selected \code{measure_types}.
+Creates batches of \code{game_ids} and pauses between batches to avoid timeout issues.
 }

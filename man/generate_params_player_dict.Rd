@@ -10,6 +10,5 @@ generate_params_player_dict()
 A named list of query parameters.
 }
 \description{
-This function generates the query parameters required for fetching the
-NBA player dictionary
+This function generates the query parameters required for fetching the NBA player dictionary.
 }

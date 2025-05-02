@@ -1,9 +1,7 @@
 #' Get NBA Play-by-Play Data
 #'
-#' This function gets play-by-play data for a vector of game IDs and returns a
-#' combined tibble.
-#' Creates batches of `game_ids` and pauses between batches to avoid timeout
-#' issues.
+#' This function gets play-by-play data for a vector of game IDs and returns a combined tibble.
+#' Creates batches of `game_ids` and pauses between batches to avoid timeout issues.
 #'
 #' @param game_ids A character vector of game IDs.
 #' @param batch_size Number of requests before pausing (default: 100)
@@ -35,8 +33,7 @@ nba_play_by_play <- function(game_ids, batch_size = 100, pause_seconds = 15) {
     batch_results <- future_map_dfr(batch_games, ~ {
       tryCatch(fetch_play_by_play_data(.x),
         error = function(e) {
-          message(glue("Error fetching data for Game ID {.x}:
-                             {e$message}"))
+          message(glue("Error fetching data for Game ID {.x}: {e$message}"))
           return(tibble())
         }
       )
@@ -65,8 +62,7 @@ fetch_play_by_play_data <- function(game_id) {
 
   all_data <- map_dfr(game_id, function(game) {
     url <- paste0(
-      "https://stats.nba.com/stats/playbyplayv2?GameID=", game,
-      "&StartPeriod=0&EndPeriod=12"
+      "https://stats.nba.com/stats/playbyplayv2?GameID=", game, "&StartPeriod=0&EndPeriod=12"
     )
 
     data <- get_data_no_params(url, headers)

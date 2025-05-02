@@ -11,24 +11,22 @@ nba_shot_chart(shot_data, interactive = TRUE, title = NULL)
 \code{loc_y}, and \code{shot_made_flag} columns (plus optional
 \code{shot_distance}, \code{shot_value}, and \code{game_date} for tooltips).}
 
-\item{interactive}{\code{logical} Whether to return an interactive
-Plotly chart (\code{TRUE}) or a static ggplot2 plot (\code{FALSE}).
-Defaults to \code{TRUE}.}
+\item{interactive}{\code{logical} Whether to return an interactive Plotly chart (\code{TRUE})
+or a static ggplot2 plot (\code{FALSE}). Defaults to \code{TRUE}.}
 
-\item{title}{A \code{character} string to use as the chart title.
-Defaults to \code{NULL}.}
+\item{title}{A \code{character} string to use as the chart title. Defaults to \code{NULL}.}
 }
 \value{
-If \code{process_shots()} returns a data frame, that data frame is
-returned. Otherwise, returns a \code{ggplot2} object (when
+If \code{process_shots()} returns a data frame, that data frame is returned.
+Otherwise, returns a \code{ggplot2} object (when
 \code{interactive = FALSE}) or a Plotly object (when
 \code{interactive = TRUE}).
 }
 \description{
 Create and return a shot chart for the given shot data, either as an
 interactive Plotly object or a static ggplot2 plot.
-Internally calls \code{process_shots()} to prepare the data, then overlays
-the shots on the half‑court background.
+Internally calls \code{process_shots()} to prepare the data, then overlays the shots on the
+half‑court background.
 }
 \examples{
 \dontrun{

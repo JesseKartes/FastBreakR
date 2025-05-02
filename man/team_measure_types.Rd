@@ -15,7 +15,6 @@ team_measure_types
 }
 \description{
 This file contains the available measure types for NBA team statistics.
-The measure types can be used to filter or categorize team stats in various
-analyses and models.
+The measure types can be used to filter or categorize team stats in various analyses and models.
 }
 \keyword{datasets}

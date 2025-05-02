@@ -10,8 +10,7 @@ add_event_info(data)
 \item{data}{A data frame containing game data with the following columns:}
 }
 \value{
-A data frame with additional columns for season year, team location,
-and event index.
+A data frame with additional columns for season year, team location, and event index.
 }
 \description{
 This function processes a given dataset by adding season year, team location,

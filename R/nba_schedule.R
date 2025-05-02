@@ -26,8 +26,7 @@ fetch_nba_schedule <- function() {
 
 #' Process NBA Schedule Data
 #'
-#' This function processes the fetched NBA schedule data by adding game and
-#' schedule details.
+#' This function processes the fetched NBA schedule data by adding game and schedule details.
 #' @param data A list containing the fetched NBA schedule data.
 #' @return A data frame with processed NBA schedule.
 process_nba_schedule <- function(data) {
@@ -76,8 +75,6 @@ process_nba_schedule <- function(data) {
 
   nba_schedule <- schedule_df %>%
     clean_names() %>%
-    # filter(!series_text %in% c("Preseason", "Championship", "All-Star Game") &
-    #            team_name != "") %>%
     mutate(
       game_date = as_date(game_date_est),
       team_name = paste0(team_city, " ", team_name)
@@ -87,9 +84,7 @@ process_nba_schedule <- function(data) {
     group_by(game_id) %>%
     mutate(
       opp_team_id = team_id[c(2, 1)],
-      opp_team_name = if_else(location == "home",
-        lag(team_name), lead(team_name)
-      )
+      opp_team_name = if_else(location == "home", lag(team_name), lead(team_name))
     ) %>%
     filter(team_id != opp_team_id) %>%
     ungroup() %>%

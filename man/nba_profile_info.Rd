@@ -7,12 +7,10 @@
 nba_profile_info(player_id)
 }
 \arguments{
-\item{player_id}{A single or vector of player IDs to fetch profile
-information for.}
+\item{player_id}{A single or vector of player IDs to fetch profile information for.}
 }
 \value{
-A tibble containing the processed profile information for the
-player(s).
+A tibble containing the processed profile information for the player(s).
 }
 \description{
 Retrieves and processes profile information for a single or multiple players

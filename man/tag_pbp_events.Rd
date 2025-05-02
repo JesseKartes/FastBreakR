@@ -13,6 +13,5 @@ tag_pbp_events(game_df)
 A tibble with logical/stat columns for each event.
 }
 \description{
-Maps each play-by-play event to a set of stat indicator
-columns (e.g., FGA, FGM, etc.).
+Maps each play-by-play event to a set of stat indicator columns (e.g., FGA, FGM, etc.).
 }

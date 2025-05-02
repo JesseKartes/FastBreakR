@@ -3,10 +3,9 @@
 #' This function gets NBA scores for the specified seasons. Function pauses for
 #' five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
-#' NBA scores.
-#' @param season_type A character string specifying the type of season. Valid
-#' options include:
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch NBA scores.
+#' @param season_type A character string specifying the type of season.
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Pre Season"} - Pre Season games.
 #'   \item \strong{"Regular Season"} - Regular Season games.
@@ -16,10 +15,8 @@
 #'   \item \strong{"PlayIn"} - Play In games.
 #' }
 #' @param return_nested A logical value. If FALSE (default), returns a single
-#' combined data frame for all seasons.If TRUE, returns a list of data frames,
-#' one for each season.
-#' @return A data frame containing the NBA scores data for the specified
-#' seasons.
+#' combined data frame for all seasons. If TRUE, returns a list of data frames, one for each season.
+#' @return A data frame containing the NBA scores data for the specified seasons.
 #' @export
 nba_scores <- function(seasons,
                        season_type = "Regular Season",

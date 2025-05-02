@@ -15,8 +15,8 @@ nba_career_splits(
 \arguments{
 \item{season}{A numeric value representing the season (e.g., 2024).}
 
-\item{season_type}{A character string specifying the type of season
-(default = "Regular Season"). Valid options include:
+\item{season_type}{A character string specifying the type of season (default = "Regular Season").
+Valid options include:
 \itemize{
 \item \strong{"Pre Season"} - Pre Season games.
 \item \strong{"Regular Season"} - Regular Season games.
@@ -26,8 +26,8 @@ nba_career_splits(
 \item \strong{"PlayIn"} - Play In games.
 }}
 
-\item{measure_type}{A character vector specifying the types of stats
-(default = "Base"). Valid options include:
+\item{measure_type}{A character vector specifying the types of stats (default = "Base").
+Valid options include:
 \itemize{
 \item \strong{"Base"} - Traditional stats.
 \item \strong{"Advanced"} - Advanced stats.
@@ -38,8 +38,8 @@ nba_career_splits(
 
 \item{player_id}{A numeric or character vector representing the player's ID}
 
-\item{per_mode}{A character string representing the aggregation method
-(default = "PerGame") Valid options include:
+\item{per_mode}{A character string representing the aggregation method (default = "PerGame").
+Valid options include:
 \itemize{
 \item \strong{"PerGame"} - Stats on per game basis.
 \item \strong{"Totals"} - Stat totals.

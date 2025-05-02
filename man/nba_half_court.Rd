@@ -10,12 +10,10 @@ nba_half_court(title = NULL)
 \item{title}{A character string to use as the plot title.}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object representing the NBA
-half‑court.
+A \code{\link[ggplot2]{ggplot}} object representing the NBA half‑court.
 }
 \description{
 Create a \pkg{ggplot2} half‑court plot of an NBA basketball court.
-Draws the court boundary, paint, free‑throw circle, restricted area,
-rim, backboard, 3‑point line, and mid‑court hash marks. To be used as a
-background for shot‑chart functions.
+Draws the court boundary, paint, free‑throw circle, restricted area, rim, backboard,
+3‑point line, and mid‑court hash marks. To be used as a background for shot‑chart functions.
 }

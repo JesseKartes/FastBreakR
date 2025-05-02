@@ -3,6 +3,7 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/LICENSE-text.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/articles/FastBreakR.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/articles/index.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/articles/pbp_vignette.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/authors.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/index.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/news/index.html</loc></url>
@@ -22,7 +23,11 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_advanced_stats.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_age.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_lineup_playtime.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_lineup_playtime_matchups.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_lineup_stats.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_matchup_stats.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_minutes_played.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/calculate_possessions_played.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/clean_stats_cols.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/combine_and_add_players.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/combine_team_and_opp_scores.html</loc></url>
@@ -40,6 +45,7 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/fetch_player_awards_data.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/fetch_player_career_data.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/fetch_player_dictionary_data.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/fetch_player_news.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/fetch_player_profile_data.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/fetch_player_splits_data.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/fetch_player_stats.html</loc></url>
@@ -63,6 +69,7 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/get_current_season.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/get_data.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/get_data_no_params.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/get_game_starters.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/get_player_headshot.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/get_player_measure_types.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/get_team_logo.html</loc></url>
@@ -70,6 +77,7 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/identify_fg_and_one.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/index.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/initial_playtime.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/initial_playtime_matchups.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/join_data_frames.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/join_scores.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/make_pbp_corrections.html</loc></url>
@@ -79,17 +87,20 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_career_splits.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_career_stats.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_fanduel.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_half_court.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_play_by_play.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_player_awards.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_player_dictionary.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_player_headshot.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_player_highs.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_player_lookup.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_player_news.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_player_stats.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_profile_info.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_profile_stats.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_schedule.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_scores.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_shot_chart.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_shots.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_shots_league_avg.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_standings.html</loc></url>
@@ -99,6 +110,9 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_team_stats.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/nba_win_probability.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/pbp_box_scores.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/pbp_box_scores_lineup.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/pbp_box_scores_lineup_matchups.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/pbp_box_scores_player.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/pbp_lineups.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/pbp_process_lineups.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/player_measure_types.html</loc></url>
@@ -116,6 +130,9 @@
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/process_win_probability_data.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/seconds_passed.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/subs_in_quarter.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/summarize_player_box.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/tag_lineup_events.html</loc></url>
+<url><loc>https://jessekartes.github.io/FastBreakR/reference/tag_pbp_events.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/team_measure_types.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/track_pbp_lineups.html</loc></url>
 <url><loc>https://jessekartes.github.io/FastBreakR/reference/track_subs_and_lineups.html</loc></url>

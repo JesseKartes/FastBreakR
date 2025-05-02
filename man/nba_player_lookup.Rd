@@ -10,6 +10,6 @@ nba_player_lookup()
 A tibble with person_id and player_name.
 }
 \description{
-This function retrieves a simplified player dictionary from the NBA API,
-including player IDs and full names.
+This function retrieves a simplified player dictionary from the NBA API, including player IDs
+and full names.
 }

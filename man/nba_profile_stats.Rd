@@ -11,8 +11,8 @@ nba_profile_stats(
 )
 }
 \arguments{
-\item{season_type}{A character string specifying the type of season
-(default = "Regular Season"). Valid options include:
+\item{season_type}{A character string specifying the type of season (default = "Regular Season").
+Valid options include:
 \itemize{
 \item \strong{"Pre Season"} - Pre Season games.
 \item \strong{"Regular Season"} - Regular Season games.
@@ -24,8 +24,8 @@ nba_profile_stats(
 
 \item{player_id}{A numeric or character vector representing the player's ID}
 
-\item{per_mode}{A character string representing the aggregation method
-(default = "PerGame") Valid options include:
+\item{per_mode}{A character string representing the aggregation method (default = "PerGame")
+Valid options include:
 \itemize{
 \item \strong{"PerGame"} - Stats on per game basis.
 \item \strong{"Totals"} - Stat totals.
@@ -35,6 +35,5 @@ nba_profile_stats(
 A list of tibbles with all profile stats
 }
 \description{
-This function gets the player's various stats by measure type and
-aggregation method.
+This function gets the player's various stats by measure type and aggregation method.
 }

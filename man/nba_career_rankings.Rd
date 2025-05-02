@@ -15,6 +15,5 @@ nba_career_rankings(player_id, per_mode = "PerGame")
 A tibble with all season rankings
 }
 \description{
-This function gets the player's season rankings for regular and
-post-season.
+This function gets the player's season rankings for regular and post-season.
 }

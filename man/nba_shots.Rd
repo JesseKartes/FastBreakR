@@ -7,11 +7,10 @@
 nba_shots(seasons, season_type = "Regular Season", return_nested = FALSE)
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to fetch
-NBA shot data.}
+\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to fetch NBA shot data.}
 
-\item{season_type}{A character string specifying the type of season. Valid
-options include:
+\item{season_type}{A character string specifying the type of season.
+Valid options include:
 \itemize{
 \item \strong{"Pre Season"} - Pre Season games.
 \item \strong{"Regular Season"} - Regular Season games.
@@ -22,15 +21,12 @@ options include:
 }}
 
 \item{return_nested}{A logical value. If FALSE (default), returns a single
-combined data frame for all seasons.If TRUE, returns a list of data frames,
-one for each season.}
+combined data frame for all seasons. If TRUE, returns a list of data frames, one for each season.}
 }
 \value{
-A named a data frame containing NBA shots data for the specified
-seasons.
+A named a data frame containing NBA shots data for the specified seasons.
 }
 \description{
-This function gets NBA shot data for the specified seasons and
-returns a data frame. Function pauses for five seconds after each season to
-prevent timeout issues.
+This function gets NBA shot data for the specified seasons and returns a data frame.
+Function pauses for five seconds after each season to prevent timeout issues.
 }

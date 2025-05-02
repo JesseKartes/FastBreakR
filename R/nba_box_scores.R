@@ -1,17 +1,15 @@
 #' Box Score Options for API Endpoints
 #'
-#' A list of box score options available for fetching data from the NBA Stats
-#' API. Each entry in the list corresponds
-#' to a different type of box score data, with the associated API endpoint and
-#' the name of the list in the returned data.
+#' A list of box score options available for fetching data from the NBA Stats API.
+#' Each entry in the list corresponds to a different type of box score data, with the associated
+#' API endpoint and the name of the list in the returned data.
 #'
 #' @format A list where each element is a named list with:
 #' \describe{
-#'   \item{\code{endpoint}}{A character string representing the API endpoint to
-#'   fetch data for that box score type.}
-#'   \item{\code{list_name}}{A character string representing the list name in
-#'   the response data. This is used to access the corresponding data from the
-#'   API response.}
+#'   \item{\code{endpoint}}{A character string representing the API endpoint to fetch data for that
+#'   box score type.}
+#'   \item{\code{list_name}}{A character string representing the list name in the response data.
+#'   This is used to access the corresponding data from the API response.}
 #' }
 #' @export
 box_score_types <- list(
@@ -55,10 +53,9 @@ box_score_types <- list(
 
 #' Get NBA Box Scores
 #'
-#' This function gets NBA box score data for the specified `game_ids`, returning
-#' a data frame with all selected `measure_types`.
-#' Creates batches of `game_ids` and pauses between batches to avoid
-#' timeout issues.
+#' This function gets NBA box score data for the specified `game_ids`, returning a data frame with
+#' all selected `measure_types`.
+#' Creates batches of `game_ids` and pauses between batches to avoid timeout issues.
 #'
 #' @param game_ids A character vector of game IDs.
 #' @param measure_types A character vector of selected box score options.
@@ -78,8 +75,7 @@ box_score_types <- list(
 #' @param batch_size Number of requests before pausing (default: 100)
 #' @param pause_seconds Number of seconds to pause between batches (default: 15)
 #'
-#' @return A data frame containing box score data for the selected games and
-#' measure types.
+#' @return A data frame containing box score data for the selected games and measure types.
 #' @export
 nba_box_scores <- function(game_ids,
                            measure_types,
@@ -106,8 +102,7 @@ nba_box_scores <- function(game_ids,
 #'
 #' This function gets NBA box score matchups data for the specified `game_ids`,
 #' returning a data frame.
-#' Creates batches of game_ids and pauses between batches to avoid
-#' timeout issues.
+#' Creates batches of game_ids and pauses between batches to avoid timeout issues.
 #'
 #' @param game_ids A character vector of game IDs.
 #' @param batch_size Number of requests before pausing (default: 100)
@@ -202,18 +197,16 @@ nba_box_scores_matchups <- function(game_ids,
 
 #' Fetch Box Score Data from API
 #'
-#' This function retrieves box score data from the NBA Stats API for given game
-#' IDs
-#' using a specified endpoint. It creates batches of game_ids and pauses between
-#' batches to avoid timeout issues.
+#' This function retrieves box score data from the NBA Stats API for given game IDs using a
+#' specified endpoint. It creates batches of game_ids and pauses between batches to avoid timeout
+#' issues.
 #'
 #' @param measure_type A vector of measure types for various box score data.
 #' @param game_ids A character vector of game IDs.
 #' @param batch_size Number of requests before pausing (default: 100)
 #' @param pause_seconds Number of seconds to pause between batches (default: 15)
 #'
-#' @return A data frame containing the box score data for the specified
-#' game IDs.
+#' @return A data frame containing the box score data for the specified game IDs.
 fetch_box_score <- function(measure_type,
                             game_ids,
                             batch_size = 100,

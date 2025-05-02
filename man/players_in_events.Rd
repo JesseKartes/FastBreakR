@@ -15,7 +15,7 @@ players_in_events(data, subs_made)
 A data frame with players involved in events but not subbed
 }
 \description{
-This function processes the input data to identify players involved in
-events (excluding substitutions) and ensures that only players who are not
-substituted are included in the final output.
+This function processes the input data to identify players involved in events
+(excluding substitutions) and ensures that only players who are not substituted are included in
+the final output.
 }

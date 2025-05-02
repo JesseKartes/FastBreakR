@@ -13,6 +13,6 @@ generate_params_box_scores(game_id)
 A named list of query parameters.
 }
 \description{
-This function generates the query parameters required for fetching NBA box
-scores data for a given season.
+This function generates the query parameters required for fetching NBA box scores data for a
+given season.
 }

@@ -11,8 +11,7 @@ get_game_starters(game_df)
 \code{game_id}, \code{secs_passed_game}, \code{lineup_home}, and \code{lineup_away}.}
 }
 \value{
-A tibble with one row per starter: game_id, player, and
-team_location.
+A tibble with one row per starter: game_id, player, and team_location.
 }
 \description{
 Extracts the five home and away starters (the first lineup) from the PBP.

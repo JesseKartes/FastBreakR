@@ -1,16 +1,13 @@
 #' Get NBA Win Probability Play-by-Play Data
 #'
-#' This function gets win probability play-by-play data for a vector of game IDs
-#' and returns a combined tibble.
-#' Creates batches of `game_ids` and pauses between batches to avoid timeout
-#' issues.
+#' This function gets win probability play-by-play data for a vector of game IDs and returns a
+#' combined tibble.
+#' Creates batches of `game_ids` and pauses between batches to avoid timeout issues.
 #'
 #' @param game_ids A character vector of game IDs.
 #' @param batch_size Number of requests per batch (default: 100).
-#' @param pause_seconds Number of seconds to pause between batches
-#' (default: 15).
-#' @return A tibble containing combined win probability play-by-play data for
-#' all game IDs.
+#' @param pause_seconds Number of seconds to pause between batches (default: 15).
+#' @return A tibble containing combined win probability play-by-play data for all game IDs.
 #' @export
 nba_win_probability <- function(game_ids,
                                 batch_size = 100,

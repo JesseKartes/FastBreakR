@@ -13,6 +13,6 @@ generate_params_standings(year)
 A named list of query parameters.
 }
 \description{
-This function generates the query parameters required for fetching NBA
-standings data for a given season.
+This function generates the query parameters required for fetching NBA standings data for a
+given season.
 }

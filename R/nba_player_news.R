@@ -26,8 +26,7 @@ nba_player_news <- function(player_id) {
     }
 
     player_url <- paste0(
-      "https://www.nba.com/player/", player_list$person_id,
-      "/", player_list$player_name
+      "https://www.nba.com/player/", player_list$person_id, "/", player_list$player_name
     )
 
     fetch_player_news(player_url) %>%

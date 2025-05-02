@@ -15,7 +15,7 @@ player_measure_types
 }
 \description{
 This file contains the available measure types for NBA player statistics.
-The measure types can be used to filter or categorize player stats in various
-analyses and models.
+The measure types can be used to filter or categorize player stats in various analyses and
+models.
 }
 \keyword{datasets}

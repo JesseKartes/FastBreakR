@@ -1,13 +1,11 @@
 #' Get NBA Shots
 #'
-#' This function gets NBA shot data for the specified seasons and
-#' returns a data frame. Function pauses for five seconds after each season to
-#' prevent timeout issues.
+#' This function gets NBA shot data for the specified seasons and returns a data frame.
+#' Function pauses for five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
-#' NBA shot data.
-#' @param season_type A character string specifying the type of season. Valid
-#' options include:
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch NBA shot data.
+#' @param season_type A character string specifying the type of season.
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Pre Season"} - Pre Season games.
 #'   \item \strong{"Regular Season"} - Regular Season games.
@@ -17,10 +15,8 @@
 #'   \item \strong{"PlayIn"} - Play In games.
 #' }
 #' @param return_nested A logical value. If FALSE (default), returns a single
-#' combined data frame for all seasons.If TRUE, returns a list of data frames,
-#' one for each season.
-#' @return A named a data frame containing NBA shots data for the specified
-#' seasons.
+#' combined data frame for all seasons. If TRUE, returns a list of data frames, one for each season.
+#' @return A named a data frame containing NBA shots data for the specified seasons.
 #' @export
 nba_shots <- function(seasons,
                       season_type = "Regular Season",
@@ -71,14 +67,13 @@ nba_shots <- function(seasons,
 
 #' Get League Average NBA Shots
 #'
-#' This function gets league average NBA shot data for the specified seasons and
-#' returns a data frame. Function pauses for five seconds after each season to
-#' prevent timeout issues.
+#' This function gets league average NBA shot data for the specified seasons and returns a
+#' data frame.
+#' Function pauses for five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
-#' NBA shot data.
-#' @param season_type A character string specifying the type of season. Valid
-#' options include:
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch NBA shot data.
+#' @param season_type A character string specifying the type of season.
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Pre Season"} - Pre Season games.
 #'   \item \strong{"Regular Season"} - Regular Season games.
@@ -88,10 +83,8 @@ nba_shots <- function(seasons,
 #'   \item \strong{"PlayIn"} - Play In games.
 #' }
 #' @param return_nested A logical value. If FALSE (default), returns a single
-#' combined data frame for all seasons.If TRUE, returns a list of data frames,
-#' one for each season.
-#' @return A named a data frame containing league average NBA shots data for the
-#' specified seasons.
+#' combined data frame for all seasons. If TRUE, returns a list of data frames, one for each season.
+#' @return A named a data frame containing league average NBA shots data for the specified seasons.
 #' @export
 nba_shots_league_avg <- function(seasons,
                                  season_type = "Regular Season",
@@ -142,12 +135,10 @@ nba_shots_league_avg <- function(seasons,
 
 #' Fetch NBA Shots from API
 #'
-#' This function fetches raw NBA shot data and league average data for a given
-#' season.
+#' This function fetches raw NBA shot data and league average data for a given season.
 #'
 #' @param season A numeric value representing the season (e.g., 2024).
-#' @param season_type A character string specifying the type of season
-#' (e.g., "Regular Season").
+#' @param season_type A character string specifying the type of season (e.g., "Regular Season").
 #' @return A list containing raw shots data and league average data.
 fetch_shots_data <- function(season, season_type) {
   headers <- generate_headers_stats()
@@ -287,13 +278,11 @@ process_shots <- function(data) {
 #' NBA Half‑Court Plot
 #'
 #' Create a \pkg{ggplot2} half‑court plot of an NBA basketball court.
-#' Draws the court boundary, paint, free‑throw circle, restricted area,
-#' rim, backboard, 3‑point line, and mid‑court hash marks. To be used as a
-#' background for shot‑chart functions.
+#' Draws the court boundary, paint, free‑throw circle, restricted area, rim, backboard,
+#' 3‑point line, and mid‑court hash marks. To be used as a background for shot‑chart functions.
 #'
 #' @param title A character string to use as the plot title.
-#' @return A \code{\link[ggplot2]{ggplot}} object representing the NBA
-#' half‑court.
+#' @return A \code{\link[ggplot2]{ggplot}} object representing the NBA half‑court.
 nba_half_court <- function(title = NULL) {
   # Helper function: create circle/arc data
   circle_arc <- function(cx, cy, r, start, end, n = 100) {
@@ -306,48 +295,40 @@ nba_half_court <- function(title = NULL) {
 
   # Court boundary (50 ft wide, 47 ft long)
   df_court_boundary <- data.frame(
-    xmin = -25, xmax = 25,
-    ymin = 0,   ymax = 47
+    xmin = -25, xmax = 25, ymin = 0, ymax = 47
   )
 
   # The paint (key) with a semi-transparent fill (16 ft wide, from 0 to 19 ft)
   df_paint <- data.frame(
-    xmin = -8, xmax = 8,
-    ymin = 0,  ymax = 19
+    xmin = -8, xmax = 8, ymin = 0, ymax = 19
   )
 
   # Free-throw circle: split into top (solid) and bottom (dashed) halves
   # (centered at (0,19))
   df_free_throw_top <- circle_arc(
-    cx = 0, cy = 19, r = 6,
-    start = 0, end = pi
+    cx = 0, cy = 19, r = 6, start = 0, end = pi
   )
   df_free_throw_bottom <- circle_arc(
-    cx = 0, cy = 19, r = 6,
-    start = pi, end = 2 * pi
+    cx = 0, cy = 19, r = 6, start = pi, end = 2 * pi
   )
 
   # Restricted area (semi-circle, oriented upward; center at (0,4))
   df_restricted <- circle_arc(
-    cx = 0, cy = 4, r = 4,
-    start = 0, end = pi
+    cx = 0, cy = 4, r = 4, start = 0, end = pi
   )
 
   # Rim: shifted so the back of the rim aligns with the backboard (at y = 4)
   df_rim <- circle_arc(
-    cx = 0, cy = 4 + 0.75, r = 0.75,
-    start = 0, end = 2 * pi
+    cx = 0, cy = 4 + 0.75, r = 0.75, start = 0, end = 2 * pi
   )
   # Optional inner rim for additional detail (using a slightly smaller radius)
   df_inner_rim <- circle_arc(
-    cx = 0, cy = 4 + 0.75, r = 0.5,
-    start = 0, end = 2 * pi
+    cx = 0, cy = 4 + 0.75, r = 0.5, start = 0, end = 2 * pi
   )
 
   # Backboard: horizontal line 6 ft wide at y = 4
   df_backboard <- data.frame(
-    x1 = -3, x2 = 3,
-    y1 = 4,  y2 = 4
+    x1 = -3, x2 = 3, y1 = 4, y2 = 4
   )
 
   # 3-pt line: corner lines and arc from (0,4)
@@ -355,8 +336,7 @@ nba_half_court <- function(title = NULL) {
   t_left <- pi - corner_to_arc_angle
   t_right <- corner_to_arc_angle
   df_3pt_arc <- circle_arc(
-    cx = 0, cy = 4, r = 23.75,
-    start = t_right, end = t_left
+    cx = 0, cy = 4, r = 23.75, start = t_right, end = t_left
   )
   corner_intersect_y <- 4 + 23.75 * sin(corner_to_arc_angle)
 
@@ -453,19 +433,17 @@ nba_half_court <- function(title = NULL) {
 #'
 #' Create and return a shot chart for the given shot data, either as an
 #' interactive Plotly object or a static ggplot2 plot.
-#' Internally calls \code{process_shots()} to prepare the data, then overlays
-#' the shots on the half‑court background.
+#' Internally calls \code{process_shots()} to prepare the data, then overlays the shots on the
+#' half‑court background.
 #'
 #' @param shot_data A \code{data.frame} containing at least \code{loc_x},
 #' \code{loc_y}, and \code{shot_made_flag} columns (plus optional
 #' \code{shot_distance}, \code{shot_value}, and \code{game_date} for tooltips).
-#' @param interactive \code{logical} Whether to return an interactive
-#' Plotly chart (\code{TRUE}) or a static ggplot2 plot (\code{FALSE}).
-#' Defaults to \code{TRUE}.
-#' @param title A \code{character} string to use as the chart title.
-#' Defaults to \code{NULL}.
-#' @return If \code{process_shots()} returns a data frame, that data frame is
-#' returned. Otherwise, returns a \code{ggplot2} object (when
+#' @param interactive \code{logical} Whether to return an interactive Plotly chart (\code{TRUE})
+#' or a static ggplot2 plot (\code{FALSE}). Defaults to \code{TRUE}.
+#' @param title A \code{character} string to use as the chart title. Defaults to \code{NULL}.
+#' @return If \code{process_shots()} returns a data frame, that data frame is returned.
+#' Otherwise, returns a \code{ggplot2} object (when
 #' \code{interactive = FALSE}) or a Plotly object (when
 #' \code{interactive = TRUE}).
 #'

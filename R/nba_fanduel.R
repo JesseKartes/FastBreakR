@@ -1,9 +1,7 @@
 #' Get NBA FanDuel Data
 #'
-#' This function gets FanDuel data for a vector of game IDs and returns a
-#' combined tibble.
-#' Creates batches of `game_ids` and pauses between batches to avoid timeout
-#' issues.
+#' This function gets FanDuel data for a vector of game IDs and returns a combined tibble.
+#' Creates batches of `game_ids` and pauses between batches to avoid timeout issues.
 #'
 #' @param game_ids A character vector of game IDs.
 #' @param batch_size Number of requests before pausing (default: 100)
@@ -38,8 +36,7 @@ nba_fanduel <- function(game_ids, batch_size = 100, pause_seconds = 15) {
           fetch_fanduel_data(.x)
         },
         error = function(e) {
-          message(glue("Error fetching data for Game ID {.x}:
-                             {e$message}"))
+          message(glue("Error fetching data for Game ID {.x}: {e$message}"))
           return(tibble())
         }
       )

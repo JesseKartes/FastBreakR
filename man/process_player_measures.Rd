@@ -7,14 +7,13 @@
 process_player_measures(player_data)
 }
 \arguments{
-\item{player_data}{A data frame containing player stats to be converted to
-numeric.}
+\item{player_data}{A data frame containing player stats to be converted to numeric.}
 }
 \value{
-A data frame with the \code{game_date} column converted to Date and other
-relevant columns converted to numeric.
+A data frame with the \code{game_date} column converted to Date and other relevant columns
+converted to numeric.
 }
 \description{
-This helper function processes player data by converting the \code{game_date}
-column to a Date object and converting necessary columns to numeric values.
+This helper function processes player data by converting the \code{game_date} column to a date
+object and converting necessary columns to numeric values.
 }

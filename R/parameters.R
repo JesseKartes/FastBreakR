@@ -153,8 +153,8 @@ generate_params_shots <- function(year, season_type) {
 
 #' Generate Query Parameters for Standings API Requests
 #'
-#' This function generates the query parameters required for fetching NBA
-#' standings data for a given season.
+#' This function generates the query parameters required for fetching NBA standings data for a
+#' given season.
 #'
 #' @param year The season year for which to generate parameters.
 #' @return A named list of query parameters.
@@ -173,8 +173,8 @@ generate_params_standings <- function(year) {
 
 #' Generate Query Parameters for Box Score API Requests
 #'
-#' This function generates the query parameters required for fetching NBA box
-#' scores data for a given season.
+#' This function generates the query parameters required for fetching NBA box scores data for a
+#' given season.
 #'
 #' @param game_id The game id for which to generate parameters.
 #' @return A named list of query parameters.
@@ -193,8 +193,7 @@ generate_params_box_scores <- function(game_id) {
 
 #' Generate Query Parameters for Player Dictionary API Requests
 #'
-#' This function generates the query parameters required for fetching the
-#' NBA player dictionary
+#' This function generates the query parameters required for fetching the NBA player dictionary.
 #'
 #' @return A named list of query parameters.
 generate_params_player_dict <- function() {
@@ -217,8 +216,7 @@ generate_params_player_dict <- function() {
 
 #' Generate Query Parameters for Team Dictionary API Requests
 #'
-#' This function generates the query parameters required for fetching the
-#' NBA team dictionary
+#' This function generates the query parameters required for fetching the NBA team dictionary.
 #'
 #' @return A named list of query parameters.
 generate_params_team_dict <- function() {
@@ -231,8 +229,7 @@ generate_params_team_dict <- function() {
 
 #' Generate Query Parameters for Player Career API Requests
 #'
-#' This function generates the query parameters required for fetching the
-#' NBA player's career page
+#' This function generates the query parameters required for fetching the NBA player's career page.
 #'
 #' @param player_id The player id for which to generate parameters.
 #' @param per_mode A character string representing the aggregation method
@@ -248,8 +245,7 @@ generate_params_career <- function(player_id, per_mode = "PerGame") {
 
 #' Generate Query Parameters for Player Splits API Requests
 #'
-#' This function generates the query parameters required for fetching the
-#' NBA player's splits page
+#' This function generates the query parameters required for fetching the NBA player's splits page.
 #'
 #' @param year The season year for which to generate parameters.
 #' @param season_type The season type for the API request.

@@ -17,8 +17,6 @@ nba_play_by_play(game_ids, batch_size = 100, pause_seconds = 15)
 A tibble containing combined play-by-play data for all game IDs.
 }
 \description{
-This function gets play-by-play data for a vector of game IDs and returns a
-combined tibble.
-Creates batches of \code{game_ids} and pauses between batches to avoid timeout
-issues.
+This function gets play-by-play data for a vector of game IDs and returns a combined tibble.
+Creates batches of \code{game_ids} and pauses between batches to avoid timeout issues.
 }

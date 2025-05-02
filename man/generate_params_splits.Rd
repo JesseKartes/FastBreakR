@@ -27,6 +27,5 @@ generate_params_splits(
 A named list of query parameters.
 }
 \description{
-This function generates the query parameters required for fetching the
-NBA player's splits page
+This function generates the query parameters required for fetching the NBA player's splits page.
 }

@@ -1,13 +1,11 @@
 #' Get NBA Team Stats
 #'
-#' This function gets NBA team stats for the specified seasons returning a
-#' data frame. Function pauses for five seconds after each season to prevent
-#' timeout issues.
+#' This function gets NBA team stats for the specified seasons returning a data frame.
+#' Function pauses for five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
-#' NBA team stats.
-#' @param season_type A character string specifying the type of season
-#' (default = "Regular Season). Valid options include:
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch NBA team stats.
+#' @param season_type A character string specifying the type of season (default = "Regular Season).
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Pre Season"} - Pre Season games.
 #'   \item \strong{"Regular Season"} - Regular Season games.
@@ -26,10 +24,8 @@
 #'   \item \strong{"Scoring"} - Scoring stats.
 #' }
 #' @param return_nested A logical value. If FALSE (default), returns a single
-#' combined data frame for all seasons.If TRUE, returns a list of data frames,
-#' one for each season.
-#' @return A  data frame containing team level stats for specified seasons and
-#' measure types.
+#' combined data frame for all seasons.If TRUE, returns a list of data frames, one for each season.
+#' @return A  data frame containing team level stats for specified seasons and measure types.
 #' @export
 nba_team_stats <- function(seasons,
                            season_type = "Regular Season",

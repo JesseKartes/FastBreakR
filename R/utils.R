@@ -37,8 +37,7 @@ calc_days_next_game <- function(game_count, game_date) {
 
 #' Determine If Back-to-Back
 #'
-#' This function determines if the current game is part of a back-to-back (B2B)
-#' scenario.
+#' This function determines if the current game is part of a back-to-back (B2B) scenario.
 #'
 #' @param days_next_game The number of days until the next game.
 #' @param days_rest The number of days of rest before the current game.
@@ -49,8 +48,7 @@ calc_is_b2b <- function(days_next_game, days_rest) {
 
 #' Determine If B2B First
 #'
-#' This function determines if the current game is the first game of a
-#' back-to-back (B2B) scenario.
+#' This function determines if the current game is the first game of a back-to-back (B2B) scenario.
 #'
 #' @param days_next_game The number of days until the next game.
 #' @return A logical value indicating if it's the first game of a back-to-back.
@@ -60,8 +58,7 @@ calc_is_b2b_first <- function(days_next_game) {
 
 #' Determine If B2B Second
 #'
-#' This function determines if the current game is the second game of a
-#' back-to-back (B2B) scenario.
+#' This function determines if the current game is the second game of a back-to-back (B2B) scenario.
 #'
 #' @param days_rest The number of days of rest before the current game.
 #' @return A logical value indicating if it's the second game of a back-to-back.
@@ -87,17 +84,14 @@ add_game_details <- function(data) {
 
 #' Join Multiple Data Frames by Removing Duplicate Columns
 #'
-#' This function takes a list of data frames and joins them using `full_join`,
-#' ensuring that only unique columns from each data frame are included in the
-#' final result. It removes any columns that already exist in the preceding data
-#' frames.
+#' This function takes a list of data frames and joins them using `full_join`, ensuring that only
+#' unique columns from each data frame are included in the final result. It removes any columns
+#' that already exist in the preceding data frames.
 #'
 #' @param data_frames A list of data frames to be joined.
-#' @param join_columns A character vector of column names to join the data
-#' frames by.
+#' @param join_columns A character vector of column names to join the data frames by.
 #'
-#' @return A single data frame with all the data frames joined by the specified
-#' columns.
+#' @return A single data frame with all the data frames joined by the specified columns.
 join_data_frames <- function(data_frames, join_columns) {
   # Use `reduce` to join all data frames in the list
   reduce(data_frames, function(x, y) {
@@ -115,15 +109,14 @@ join_data_frames <- function(data_frames, join_columns) {
 #' Consolidate NBA Statistics
 #'
 #' To be used on a list of data frames representing various NBA seasons.
-#' Consolidates the data frames by performing joins using `full_join`,
-#' ensuring that only unique columns from each data frame are included
-#' in the final result. It removes any columns that already exist in
-#' the preceding data frames.
+#' Consolidates the data frames by performing joins using `full_join`, ensuring that only unique
+#' columns from each data frame are included in the final result. It removes any columns that
+#' already exist in the preceding data frames.
 #'
-#' @param data A list of data frames. Each data frame corresponds to a season
-#' and contains various statistical categories.
-#' @return A consolidated data frame containing all the input data,
-#' or NULL if no valid join columns are found.
+#' @param data A list of data frames. Each data frame corresponds to a season and contains various
+#' statistical categories.
+#' @return A consolidated data frame containing all the input data, or NULL if no valid join columns
+#' are found.
 consolidate_stats <- function(data) {
   # Check if input is a list of data frames
   if (!all(map_lgl(data, ~ is.data.frame(.)))) {
@@ -135,8 +128,7 @@ consolidate_stats <- function(data) {
 
   # Find actual join columns present in all data frames
   actual_join_columns <- potential_join_columns[
-    potential_join_columns %in%
-      Reduce(intersect, lapply(data, names))
+    potential_join_columns %in% Reduce(intersect, lapply(data, names))
   ]
 
   # If no join columns found, return NULL
@@ -193,7 +185,8 @@ add_schedule_details <- function(data) {
 clean_stats_cols <- function(data) {
   data %>% select(
     -starts_with(c("e_", "sp_")),
-    -ends_with(c("_rank", "_flag")), -contains("fantasy")
+    -ends_with(c("_rank", "_flag")),
+    -contains("fantasy")
   )
 }
 
@@ -342,16 +335,15 @@ seconds_passed <- function(time_str, period) {
 
 #' NBA Player Lookup
 #'
-#' This function retrieves a simplified player dictionary from the NBA API,
-#' including player IDs and full names.
+#' This function retrieves a simplified player dictionary from the NBA API, including player IDs
+#' and full names.
 #'
 #' @return A tibble with person_id and player_name.
 nba_player_lookup <- function() {
   nba_player_dictionary() %>%
-    mutate(player_name = paste(player_first_name,
-      player_last_name,
-      sep = " "
-    )) %>%
+    mutate(
+      player_name = paste(player_first_name, player_last_name, sep = " ")
+    ) %>%
     select(person_id, player_name)
 }
 

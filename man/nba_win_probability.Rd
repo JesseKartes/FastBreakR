@@ -11,16 +11,13 @@ nba_win_probability(game_ids, batch_size = 100, pause_seconds = 15)
 
 \item{batch_size}{Number of requests per batch (default: 100).}
 
-\item{pause_seconds}{Number of seconds to pause between batches
-(default: 15).}
+\item{pause_seconds}{Number of seconds to pause between batches (default: 15).}
 }
 \value{
-A tibble containing combined win probability play-by-play data for
-all game IDs.
+A tibble containing combined win probability play-by-play data for all game IDs.
 }
 \description{
-This function gets win probability play-by-play data for a vector of game IDs
-and returns a combined tibble.
-Creates batches of \code{game_ids} and pauses between batches to avoid timeout
-issues.
+This function gets win probability play-by-play data for a vector of game IDs and returns a
+combined tibble.
+Creates batches of \code{game_ids} and pauses between batches to avoid timeout issues.
 }

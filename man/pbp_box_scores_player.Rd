@@ -14,8 +14,7 @@ points, lineup, and possession columns.}
 A tibble with per-player box scores for offensive possessions.
 }
 \description{
-Combines raw stats, minutes played, and possessions to produce per-player
-box scores.
+Combines raw stats, minutes played, and possessions to produce per-player box scores.
 }
 \details{
 IMPORTANT: This function can only be used after \code{pbp_lineups()} has

@@ -13,6 +13,5 @@ convert_height_to_inches(height)
 A numeric value representing height in total inches.
 }
 \description{
-Converts a height given in the format "feet-inches" (e.g., "6-2") to total
-inches.
+Converts a height given in the format "feet-inches" (e.g., "6-2") to total inches.
 }

@@ -50,3 +50,8 @@ rsconnect/
 
 # README.Rmd
 README.Rmd
+/doc/
+/Meta/
+
+# .lintr
+.lintr

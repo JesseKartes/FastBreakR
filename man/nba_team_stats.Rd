@@ -12,11 +12,10 @@ nba_team_stats(
 )
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to fetch
-NBA team stats.}
+\item{seasons}{A numeric vector of seasons (e.g., 2024) for which to fetch NBA team stats.}
 
-\item{season_type}{A character string specifying the type of season
-(default = "Regular Season). Valid options include:
+\item{season_type}{A character string specifying the type of season (default = "Regular Season).
+Valid options include:
 \itemize{
 \item \strong{"Pre Season"} - Pre Season games.
 \item \strong{"Regular Season"} - Regular Season games.
@@ -37,15 +36,12 @@ NBA team stats.}
 }}
 
 \item{return_nested}{A logical value. If FALSE (default), returns a single
-combined data frame for all seasons.If TRUE, returns a list of data frames,
-one for each season.}
+combined data frame for all seasons.If TRUE, returns a list of data frames, one for each season.}
 }
 \value{
-A  data frame containing team level stats for specified seasons and
-measure types.
+A  data frame containing team level stats for specified seasons and measure types.
 }
 \description{
-This function gets NBA team stats for the specified seasons returning a
-data frame. Function pauses for five seconds after each season to prevent
-timeout issues.
+This function gets NBA team stats for the specified seasons returning a data frame.
+Function pauses for five seconds after each season to prevent timeout issues.
 }

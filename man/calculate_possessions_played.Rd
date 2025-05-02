@@ -7,12 +7,10 @@
 calculate_possessions_played(game_df)
 }
 \arguments{
-\item{game_df}{A data frame with \code{lineup_home}, \code{lineup_away},
-and \code{possession}.}
+\item{game_df}{A data frame with \code{lineup_home}, \code{lineup_away}, and \code{possession}.}
 }
 \value{
-A tibble with player, their role (offense/defense), and
-possessions count.
+A tibble with player, their role (offense/defense), and possessions count.
 }
 \description{
 Computes total offensive/defensive possessions for each player.

@@ -9,16 +9,13 @@ join_data_frames(data_frames, join_columns)
 \arguments{
 \item{data_frames}{A list of data frames to be joined.}
 
-\item{join_columns}{A character vector of column names to join the data
-frames by.}
+\item{join_columns}{A character vector of column names to join the data frames by.}
 }
 \value{
-A single data frame with all the data frames joined by the specified
-columns.
+A single data frame with all the data frames joined by the specified columns.
 }
 \description{
-This function takes a list of data frames and joins them using \code{full_join},
-ensuring that only unique columns from each data frame are included in the
-final result. It removes any columns that already exist in the preceding data
-frames.
+This function takes a list of data frames and joins them using \code{full_join}, ensuring that only
+unique columns from each data frame are included in the final result. It removes any columns
+that already exist in the preceding data frames.
 }

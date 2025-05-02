@@ -13,6 +13,5 @@ process_nba_schedule(data)
 A data frame with processed NBA schedule.
 }
 \description{
-This function processes the fetched NBA schedule data by adding game and
-schedule details.
+This function processes the fetched NBA schedule data by adding game and schedule details.
 }

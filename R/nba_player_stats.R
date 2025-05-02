@@ -1,13 +1,11 @@
 #' Get NBA Player Stats
 #'
-#' This function gets NBA player stats for the specified seasons returning a
-#' data frame. Function pauses for five seconds after each season to prevent
-#' timeout issues.
+#' This function gets NBA player stats for the specified seasons returning a data frame.
+#' Function pauses for five seconds after each season to prevent timeout issues.
 #'
-#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch
-#' NBA player stats.
-#' @param season_type A character string specifying the type of season
-#' (default = "Regular Season"). Valid options include:
+#' @param seasons A numeric vector of seasons (e.g., 2024) for which to fetch NBA player stats.
+#' @param season_type A character string specifying the type of season (default = "Regular Season").
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Pre Season"} - Pre Season games.
 #'   \item \strong{"Regular Season"} - Regular Season games.
@@ -17,7 +15,8 @@
 #'   \item \strong{"PlayIn"} - Play In games.
 #' }
 #' @param measure_types A character vector specifying the types of stats
-#' (default = NULL (all measure types)). Valid options include:
+#' (default = NULL (all measure types)).
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Base"} - Traditional stats.
 #'   \item \strong{"Advanced"} - Advanced stats.
@@ -25,11 +24,9 @@
 #'   \item \strong{"Misc"} - Misc stats.
 #'   \item \strong{"Scoring"} - Scoring stats.
 #' }
-#' @param return_nested A logical value. If FALSE (default), returns a single
-#' combined data frame for all seasons.If TRUE, returns a list of data frames,
-#' one for each season.
-#' @return A  data frame containing player level stats for specified seasons and
-#' measure types.
+#' @param return_nested A logical value. If FALSE (default), returns a single combined data frame
+#' for all seasons. If TRUE, returns a list of data frames, one for each season.
+#' @return A  data frame containing player level stats for specified seasons and measure types.
 #' @export
 nba_player_stats <- function(seasons,
                              season_type = "Regular Season",
@@ -96,14 +93,11 @@ nba_player_stats <- function(seasons,
 
 #' Fetch NBA Player Stats from API
 #'
-#' This function fetches and cleans NBA player stats for a specified season and
-#' all measure types.
+#' This function fetches and cleans NBA player stats for a specified season and all measure types.
 #'
 #' @param season A numeric value representing the season (e.g., 2024).
-#' @param season_type A character string specifying the type of season
-#' (e.g., "Regular Season").
-#' @param measure_type A character string specifying the measure type
-#' (e.g., "Base").
+#' @param season_type A character string specifying the type of season (e.g., "Regular Season").
+#' @param measure_type A character string specifying the measure type (e.g., "Base").
 #' @return A data frame with cleaned NBA player stats.
 fetch_player_stats <- function(season, season_type, measure_type) {
   headers <- generate_headers_stats()
@@ -128,13 +122,12 @@ fetch_player_stats <- function(season, season_type, measure_type) {
 
 #' Process Player Data
 #'
-#' This helper function processes player data by converting the `game_date`
-#' column to a Date object and converting necessary columns to numeric values.
+#' This helper function processes player data by converting the `game_date` column to a date
+#' object and converting necessary columns to numeric values.
 #'
-#' @param player_data A data frame containing player stats to be converted to
-#' numeric.
-#' @return A data frame with the `game_date` column converted to Date and other
-#' relevant columns converted to numeric.
+#' @param player_data A data frame containing player stats to be converted to numeric.
+#' @return A data frame with the `game_date` column converted to Date and other relevant columns
+#' converted to numeric.
 #' @export
 process_player_measures <- function(player_data) {
   player_data <- player_data %>%

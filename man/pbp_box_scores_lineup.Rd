@@ -7,8 +7,7 @@
 pbp_box_scores_lineup(game_df)
 }
 \arguments{
-\item{game_df}{A data frame of play-by-play data processed with
-\code{pbp_lineups()}}
+\item{game_df}{A data frame of play-by-play data processed with \code{pbp_lineups()}}
 }
 \value{
 A tibble containing box scores for all lineups across multiple games

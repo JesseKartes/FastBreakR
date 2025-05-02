@@ -20,11 +20,10 @@ A data frame containing:
 - Possession end markers and team ownership of each possession.
 }
 \description{
-This function processes raw play-by-play (pbp) data, performs corrections to
-remove errors, adds missing player information, and generates lineups for
-each play-by-play event. It also marks the end of each possession and assigns
-the possessing team. The resulting data can be used to analyze player
-performance and lineup efficiency.
+This function processes raw play-by-play (pbp) data, performs corrections to remove errors,
+adds missing player information, and generates lineups for each play-by-play event.
+It also marks the end of each possession and assigns the possessing team.
+The resulting data can be used to analyze player performance and lineup efficiency.
 }
 \details{
 The function performs the following steps:

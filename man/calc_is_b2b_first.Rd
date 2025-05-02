@@ -13,6 +13,5 @@ calc_is_b2b_first(days_next_game)
 A logical value indicating if it's the first game of a back-to-back.
 }
 \description{
-This function determines if the current game is the first game of a
-back-to-back (B2B) scenario.
+This function determines if the current game is the first game of a back-to-back (B2B) scenario.
 }

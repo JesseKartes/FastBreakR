@@ -19,6 +19,5 @@ A tibble containing combined box score matchup data for all game IDs.
 \description{
 This function gets NBA box score matchups data for the specified \code{game_ids},
 returning a data frame.
-Creates batches of game_ids and pauses between batches to avoid
-timeout issues.
+Creates batches of game_ids and pauses between batches to avoid timeout issues.
 }

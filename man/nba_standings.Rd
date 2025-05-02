@@ -7,18 +7,14 @@
 nba_standings(seasons, return_nested = FALSE)
 }
 \arguments{
-\item{seasons}{A numeric vector of seasons for which to get the standings
-data.}
+\item{seasons}{A numeric vector of seasons for which to get the standings data.}
 
 \item{return_nested}{A logical value. If FALSE (default), returns a single
-combined data frame for all seasons. If TRUE, returns a list of
-data frames, one for each season.}
+combined data frame for all seasons. If TRUE, returns a list of data frames, one for each season.}
 }
 \value{
-A data frame containing the NBA standings data for the specified
-seasons.
+A data frame containing the NBA standings data for the specified seasons.
 }
 \description{
-This function gets NBA standings as a data frame for a single or multiple
-seasons.
+This function gets NBA standings as a data frame for a single or multiple seasons.
 }

@@ -16,12 +16,10 @@ fetch_box_score(measure_type, game_ids, batch_size = 100, pause_seconds = 15)
 \item{pause_seconds}{Number of seconds to pause between batches (default: 15)}
 }
 \value{
-A data frame containing the box score data for the specified
-game IDs.
+A data frame containing the box score data for the specified game IDs.
 }
 \description{
-This function retrieves box score data from the NBA Stats API for given game
-IDs
-using a specified endpoint. It creates batches of game_ids and pauses between
-batches to avoid timeout issues.
+This function retrieves box score data from the NBA Stats API for given game IDs using a
+specified endpoint. It creates batches of game_ids and pauses between batches to avoid timeout
+issues.
 }

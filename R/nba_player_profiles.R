@@ -3,10 +3,8 @@
 #'
 #' Retrieves and processes profile information for a single or multiple players
 #'
-#' @param player_id A single or vector of player IDs to fetch profile
-#' information for.
-#' @return A tibble containing the processed profile information for the
-#' player(s).
+#' @param player_id A single or vector of player IDs to fetch profile information for.
+#' @return A tibble containing the processed profile information for the player(s).
 #' @export
 nba_profile_info <- function(player_id) {
   results <- map_dfr(player_id, function(id) {
@@ -14,10 +12,9 @@ nba_profile_info <- function(player_id) {
 
     all_player_data %>%
       select(
-        person_id, display_first_last, birthdate, school, country, height,
-        weight, season_exp, jersey, position, team_id, team_name,
-        team_abbreviation, team_city, from_year, to_year, draft_year,
-        draft_round, draft_number
+        person_id, display_first_last, birthdate, school, country, height, weight, season_exp,
+        jersey, position, team_id, team_name, team_abbreviation, team_city,
+        from_year, to_year, draft_year, draft_round, draft_number
       ) %>%
       mutate(
         height_inches = convert_height_to_inches(height),
@@ -44,8 +41,7 @@ fetch_profile_info <- function(player_id) {
 
   all_data <- map_dfr(player_id, function(player) {
     url <- paste0(
-      "https://stats.nba.com/stats/commonplayerinfo?LeagueID=00&PlayerID=",
-      player
+      "https://stats.nba.com/stats/commonplayerinfo?LeagueID=00&PlayerID=", player
     )
 
     data <- get_data_no_params(url, headers)
@@ -68,8 +64,7 @@ fetch_profile_info <- function(player_id) {
 # Conversion functions
 #' Convert Height from Feet-Inches to Inches
 #'
-#' Converts a height given in the format "feet-inches" (e.g., "6-2") to total
-#' inches.
+#' Converts a height given in the format "feet-inches" (e.g., "6-2") to total inches.
 #'
 #' @param height A character string representing height in "feet-inches" format.
 #' @return A numeric value representing height in total inches.
@@ -123,11 +118,10 @@ calculate_age <- function(birthdate) {
 
 #' Get Player Profile Stats
 #'
-#' This function gets the player's various stats by measure type and
-#' aggregation method.
+#' This function gets the player's various stats by measure type and aggregation method.
 #'
-#' @param season_type A character string specifying the type of season
-#' (default = "Regular Season"). Valid options include:
+#' @param season_type A character string specifying the type of season (default = "Regular Season").
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Pre Season"} - Pre Season games.
 #'   \item \strong{"Regular Season"} - Regular Season games.
@@ -137,8 +131,8 @@ calculate_age <- function(birthdate) {
 #'   \item \strong{"PlayIn"} - Play In games.
 #' }
 #' @param player_id A numeric or character vector representing the player's ID
-#' @param per_mode A character string representing the aggregation method
-#' (default = "PerGame") Valid options include:
+#' @param per_mode A character string representing the aggregation method (default = "PerGame")
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"PerGame"} - Stats on per game basis.
 #'   \item \strong{"Totals"} - Stat totals.
@@ -228,8 +222,8 @@ process_profile_data <- function(data) {
 #' This function gets the player's various splits by measure type and season.
 #'
 #' @param season A numeric value representing the season (e.g., 2024).
-#' @param season_type A character string specifying the type of season
-#' (default = "Regular Season"). Valid options include:
+#' @param season_type A character string specifying the type of season (default = "Regular Season").
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Pre Season"} - Pre Season games.
 #'   \item \strong{"Regular Season"} - Regular Season games.
@@ -238,8 +232,8 @@ process_profile_data <- function(data) {
 #'   \item \strong{"IST"} - NBA Cup games.
 #'   \item \strong{"PlayIn"} - Play In games.
 #' }
-#' @param measure_type A character vector specifying the types of stats
-#' (default = "Base"). Valid options include:
+#' @param measure_type A character vector specifying the types of stats (default = "Base").
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"Base"} - Traditional stats.
 #'   \item \strong{"Advanced"} - Advanced stats.
@@ -248,8 +242,8 @@ process_profile_data <- function(data) {
 #'   \item \strong{"Scoring"} - Scoring stats.
 #' }
 #' @param player_id A numeric or character vector representing the player's ID
-#' @param per_mode A character string representing the aggregation method
-#' (default = "PerGame") Valid options include:
+#' @param per_mode A character string representing the aggregation method (default = "PerGame").
+#' Valid options include:
 #' \itemize{
 #'   \item \strong{"PerGame"} - Stats on per game basis.
 #'   \item \strong{"Totals"} - Stat totals.
@@ -358,8 +352,8 @@ nba_player_highs <- function(player_id) {
 
 #' Get Player Career Totals
 #'
-#' This function gets the player's regular season, post-season, all-star, and
-#' preseason career totals.
+#' This function gets the player's regular season, post-season, all-star, and preseason career
+#' totals.
 #'
 #' @param player_id A numeric or character vector representing the player's ID
 #' @param per_mode A character string representing the aggregation method
@@ -394,8 +388,7 @@ nba_career_stats <- function(player_id, per_mode = "PerGame") {
 
 #' Get Player Career Rankings
 #'
-#' This function gets the player's season rankings for regular and
-#' post-season.
+#' This function gets the player's season rankings for regular and post-season.
 #'
 #' @param player_id A numeric or character vector representing the player's ID
 #' @param per_mode A character string representing the aggregation method
