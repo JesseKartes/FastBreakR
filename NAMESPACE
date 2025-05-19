@@ -29,6 +29,9 @@ export(pbp_lineups)
 export(pbp_box_scores_lineup)
 export(pbp_box_scores_lineup_matchups)
 export(pbp_box_scores_player)
+export(pbp_advanced_lineup)
+export(pbp_advanced_player)
+export(pbp_usage_player)
 
 # Import packages
 import(dplyr)

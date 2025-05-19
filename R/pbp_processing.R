@@ -119,7 +119,7 @@ pbp_box_scores_lineup <- function(game_df) {
           lineup_box_score,
           by = c("game_id", "lineup", "period", "team_name", "team_location")
         ) %>%
-        arrange(desc(lineup_role), period, team_location, lineup_index)
+        arrange(lineup_role, period, team_location, lineup_index)
 
       return(final_box_score)
     }) %>%
@@ -198,17 +198,20 @@ pbp_box_scores_player <- function(game_df) {
   poss <- calculate_possessions_played(game_df)
 
   player_box_final <- base_box %>%
-    left_join(mins, by = c("player", "period")) %>%
-    left_join(poss, by = c("player", "period")) %>%
+    full_join(mins, by = c("game_id", "period", "team_location", "team_name",  "player")) %>%
+    left_join(poss, by = c("period", "player")) %>%
     left_join(
       get_game_starters(game_df) %>% mutate(starter = TRUE),
-      by = c("game_id", "player", "period")
+      by = c("game_id", "period", "player")
     ) %>%
     replace_na(list(starter = FALSE)) %>%
     filter(player_role == "offense") %>%
     select(
       game_id, period, team_location, team_name, player, starter,
-      total_minutes, minutes_played, fgm:foul, poss, pts
+      total_minutes, minutes_played, fgm:pfd, poss, pts
+    ) %>%
+    mutate(
+      across(fgm:pts, ~ coalesce(.x, 0))
     ) %>%
     arrange(game_id, period, team_location, desc(starter), player)
 
@@ -261,8 +264,10 @@ tag_pbp_events <- function(game_df) {
       # misc
       stl = FALSE,
       blk = FALSE,
+      blka = eventmsgtype == 2 & str_detect(desc, regex("BLOCK", ignore_case = TRUE)),
       tov = eventmsgtype == 5,
-      foul = eventmsgtype == 6,
+      pf = eventmsgtype == 6,
+      pfd = FALSE,
 
       # points
       pts = shot_pts_home + shot_pts_away
@@ -293,8 +298,10 @@ tag_pbp_events <- function(game_df) {
       reb = FALSE,
       stl = FALSE,
       blk = FALSE,
+      blka = FALSE,
       tov = FALSE,
-      foul = FALSE,
+      pf = FALSE,
+      pfd = FALSE,
       pts = 0
     )
 
@@ -325,8 +332,10 @@ tag_pbp_events <- function(game_df) {
       reb = FALSE,
       stl = FALSE,
       blk = TRUE,
+      blka = FALSE,
       tov = FALSE,
-      foul = FALSE,
+      pf = FALSE,
+      pfd = FALSE,
       pts = 0
     )
 
@@ -360,15 +369,54 @@ tag_pbp_events <- function(game_df) {
       reb = FALSE,
       stl = TRUE,
       blk = FALSE,
+      blka = FALSE,
       tov = FALSE,
-      foul = FALSE,
+      pf = FALSE,
+      pfd = FALSE,
       pts = 0
     )
 
-  # 5) Combine and sort
+  # 5) Foul events
+  foul_events <- df %>%
+    filter(
+      eventmsgtype == 6
+    ) %>%
+    mutate(
+      team_location2 = if_else(team_location == "away", "home", "away")
+    ) %>%
+    transmute(
+      game_id,
+      secs_passed_game,
+      player = player2_name,
+      team_name = player2_team_abbreviation,
+      team_location = if_else(team_location == "away", "home", "away"),
+      period,
+
+      # all other stats are zero/false
+      fgm = FALSE,
+      fga = FALSE,
+      fg3m = FALSE,
+      fg3a = FALSE,
+      ftm = FALSE,
+      fta = FALSE,
+      oreb = FALSE,
+      dreb = FALSE,
+      reb = FALSE,
+      ast = FALSE,
+      reb = FALSE,
+      stl = FALSE,
+      blk = FALSE,
+      blka = FALSE,
+      tov = FALSE,
+      pf = FALSE,
+      pfd = TRUE,
+      pts = 0
+    )
+
+  # 6) Combine and sort
   tagged_events <- bind_rows(
     primary_events,
-    assist_events, block_events, steal_events
+    assist_events, block_events, steal_events, foul_events
   ) %>%
     arrange(game_id, secs_passed_game)
 
@@ -410,19 +458,27 @@ calculate_minutes_played <- function(game_df) {
     )
 
   home_min <- intervals %>%
-    select(interval, home_list, period) %>%
+    select(game_id, interval, home_list, period, home_team_name) %>%
     unnest(home_list) %>%
-    group_by(player = home_list, period) %>%
-    summarize(sec_played = sum(interval), .groups = "drop")
+    group_by(game_id, player = home_list, period, home_team_name) %>%
+    summarize(sec_played = sum(interval), .groups = "drop") %>%
+    mutate(
+      team_location = "home",
+      team_name = home_team_name
+    )
 
   away_min <- intervals %>%
-    select(interval, away_list, period) %>%
+    select(game_id, interval, away_list, period, away_team_name) %>%
     unnest(away_list) %>%
-    group_by(player = away_list, period) %>%
-    summarize(sec_played = sum(interval), .groups = "drop")
+    group_by(game_id, player = away_list, period, away_team_name) %>%
+    summarize(sec_played = sum(interval), .groups = "drop") %>%
+    mutate(
+      team_location = "away",
+      team_name = away_team_name
+    )
 
   minutes_played <- bind_rows(home_min, away_min) %>%
-    group_by(player, period) %>%
+    group_by(game_id, player, period, team_location, team_name) %>%
     summarize(
       total_sec = sum(sec_played),
       total_minutes = total_sec / 60,
@@ -772,7 +828,10 @@ combine_and_add_players <- function(subs_made, other_players) {
     quarter_start_lineups
   ) %>%
     filter(
-      !(game_id == "0022200140" & name_player == "Dennis Schroder" & period == 4)
+      !(game_id == "0022200140" & name_player == "Dennis Schroder" & period == 4),
+      !(game_id == "0021600668" & name_player == "Ian Clark" & period == 4),
+      !(game_id == "0021600655" & name_player == "Derrick Williams" & period == 1),
+      !(game_id == "0021600235" & name_player == "Malik Beaseley" & period == 4)
     )
 
   return(quarter_start_lineups)
@@ -1161,6 +1220,12 @@ add_pbp_possessions <- function(data) {
       ),
       poss_team = case_when(
         possession == 1 &
+          eventmsgtype == 4 &
+          team_location == "home" ~ "away",
+        possession == 1 &
+          eventmsgtype == 4 &
+          team_location == "away" ~ "home",
+        possession == 1 &
           team_location == "home" ~ "home",
         possession == 1 &
           team_location == "away" ~ "away"
@@ -1539,11 +1604,26 @@ tag_lineup_events <- function(game_df, mode = c("lineup", "matchup")) {
     ) %>%
     select(-lineup_tmp)
 
-  df <- bind_rows(df, block_events, steal_events) %>%
+  foul_events <- df %>%
+    filter(eventmsgtype == 6) %>%
+    mutate(
+      lineup_tmp = lineup,
+      lineup = opp_lineup,
+      opp_lineup = lineup_tmp,
+      team_name = if_else(team_name == away_team_name, home_team_name, away_team_name),
+      team_location = if_else(team_location == "away", "home", "away"),
+      possession = 0,
+      foul_drawn = TRUE,
+      eventmsgtype = "0"
+    ) %>%
+    select(-lineup_tmp)
+
+  df <- bind_rows(df, block_events, steal_events, foul_events) %>%
     arrange(game_id, secs_passed_game) %>%
     replace_na(list(
       steal = FALSE,
-      block = FALSE
+      block = FALSE,
+      foul_drawn = FALSE
     ))
 
   df %>%
@@ -1565,68 +1645,449 @@ tag_lineup_events <- function(game_df, mode = c("lineup", "matchup")) {
       ast = eventmsgtype == 1 & !is.na(player2_name),
       stl = steal == TRUE,
       blk = block == TRUE,
+      blka = eventmsgtype == 2 & str_detect(desc, regex("BLOCK", ignore_case = TRUE)),
       tov = eventmsgtype == 5,
-      foul = eventmsgtype == 6,
+      pf = eventmsgtype == 6,
+      pfd = foul_drawn == TRUE,
       poss = possession == 1,
       pts = lineup_pts
     )
 }
 
+#' Compute Advanced Lineup Stats
+#'
+#' Calculates a suite of offensive and defensive advanced metrics for a single
+#' lineup role by joining base box‑score counts with the opponent’s stats,
+#' cleaning, and rounding results.
+#'
+#' @param pbp_bs A tibble of lineup box‑score counts as returned by
+#'   \code{pbp_box_scores_lineup()}, containing columns
+#'   \code{game_id}, \code{period}, \code{lineup}, \code{poss}, \code{pts},
+#'   etc.
+#' @param base_role Character; the \code{lineup_role} (e.g. \code{"lineup"}) to
+#'   treat as the “offense” for which metrics will be computed.
+#' @param opp_role Character; the \code{lineup_role} (e.g. \code{"opp_lineup"})
+#'   to treat as the “defender,” whose counts will be prefixed with \code{opp_}.
+#' @return A tibble with one row per \code{game_id} × \code{period} ×
+#'   \code{lineup}, containing all standard advanced metrics:
+#'   \code{efg_pct}, \code{ts_pct}, \code{ortg}, \code{drtg}, \code{nrtg},
+#'   \code{ast_pct}, \code{ast_tov}, \code{ast_ratio}, \code{oreb_pct},
+#'   \code{dreb_pct}, \code{trb_pct}, \code{tov_pct}, \code{usage_pct},
+#'   \code{fg2a_pct}, \code{fg3a_pct}, \code{ftr}, \code{stl_pct},
+#'   \code{blk_pct}, \code{ppp}, \code{pm}, \code{pace}, plus the original
+#'   counting stats and a \code{lineup_role} column set to \code{base_role}.
+compute_lineup_advanced_stats <- function(pbp_bs, base_role, opp_role) {
+  base_stats <- pbp_bs %>%
+    filter(lineup_role == base_role) %>%
+    select(-lineup_role)
 
-#' Calculate Lineup Advanced Stats (this function is under development)
-#'
-#' This function is a work in progress and not ready for use
-#'
-#' This function calculates the advanced stats for each lineup to be used in
-#' calculating play-by-play box scores.
-#'
-#' @param lineup_stats A data frame containing play-by-play data with lineups
-#' and stats.
-#' @return A tibble containing advanced stats data.
-calculate_advanced_stats <- function(lineup_stats) {
-  advanced_stats <- lineup_stats %>%
-    filter(!is.na(lineup)) %>%
-    group_by(game_id, team_location, team_name, period, lineup) %>%
-    summarize(across(fgm:pts, sum), .groups = "drop") %>%
-    left_join(
-      lineup_stats %>%
-        filter(!is.na(lineup)) %>%
-        group_by(opp_lineup) %>%
-        summarize(across(fgm:pts, sum), .groups = "drop"),
-      by = c("lineup" = "opp_lineup"), suffix = c("", "_opp")
-    ) %>%
+  opp_stats <- pbp_bs %>%
+    filter(lineup_role == opp_role) %>%
+    select(game_id, period, lineup, fgm:pts) %>%
+    rename_with(~ paste0("opp_", .x), -c(game_id, period, lineup))
+
+  adv_cols <- c(
+    "efg_pct","ts_pct","ortg","drtg","nrtg",
+    "ast_pct","ast_tov","ast_ratio",
+    "oreb_pct","dreb_pct","trb_pct",
+    "tov_pct","usage_pct","fg2a_pct","fg3a_pct",
+    "ftr","stl_pct","blk_pct","ppp","pm","pace"
+  )
+
+  base_stats %>%
+    left_join(opp_stats, by = c("game_id","period","lineup")) %>%
+    mutate(across(where(is.numeric), ~ replace(., is.na(.) | is.nan(.), 0))) %>%
     mutate(
-      plus_minus = pts - pts_opp,
-      fg_pct = fgm / fga,
-      fg3_pct = fg3m / fg3a,
-      ft_pct = ftm / fta,
-      ortg = (pts / poss) * 100,
-      drtg = (pts_opp / poss_opp) * 100,
-      nrtg = ortg - drtg,
-      ast_pct = ast / fgm,
-      ast_tov = if_else(tov > 0, ast / tov, ast / 1),
-      ast_ratio = ast / poss,
-      oreb_pct = oreb / (oreb + dreb_opp),
-      dreb_pct = dreb / (dreb + oreb_opp),
-      tov_pct = tov / poss,
       efg_pct = (fgm + 0.5 * fg3m) / fga,
       ts_pct = pts / (2 * (fga + 0.44 * fta)),
-      usage_pct = poss / (sum(poss + poss_opp, na.rm = TRUE))
+      ortg = (pts / poss) * 100,
+      drtg = (opp_pts / opp_poss) * 100,
+      nrtg = ortg - drtg,
+      ast_pct = if_else(fgm > 0, ast / fgm, 0),
+      ast_tov = if_else(tov > 0, ast / tov, 0),
+      ast_ratio = ast / poss,
+      oreb_pct = oreb / (oreb + opp_dreb),
+      dreb_pct = dreb / (dreb + opp_oreb),
+      trb_pct = (oreb + dreb) / (oreb + dreb + opp_oreb + opp_dreb),
+      tov_pct = tov / poss,
+      usage_pct = ((fga + 0.5*fta + tov) / poss) * 100, # NBA.com uses 0.5 / NBA Stuffer uses 0.44
+      fg2a_pct = (fgm - fg3m) / (fga - fg3a),
+      fg3a_pct = fg3a / fga,
+      ftr = fta / fga,
+      stl_pct = stl / opp_poss,
+      blk_pct = blk / opp_poss,
+      ppp = pts / poss,
+      pm = pts - opp_pts,
+      pace = poss / total_minutes * 48
     ) %>%
+    replace_na(as.list(set_names(rep(0, length(adv_cols)), adv_cols))) %>%
+    mutate(across(matches("pct$|rtg$|ratio$|ftr|ppp|pace"), \(x) round(x, 3))) %>%
+    select(game_id:minutes_played, fgm:pts, efg_pct:pace) %>%
+    mutate(lineup_role = base_role)
+}
+
+#' Calculate Lineup Advanced Stats Box Score
+#'
+#' Wrapper that takes play‑by‑play data (processed by \code{pbp_lineups()})
+#' and returns a box‑score–style tibble of advanced metrics for each lineup
+#' and its opponent.
+#'
+#' @param game_df A tibble of play‑by‑play events, as returned by
+#'   \code{pbp_lineups()}.
+#' @return A tibble with one row per \code{lineup_role} per \code{lineup},
+#'   containing all advanced metrics for both offense (\code{lineup}) and
+#'   defense (\code{opp_lineup}).
+#' @export
+pbp_advanced_lineup <- function(game_df) {
+  pbp_bs <- pbp_box_scores_lineup(game_df)
+
+  # Define the two role pairs
+  roles <- list(
+    list(base_role = "lineup", opp_role = "opp_lineup"),
+    list(base_role = "opp_lineup", opp_role = "lineup")
+  )
+
+  # Map over each pair, calling your helper
+  stats_list <- map(
+    roles,
+    ~ compute_lineup_advanced_stats(
+      base_role = .x$base_role,
+      opp_role = .x$opp_role,
+      pbp_bs = pbp_bs
+    )
+  )
+
+  # Bind the two results into one tibble
+  list_rbind(stats_list)
+}
+
+#' Summarize Opponent Points and Possessions by Defender
+#'
+#' Processes lineup‑aware play‑by‑play data to compute, for each defender,
+#' the total opponent field goals, free throws, rebounds, assists, steals,
+#' blocks, turnovers, fouls, possessions, and points they faced.
+#'
+#' @param game_df A tibble of play‑by‑play events (from \code{pbp_lineups()})
+#'   which must include \code{possession}, \code{poss_team},
+#'   \code{lineup_home_pt}, \code{lineup_away_pt}, \code{shot_pts_home},
+#'   and \code{shot_pts_away}.
+#' @return A tibble with one row per \code{game_id} × \code{period} ×
+#'   \code{player}, containing:
+#'   \itemize{
+#'     \item \code{opp_fgm}, \code{opp_fga}, \code{opp_fg3m}, \code{opp_fg3a},
+#'           \code{opp_ftm}, \code{opp_fta}
+#'     \item \code{opp_oreb}, \code{opp_dreb}, \code{opp_reb}
+#'     \item \code{opp_ast}, \code{opp_stl}, \code{opp_blk},
+#'           \code{opp_tov}, \code{opp_pf}
+#'     \item \code{opp_poss}: total opponent possessions faced
+#'     \item \code{opp_pts}: total points scored against the defender
+#'   }
+summarize_player_def_stats <- function(game_df) {
+  df <- game_df %>%
+    # 1) make sure every row “knows” which team had the ball & who was on court
+    group_by(game_id, period) %>%
+    fill(poss_team, lineup_home, lineup_away, .direction = "up") %>%
+    ungroup()
+
+  block_events <- game_df %>%
+    group_by(game_id, period) %>%
+    fill(poss_team, lineup_home, lineup_away, .direction = "up") %>%
+    ungroup() %>%
     mutate(
-      across(
-        where(is.numeric),
-        ~ replace(., is.na(.) | is.nan(.), 0)
-      ),
-      across(
-        matches("pct$|ratio$|rtg$"), ~ round(., 3)
+      desc = paste0(
+        coalesce(homedescription, ""),
+        if_else(!is.na(homedescription) & !is.na(visitordescription), "; ", ""),
+        coalesce(visitordescription, "")
       )
     ) %>%
-    filter(!is.na(team_name)) %>%
-    select(
-      game_id:fga, fg_pct, fg3m:fg3a, fg3_pct, ftm:fta, ft_pct, oreb:foul, pts, poss, ortg:usage_pct
-    ) %>%
-    arrange(team_location, period)
+    filter(str_detect(desc, regex("BLOCK", ignore_case = TRUE))) %>%
+    mutate(
+      poss_team = if_else(poss_team == "away", "home", "away"),
+      possession = 0,
+      block = TRUE,
+      eventmsgtype = "0"
+    )
 
-  return(advanced_stats)
+  steal_events <- game_df %>%
+    group_by(game_id, period) %>%
+    fill(poss_team, lineup_home, lineup_away, .direction = "up") %>%
+    ungroup() %>%
+    mutate(
+      desc = paste0(
+        coalesce(homedescription, ""),
+        if_else(!is.na(homedescription) & !is.na(visitordescription), "; ", ""),
+        coalesce(visitordescription, "")
+      )
+    ) %>%
+    filter(str_detect(desc, regex("STEAL", ignore_case = TRUE))) %>%
+    mutate(
+      poss_team = if_else(poss_team == "away", "home", "away"),
+      possession = 0,
+      steal = TRUE,
+      eventmsgtype = "0"
+    )
+
+  df <- bind_rows(df, block_events, steal_events) %>%
+    arrange(game_id, secs_passed_game) %>%
+    replace_na(list(
+      steal = FALSE,
+      block = FALSE
+    ))
+
+  def_stats <- df %>%
+    # 2) define all your event‐level defensive stats
+    mutate(
+      desc = paste0(
+        coalesce(homedescription, ""),
+        if_else(!is.na(homedescription) & !is.na(visitordescription), "; ", ""),
+        coalesce(visitordescription, "")
+      ),
+      fgm = eventmsgtype == 1,
+      fga = eventmsgtype %in% c(1, 2),
+      fg3m = fgm & str_detect(desc, regex("3PT", ignore_case = TRUE)),
+      fg3a = fga & str_detect(desc, regex("3PT", ignore_case = TRUE)),
+      ftm = eventmsgtype == 3 & !str_detect(desc, regex("MISS", ignore_case = TRUE)),
+      fta = eventmsgtype == 3,
+      oreb = eventmsgtype == 4 & player1_team_id == lag(player1_team_id),
+      dreb = eventmsgtype == 4 & player1_team_id != lag(player1_team_id),
+      reb = eventmsgtype == 4,
+      ast = eventmsgtype == 1 & !is.na(player2_name),
+      stl = steal == TRUE,
+      blk = block == TRUE,
+      tov = eventmsgtype == 5,
+      pf = eventmsgtype == 6
+    ) %>%
+    # 3) split out the five defenders
+    mutate(
+      defenders = if_else(
+        poss_team == "home",
+        str_split(lineup_away, ",\\s*"),
+        str_split(lineup_home, ",\\s*")
+      )
+    ) %>%
+    unnest(defenders) %>%
+    # 4) roll up per defender
+    group_by(game_id, period, player = defenders) %>%
+    summarize(
+      opp_fgm = sum(fgm, na.rm = TRUE),
+      opp_fga = sum(fga, na.rm = TRUE),
+      opp_fg3m = sum(fg3m, na.rm = TRUE),
+      opp_fg3a = sum(fg3a, na.rm = TRUE),
+      opp_ftm = sum(ftm, na.rm = TRUE),
+      opp_fta = sum(fta, na.rm = TRUE),
+      opp_oreb = sum(oreb, na.rm = TRUE),
+      opp_dreb = sum(dreb, na.rm = TRUE),
+      opp_reb = sum(reb, na.rm = TRUE),
+      opp_ast = sum(ast, na.rm = TRUE),
+      opp_stl = sum(stl, na.rm = TRUE),
+      opp_blk = sum(blk, na.rm = TRUE),
+      opp_tov = sum(tov, na.rm = TRUE),
+      opp_pf = sum(pf, na.rm = TRUE),
+      opp_poss = sum(possession, na.rm = TRUE),
+      opp_pts = sum(shot_pts_home + shot_pts_away, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+  return(def_stats)
+}
+
+#' Compute Advanced Player Stats
+#'
+#' Combines offensive box scores, defensive summaries, and lineup totals to
+#' generate per‑player advanced metrics (e.g.\ efficiency and rating stats).
+#'
+#' @param game_df A tibble of play‑by‑play events, as returned by
+#'   \code{pbp_lineups()}, including lineup and possession columns.
+#' @return A tibble with one row per \code{player} containing advanced stats:
+#'   \code{efg_pct}, \code{ts_pct}, \code{ortg}, \code{drtg}, \code{nrtg},
+#'   \code{ast_pct}, \code{ast_tov}, \code{ast_ratio}, \code{oreb_pct},
+#'   \code{dreb_pct}, \code{trb_pct}, \code{tov_pct}, \code{usage_pct},
+#'   \code{fg2a_pct}, \code{fg3a_pct}, \code{ftr}, \code{stl_pct},
+#'   \code{blk_pct}, \code{ppp}, \code{pm}, \code{pace}, plus raw counts
+#'   and minutes played.
+compute_player_advanced_stats <- function(game_df) {
+  if (!"lineup_home_pt" %in% names(game_df)) {
+    stop("pbp_lineups() must be run before defensive player box scores")
+  }
+
+  player_box <- pbp_box_scores_player(game_df)
+  opp_stats <- summarize_player_def_stats(game_df)
+  lineup_playtime <- calculate_lineup_playtime(game_df)
+
+  all_stats <- player_box %>%
+    full_join(opp_stats, by = c("game_id", "period", "player"))
+
+  # Get lineup‐level offense counts (team FGA, FTA, TOV) via your existing function
+  lineup_off <- calculate_lineup_stats(game_df, lineup_playtime) %>%
+    filter(lineup_role == "lineup") %>%
+    select(game_id, period, lineup, fga, fta, tov, pts)
+
+  # Expand each lineup string into its five players
+  player_team_totals <- lineup_off %>%
+    mutate(player = str_split(lineup, ",\\s*")) %>%  # list‑column of 5 names
+    unnest(player) %>%                                # one row per player
+    group_by(game_id, period, player) %>%
+    summarize(
+      team_fga = sum(fga, na.rm = TRUE),
+      team_fta = sum(fta, na.rm = TRUE),
+      team_tov = sum(tov, na.rm = TRUE),
+      team_pts = sum(pts, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    mutate(
+      team_min = if_else(period > 4, 5, 12)
+    )
+
+  all_stats <- all_stats %>%
+    left_join(player_team_totals, by = c("game_id", "period", "player"))
+
+  adv_cols <- c(
+    "efg_pct","ts_pct","ortg","drtg","nrtg",
+    "ast_pct","ast_tov","ast_ratio",
+    "oreb_pct","dreb_pct","trb_pct",
+    "tov_pct","usage_pct","fg2a_pct","fg3a_pct",
+    "ftr","stl_pct","blk_pct","ppp","pm","pace"
+  )
+
+  player_adv_box <- all_stats %>%
+    mutate(
+      efg_pct = (fgm + 0.5 * fg3m) / fga,
+      ts_pct = pts / (2 * (fga + 0.44 * fta)),
+      ortg = (pts / poss) * 100,
+      drtg = (opp_pts / opp_poss) * 100,
+      nrtg = ortg - drtg,
+      ast_pct = if_else(fgm > 0, ast / fgm, 0),
+      ast_tov = if_else(tov > 0, ast / tov, 0),
+      ast_ratio = ast / poss,
+      oreb_pct = oreb / (oreb + opp_dreb),
+      dreb_pct = dreb / (dreb + opp_oreb),
+      trb_pct = (oreb + dreb) / (oreb + dreb + opp_oreb + opp_dreb),
+      tov_pct = tov / poss,
+      usage_pct = ((fga + 0.5*fta + tov)) / # NBA.com uses 0.5 / NBA Stuffer uses 0.44
+                      ((team_fga + 0.5*team_fta + team_tov)) * 100,
+      fg2a_pct = (fgm - fg3m) / (fga - fg3a),
+      fg3a_pct = fg3a / fga,
+      ftr = fta / fga,
+      stl_pct = stl / opp_poss,
+      blk_pct = blk / opp_poss,
+      ppp = pts / poss,
+      pm = team_pts - opp_pts,
+      pace = poss / total_minutes * 48
+    ) %>%
+    replace_na(as.list(set_names(rep(0, length(adv_cols)), adv_cols))) %>%
+    mutate(across(matches("pct$|rtg$|ratio$|ftr|ppp|pace"), \(x) round(x, 3))) %>%
+    select(game_id:minutes_played, fgm:pts, efg_pct:pace)
+
+  return(player_adv_box)
+}
+
+#' Calculate Player Advanced Stats Box Score
+#'
+#' Wrapper around \code{compute_player_advanced_stats()} to produce a per-player
+#' advanced metrics tibble.
+#'
+#' @param game_df A tibble of play‑by‑play events, as returned by
+#'   \code{pbp_lineups()}.
+#' @return A tibble with per‑player advanced stats.
+#' @export
+pbp_advanced_player <- function(game_df) {
+  compute_player_advanced_stats(game_df)
+}
+
+#' Compute Player Usage Stats
+#'
+#' Calculates usage rates and the breakdown of each player’s shot, rebound, assist, turnover,
+#' block, steal, and point usage as a percentage of team totals.
+#'
+#' @param game_df A tibble of play‑by‑play events, as returned by
+#'   \code{pbp_lineups()}.
+#' @return A tibble with one row per \code{player}, containing:
+#'   \code{usage_pct} and detailed usage metrics
+#'   \code{usage_fgm}, \code{usage_fga}, \code{usage_fg3m}, \dots,
+#'   \code{usage_pts}.
+compute_player_usage_stats <- function(game_df) {
+  if (!"lineup_home_pt" %in% names(game_df)) {
+    stop("pbp_lineups() must be run before defensive player box scores")
+  }
+
+  player_box <- pbp_box_scores_player(game_df)
+  lineup_playtime <- calculate_lineup_playtime(game_df)
+
+  # Get lineup‐level offense counts (team FGA, FTA, TOV) via your existing function
+  lineup_off <- calculate_lineup_stats(game_df, lineup_playtime) %>%
+    filter(lineup_role == "lineup") %>%
+    select(game_id, period, lineup, fgm:pts)
+
+  # Expand each lineup string into its five players
+  player_team_totals <- lineup_off %>%
+    mutate(player = str_split(lineup, ",\\s*")) %>%  # list‑column of 5 names
+    unnest(player) %>%                                # one row per player
+    group_by(game_id, period, player) %>%
+    summarize(
+      team_fgm = sum(fgm, na.rm = TRUE),
+      team_fga = sum(fga, na.rm = TRUE),
+      team_fg3m = sum(fg3m, na.rm = TRUE),
+      team_fg3a = sum(fg3a, na.rm = TRUE),
+      team_ftm = sum(ftm, na.rm = TRUE),
+      team_fta = sum(fta, na.rm = TRUE),
+      team_oreb = sum(oreb, na.rm = TRUE),
+      team_dreb = sum(dreb, na.rm = TRUE),
+      team_reb = sum(reb, na.rm = TRUE),
+      team_ast = sum(ast, na.rm = TRUE),
+      team_stl = sum(stl, na.rm = TRUE),
+      team_blk = sum(blk, na.rm = TRUE),
+      team_blka = sum(blka, na.rm = TRUE),
+      team_tov = sum(tov, na.rm = TRUE),
+      team_pf = sum(pf, na.rm = TRUE),
+      team_poss = sum(poss, na.rm = TRUE),
+      team_pts = sum(pts, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    mutate(
+      team_min = if_else(period > 4, 5, 12)
+    )
+
+  all_stats <- player_box %>%
+    left_join(player_team_totals, by = c("game_id", "period", "player"))
+
+  player_usage_box <- all_stats %>%
+    mutate(
+      usage_pct = ((fga + 0.5*fta + tov)) / # NBA.com uses 0.5 / NBA Stuffer uses 0.44
+        ((team_fga + 0.5*team_fta + team_tov)) * 100,
+      usage_fgm = fgm / team_fgm,
+      usage_fga = fga / team_fga,
+      usage_fg3m = fg3m  / team_fg3m ,
+      usage_fg3a = fg3a / team_fg3a,
+      usage_ftm = ftm / team_ftm,
+      usage_fta = fta / team_fta,
+      usage_oreb = oreb / team_oreb,
+      usage_dreb = dreb / team_dreb,
+      usage_reb = reb / team_reb,
+      usage_ast = ast / team_ast,
+      usage_stl = stl / team_stl,
+      usage_blk = blk / team_blk,
+      usage_blka = blka / team_blka,
+      usage_tov = tov / team_tov,
+      usage_pf = pf / team_pf,
+      usage_pts = pts / team_pts
+    ) %>%
+    mutate(
+      across(where(is.numeric), ~ replace(., is.na(.) | is.nan(.), 0))
+    )%>%
+    mutate(across(usage_pct:usage_pts, \(x) round(x, 3))) %>%
+    select(game_id:minutes_played, usage_pct:usage_pts)
+
+  return(player_usage_box)
+}
+
+#' Calculate Player Usage Stats Box Score
+#'
+#' Wrapper around \code{compute_player_usage_stats()} to output per-player usage statistics.
+#'
+#' @param game_df A tibble of play‑by‑play events, as returned by
+#'   \code{pbp_lineups()}.
+#' @return A tibble with per‑player usage stats.
+#' @export
+pbp_usage_player <- function(game_df) {
+  compute_player_usage_stats(game_df)
 }
