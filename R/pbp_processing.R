@@ -41,10 +41,7 @@ pbp_lineups <- function(data) {
   # Apply corrections to the play-by-play data
   pbp_final <- tryCatch(
     {
-      data <- data %>%
-        make_pbp_corrections() %>%
-        add_event_info() %>%
-        add_team_names()
+      data <- prepare_pbp_data(data)
 
       # Track substitutions made during the game
       subs_made <- subs_in_quarter(data)
@@ -644,11 +641,11 @@ add_event_info <- function(data) {
         TRUE ~ NA_character_
       ),
       # Calculate seconds left in quarter and seconds passed in the game
-      secs_left_quarter = convert_to_seconds(pctimestring),
-      secs_passed_quarter = if_else(period %in% 1:4,
-        720 - secs_left_quarter,
-        300 - secs_left_quarter
-      ),
+      secs_remain_quarter = convert_to_seconds(pctimestring),
+      # secs_passed_quarter = if_else(period %in% 1:4,
+      #   720 - secs_remain_quarter,
+      #   300 - secs_remain_quarter
+      # ),
       secs_passed_game = seconds_passed(pctimestring, period),
       # Fix NA player_team_id
       player1_team_id = if_else(is.na(player1_team_id), player1_id, player1_team_id)
@@ -681,12 +678,12 @@ add_team_names <- function(data) {
   # Extract home and away team names
   home_teams <- data %>%
     filter(eventmsgtype == 10, eventmsgactiontype == 0, period == 1) %>%
-    select(game_id, home_team_name = player1_team_abbreviation) %>%
+    select(game_id, home_team_name = player1_team_abbreviation, home_team_id = player1_team_id) %>%
     distinct()
 
   away_teams <- data %>%
     filter(eventmsgtype == 10, eventmsgactiontype == 0, period == 1) %>%
-    select(game_id, away_team_name = player2_team_abbreviation) %>%
+    select(game_id, away_team_name = player2_team_abbreviation, away_team_id = player2_team_id) %>%
     distinct()
 
   # Join home and away teams
@@ -845,21 +842,10 @@ combine_and_add_players <- function(subs_made, other_players) {
 #' @return A data frame with the only the fgs of an and-one.
 identify_fg_and_one <- function(data) {
   fgs_data <- data %>%
-    mutate(
-      possession = case_when(
-        eventmsgtype %in% c(1, 2, 5) ~ 1,
-        eventmsgtype == 3 & eventmsgactiontype %in% c(
-          10, 12, 15,
-          19, 20, 29
-        ) ~ 1,
-        TRUE ~ 0
-      )
-    ) %>%
     filter(
       eventmsgtype == 1 |
         (eventmsgtype == 6 & !eventmsgactiontype %in% c(
-          4, 10, 11,
-          12, 16, 18
+          4, 10, 11, 12, 16, 18
         )) |
         (eventmsgtype == 3 & eventmsgactiontype == 10)
     ) %>%
