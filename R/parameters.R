@@ -329,3 +329,25 @@ generate_params_profile <- function(season_type = "Regular Season",
   )
   return(profile_params)
 }
+
+#' Generate Query Parameters for Box Score API Requests for PBP Fix
+#'
+#' This function generates the query parameters required for fetching NBA box scores data for a
+#' given season.
+#'
+#' @param game_id The game id for which to generate parameters.
+#' @param start_range The start time for which to generate parameters.
+#' @param end_range The end time for which to generate parameters.
+#' @return A named list of query parameters.
+generate_params_box_scores_fix <- function(game_id, start_range, end_range) {
+  params <- list(
+    `GameID` = as.character(game_id),
+    `LeagueID` = "00",
+    `rangeType` = "2",
+    `startPeriod` = "0",
+    `endPeriod` = "0",
+    `startRange` = as.character(start_range),
+    `endRange` = as.character(end_range)
+  )
+  return(params)
+}

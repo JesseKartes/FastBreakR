@@ -98,7 +98,7 @@ Let's get play-by-play data for that same set of game IDs.
 
 ```{r, fetch play by play, cache=TRUE}
 # Fetch the play-by-play data for the same games
-play_by_play_data <- nba_play_by_play(games)
+play_by_play_data <- nba_stats_play_by_play(games)
 
 # Display a glimpse of the play-by-play data
 glimpse(play_by_play_data)

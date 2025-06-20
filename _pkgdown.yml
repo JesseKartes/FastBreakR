@@ -3,7 +3,7 @@ template:
   bootstrap: 5
 home:
   title: "Welcome to FastBreakR"
-articles:
-  - title: "Play-by-Play Analysis"
-    contents:
-      - pbp_vignette
+# articles:
+#   - title: "Play-by-Play Analysis"
+#     contents:
+#       - pbp_vignette

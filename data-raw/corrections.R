@@ -6,8 +6,7 @@ home_corrections <- tribble(
   ~game_id, ~eventnum, ~eventmsgtype, ~eventmsgactiontype, ~homedescription,
   "0022200094", "542", "3", "16", "Lee Free Throw Technical (5 PTS)",
   "0022100249", "705", "3", "18", "MISS J. Jackson Free Throw Flagrant 1 of 2",
-  "0022100249", "707", "3", "19",
-  "J. Jackson Free Throw Flagrant 2 of 2 (5 PTS)"
+  "0022100249", "707", "3", "19", "J. Jackson Free Throw Flagrant 2 of 2 (5 PTS)"
 )
 
 # Corrections for visitor team descriptions
@@ -29,6 +28,13 @@ delete_rows <- tribble(
 # Missing starters for specific games and periods
 missing_starters <- tribble(
   ~game_id, ~period, ~team_player, ~name_player,
+  "0022401102", 6, "DEN", "Peyton Watson",
+  "0022401162", 5, "UTA", "Jaden Springer",
+  "0022400985", 5, "PHI", "Justin Edwards",
+  "0022400903", 5, "LAL", "Dorian Finney-Smith",
+  "0022400771", 5, "WAS", "Kyshawn George",
+  "0022400762", 5, "SAC", "Zach LaVine",
+  "0022400501", 5, "MIA", "Tyler Herro",
   "0022400290", 5, "HOU", "Dilon Brooks",
   "0022400230", 5, "TOR", "Gradey Dick",
   "0022400223", 5, "DET", "Tobias Harris",
@@ -94,7 +100,33 @@ missing_starters <- tribble(
   "0021801070", 5, "MEM", "Bruno Caboclo",
   "0021801132", 5, "GSW", "Andre Iguodala",
   "0021801229", 5, "UTA", "Tyler Cavanaugh",
-  "0021800569", 5, "CHI", "Wendell Carter Jr."
+  "0021800569", 5, "CHI", "Wendell Carter Jr.",
+  "0021701136", 5, "MIL", "Jason Terry",
+  "0021701103", 5, "NYK", "Courtney Lee",
+  "0021701103", 5, "CHA", "Dwayne Bacon",
+  "0021700966", 5, "TOR", "Kyle Lowry",
+  "0021700893", 5, "MIL", "Eric Bledsoe",
+  "0021700692", 6, "NOP", "Darius Miller",
+  "0021700635", 5, "NOP", "Ian Clark",
+  "0021700607", 5, "NYK", "Michael Beasley",
+  "0021700584", 2, "NOP", "Dante Cunningham",
+  "0021700064", 5, "WAS", "Kelly Oubre Jr.",
+  "0021600976", 5, "NOP", "Solomon Hill",
+  "0021600559", 6, "POR", "Allen Crabbe",
+  "0021600359", 5, "NOP", "Langston Galloway",
+  "0021600270", 5, "OKC", "Andre Roberson",
+  "0021600270", 5, "WAS", "Otto Porter Jr.",
+  "0021600253", 4, "SAC", "Garrett Temple",
+  "0021600049", 5, "MIA", "Dion Waiters",
+  "0021501197", 5, "MIL", "Tyler Ennis",
+  "0021500721", 5, "CLE", "JR Smith",
+  "0021500674", 5, "SAC", "Rudy Gay",
+  "0021500624", 5, "LAC", "Paul Pierce",
+  "0021500587", 5, "PHI", "Hollis Thompson",
+  "0021500523", 6, "DAL", "Wesley Matthews",
+  "0021500515", 5, "MIA", "Goran Dragic",
+  "0021500359", 5, "DET", "Marcus Morris Sr.",
+  "0021500025", 5, "DET", "Kentavious Caldwell-Pope"
 )
 
 # Create corrections list
