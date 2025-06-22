@@ -3,7 +3,8 @@ Type: Package
 Title: NBA Data Fetching and Processing
 Version: 0.1.4
 Author: person("Jesse Kartes", "Author", email = "jesse.kartes@gmail.com", 
-                role = c("aut", "cre"))
+                role = c("aut", "cre")),
+        person("Darryl", "Blackport", role = "ctb")
 Maintainer: Jesse Kartes <jesse.kartes@gmail.com>
 Description: FastBreakR provides a seamless interface for fetching and processing
     NBA data from the official NBA API. The package includes functions for
@@ -12,7 +13,10 @@ Description: FastBreakR provides a seamless interface for fetching and processin
     advanced models, visualizations, or simply exploring NBA stats, FastBreakR
     makes it easy to access and work with up-to-date NBA data.
 License: MIT + file LICENSE
-URL: https://jessekartes.github.io/FastBreakR
+URL: 
+    https://github.com/jessekartes/FastBreakR, 
+    https://jessekartes.github.io/FastBreakR, 
+    https://api.pbpstats.com/docs
 BugReports: https://github.com/jessekartes/FastBreakR/issues
 Encoding: UTF-8
 LazyData: false
@@ -31,6 +35,7 @@ Imports:
     future,
     glue,
     httr,
+    httr2,
     jsonlite,
     rvest,
     zoo,
@@ -53,6 +58,7 @@ Collate:
      nba_box_scores.R
      nba_player_profiles.R
      nba_player_news.R
+     pbpstats.R
 Suggests:
     testthat,
     knitr,
