@@ -34,5 +34,5 @@ utils::globalVariables(c(
   "mdy_hm", "next_sec", "period", "player", "player3_team_abbreviation", "player_role",
   "player_team", "poss_team", "possessions", "prev_opp_lineup", "prev_period", "sec_played",
   "starters", "steal", "total_sec", "x", "x1", "x2", "xmax", "xmin", "y", "y1", "y2", "years",
-  "ymax", "ymin"
+  "ymax", "ymin", "pid", "offense_team"
 ))

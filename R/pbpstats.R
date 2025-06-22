@@ -2180,7 +2180,7 @@ get_wowy_stats <- function(
     team_id,
     filter_comparison,
     filter_event,
-    filer_value,
+    filter_value,
     type,
     starter_state = NULL,
     opponent_id = NULL,

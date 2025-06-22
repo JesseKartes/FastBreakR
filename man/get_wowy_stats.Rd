@@ -11,7 +11,7 @@ get_wowy_stats(
   team_id,
   filter_comparison,
   filter_event,
-  filer_value,
+  filter_value,
   type,
   starter_state = NULL,
   opponent_id = NULL,
@@ -54,6 +54,9 @@ get_wowy_stats(
 \item \code{"Started"}
 \item \code{"CameOffBench"}
 }.}
+
+\item{filter_value}{Numeric or character. The value to filter with the specified comparison
+and event.}
 
 \item{type}{Character. One of:
 \itemize{
@@ -105,9 +108,6 @@ defaults to \code{NULL}.}
 \item \code{"High"}
 \item \code{"VeryHigh"}
 }; comma‐separated for multiple values; defaults to \code{NULL}.}
-
-\item{filter_value}{Numeric or character. The value to filter with the specified comparison
-and event.}
 }
 \value{
 A tibble of WOWY statistics as returned by the API.

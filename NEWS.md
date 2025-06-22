@@ -1,3 +1,10 @@
+## [0.1.5] - 2025-06-22
+### Added
+- Functions for pbpstats API wrapper
+- Thin wrapper for all pbpstats API endpoints
+- Added functions for both NBA.com pbp endpoints data.nba.com and stats.nba.com
+- Removed pbp processing function (rework in progress)
+
 ## [0.1.4] - 2025-05-01
 ### Added
 - Play-by-play and Shot Chart functions updates:
