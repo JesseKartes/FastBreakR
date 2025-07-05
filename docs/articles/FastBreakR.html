@@ -31,6 +31,7 @@
       <ul class="navbar-nav me-auto">
 <li class="active nav-item"><a class="nav-link" href="../articles/FastBreakR.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -106,18 +107,34 @@ started.</p>
 and its dependencies. You can install FastBreakR directly from
 GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install from GitHub</span></span>
-<span></span>
-<span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"JesseKartes/FastBreakR"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"JesseKartes/FastBreakR"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Using github PAT from envvar GITHUB_TOKEN. Use `gitcreds::gitcreds_set()` and unset GITHUB_TOKEN in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.</span></span></code></pre>
+<pre><code><span><span class="co">## Downloading GitHub repo JesseKartes/FastBreakR@HEAD</span></span></code></pre>
+<pre><code><span><span class="co">## Rcpp (1.0.14 -&gt; 1.1.0) [CRAN]</span></span></code></pre>
+<pre><code><span><span class="co">## Installing 1 packages: Rcpp</span></span></code></pre>
+<pre><code><span><span class="co">## Installing package into '/private/var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T/RtmpwiELof/temp_libpathb59f18eea2ea'</span></span>
+<span><span class="co">## (as 'lib' is unspecified)</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## The downloaded binary packages are in</span></span>
+<span><span class="co">##  /var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T//Rtmp9fGvuD/downloaded_packages</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## * checking for file ‘/private/var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T/Rtmp9fGvuD/remotesca5e793df12f/JesseKartes-FastBreakR-d0a5a8d/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">## * preparing ‘FastBreakR’:</span></span>
+<span><span class="co">## * checking DESCRIPTION meta-information ... OK</span></span>
+<span><span class="co">## * checking for LF line-endings in source and make files and shell scripts</span></span>
+<span><span class="co">## * checking for empty or unneeded directories</span></span>
+<span><span class="co">## Omitted ‘LazyData’ from DESCRIPTION</span></span>
+<span><span class="co">## * building ‘FastBreakR_0.1.5.tar.gz’</span></span></code></pre>
+<pre><code><span><span class="co">## Installing package into '/private/var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T/RtmpwiELof/temp_libpathb59f18eea2ea'</span></span>
+<span><span class="co">## (as 'lib' is unspecified)</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
 <p>To get started with FastBreakR, simply load the package along with
 <code>dplyr</code> to streamline your data analysis workflow:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the FastBreakR package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jessekartes/FastBreakR" class="external-link">FastBreakR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -139,13 +156,13 @@ duplicate columns from the merged categories:</p>
 <p>If you only need one or a few specific stat categories, simply use
 the <code>measure_type</code> argument within the
 <strong><code><a href="../reference/nba_team_stats.html">nba_team_stats()</a></code></strong> function.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fetch team stats for the 2022-2023 &amp; 2023-2024 regular season</span></span>
 <span><span class="va">team_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nba_team_stats.html">nba_team_stats</a></span><span class="op">(</span><span class="fl">2023</span><span class="op">:</span><span class="fl">2024</span>, season_type <span class="op">=</span> <span class="st">"Regular Season"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fetching season 2023 (1/2)</span></span></code></pre>
 <pre><code><span><span class="co">## Pausing for 5 seconds before fetching the next season...</span></span></code></pre>
 <pre><code><span><span class="co">## Fetching season 2024 (2/2)</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display a glimpse of the team stats data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">team_stats</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 4,920</span></span>
@@ -243,7 +260,7 @@ the game IDs we need.</p>
 detailed box score data for specified games and stat categories. The
 resulting data frame is clean and consolidated, with duplicate columns
 across stat categories automatically removed for easier analysis.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Here, we're getting the game_ids we need</span></span>
 <span><span class="va">games</span> <span class="op">&lt;-</span> <span class="va">team_stats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">game_date</span> <span class="op">==</span> <span class="st">"2023-12-25"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -260,7 +277,7 @@ across stat categories automatically removed for easier analysis.</p>
 <span><span class="co">## 0022300401 to 0022300405</span></span></code></pre>
 <pre><code><span><span class="co">## Error fetching data for Game ID 0022300404:</span></span>
 <span><span class="co">## In index: 2.</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display a glimpse of the box score data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">box_scores</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 113</span></span>
@@ -343,17 +360,17 @@ ensure that your requests don’t result in timeouts or errors due to rate
 limiting, FastBreakR incorporates an automatic rate-limiting
 mechanism.</p>
 <p>Below is an example of how to fetch play-by-play data for a specific
-set of games, using the <strong><code>nba_play_by_play()</code></strong>
-function. This example demonstrates how to fetch data for a list of game
-IDs.</p>
+set of games, using the
+<strong><code><a href="../reference/nba_stats_play_by_play.html">nba_stats_play_by_play()</a></code></strong> function. This
+example demonstrates how to fetch data for a list of game IDs.</p>
 <p>Let’s get play-by-play data for that same set of game IDs.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fetch the play-by-play data for the same games</span></span>
 <span><span class="va">play_by_play_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nba_stats_play_by_play.html">nba_stats_play_by_play</a></span><span class="op">(</span><span class="va">games</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fetching 5 games in 1 batches</span></span></code></pre>
 <pre><code><span><span class="co">## Fetching batch 1/1: games</span></span>
 <span><span class="co">## 0022300401 to 0022300405</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display a glimpse of the play-by-play data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">play_by_play_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 2,344</span></span>

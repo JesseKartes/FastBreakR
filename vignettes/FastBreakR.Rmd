@@ -25,12 +25,9 @@ This vignette introduces some the primary functions of FastBreakR, demonstrating
 ## Prerequisites
 Before you start, ensure you have installed the FastBreakR package and its dependencies. You can install FastBreakR directly from GitHub:
 
-```r
-# Install from GitHub
-
-# install.packages("pak")
-pak::pak("JesseKartes/FastBreakR")
-install.packages("dplyr")
+```{r install}
+# install.packages("remotes")
+remotes::install_github("JesseKartes/FastBreakR")
 ```
 
 ## Getting Started
@@ -92,7 +89,7 @@ Nice! Now we have a data frame containing traditional stats, along with detailed
 
 Fetching play-by-play data from the NBA can be resource-intensive, especially when requesting data for many games in quick succession. To ensure that your requests don't result in timeouts or errors due to rate limiting, FastBreakR incorporates an automatic rate-limiting mechanism.
 
-Below is an example of how to fetch play-by-play data for a specific set of games, using the **`nba_play_by_play()`** function. This example demonstrates how to fetch data for a list of game IDs.
+Below is an example of how to fetch play-by-play data for a specific set of games, using the **`nba_stats_play_by_play()`** function. This example demonstrates how to fetch data for a list of game IDs.
 
 Let's get play-by-play data for that same set of game IDs.
 

@@ -1,0 +1,104 @@
+---
+title: "Using the pbpstats API Wrapper"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pbpstats API Wrapper}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+This vignette demonstrates how to leverage FastBreakR’s thin wrappers
+around the pbpstats API, developed by Daryl Blackport. This wrapper provides easy access to every
+endpoint of the pbpstats API — including live game data, play-by-play, team stats, player stats,
+and more. FastBreakR is the only R package offering a complete pbpstats API wrapper covering all
+available endpoints.
+
+See https://api.pbpstats.com/docs for more info.
+
+```{r setup, include = FALSE}
+library(knitr)
+opts_chunk$set(
+  comment = '',
+  collapse = TRUE,
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Load FastBreakR
+
+```{r load}
+# install.packages("remotes")
+# remotes::install_github("JesseKartes/FastBreakR")
+
+library(FastBreakR)
+library(tibble, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+```
+
+## Get Career Stats for Teams/Players/Lineups
+
+This thin wrapper make it easy to fetch comprehensive career statistics for any team, player,
+or lineup. This is particularly useful for building historical performance summaries or
+benchmarking entities against league averages.
+
+```{r season stats}
+# Fetch career stats for Tyrese Haliburton
+season_stats <- get_all_season_stats(entity_type = "Player", entity_id = "1630169")
+
+# View Hali's regular season career stats
+player_stats <- tibble(season_stats$results$`Regular Season`) %>%
+  select(Season, GamesPlayed, PlusMinus, Points, FG3M)
+
+knitr::kable(player_stats, caption = paste('Tyrese Haliburton Career Stats'))
+```
+
+## Get Players Stats for Specific Lineups
+
+Lineup analytics allow you to isolate the impact of specific player combinations.
+The snippet below retrieves stats for the 2024–25 Knicks playoff starting five, ideal for lineup
+evaluation or opponent scouting.
+
+```{r lineups}
+# Knicks Playoffs Starters
+knicks_playoffs <- get_lineup_player_stats(
+  season = "2024-25",
+  season_type = "Playoffs",
+  lineup_id = "1626157-1628384-1628404-1628969-1628973"
+)
+
+knicks_stats <- tibble(knicks_playoffs$multi_row_table_data) %>%
+  select(Name, Minutes, PlusMinus, Points, FtPoints)
+
+knitr::kable(knicks_stats, caption = '2024-25 Knicks Playoffs Starters')
+```
+
+## Live Team and Player Stats
+
+For live updates and streaming dashboards, pbpstats wrappers seamlessly pull in-game metrics.
+Here’s how to grab team-level live data from Game One of the 2024-25 NBA Finals.
+
+```{r live stats}
+# Game One 2024-25 NBA finals Live Stats
+live_game <- get_live_game(game_id = "0042400401", result_type = "team")
+
+live_stats <- head(live_game$game_data$rows, 10)
+
+knitr::kable(live_stats, caption = paste('NBA Finals Game One'))
+```
+
+## Conclusion
+
+In this vignette, we showcased FastBreakR’s pbpstats API wrapper across three simple use cases:
+
+- **Historical Career Analysis:** Pull full career statistics for players, teams, or lineups to create performance summaries.
+- **Lineup-Specific Metrics:** Evaluate the impact of specific player combinations.
+- **Real-Time Live Data:** Integrate in-game team and player stats into dashboards or live analytics
+	reports.
+
+This is just a small glimpse of what’s possible with the pbpstats API. FastBreakR is the only R
+package with full pbpstats integration—bringing powerful, customizable NBA analytics to your 
+workflow.
+
