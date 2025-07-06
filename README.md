@@ -25,27 +25,7 @@ You can install the development version of FastBreakR from GitHub with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("JesseKartes/FastBreakR")
-#> Using github PAT from envvar GITHUB_TOKEN. Use `gitcreds::gitcreds_set()` and unset GITHUB_TOKEN in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.
-#> Downloading GitHub repo JesseKartes/FastBreakR@HEAD
-#> Rcpp (1.0.14 -> 1.1.0) [CRAN]
-#> curl (6.3.0  -> 6.4.0) [CRAN]
-#> Installing 2 packages: Rcpp, curl
-#> Installing packages into '/private/var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T/RtmpwiELof/temp_libpathb59f3f885bb3'
-#> (as 'lib' is unspecified)
-#> 
-#> The downloaded binary packages are in
-#>  /var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T//Rtmp4QC7D8/downloaded_packages
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T/Rtmp4QC7D8/remotesbb396805dc87/JesseKartes-FastBreakR-d0a5a8d/DESCRIPTION’ ... OK
-#> * preparing ‘FastBreakR’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> Omitted ‘LazyData’ from DESCRIPTION
-#> * building ‘FastBreakR_0.1.5.tar.gz’
-#> Installing package into '/private/var/folders/l2/0bcgcf_d3pq5259wmlvt2rq80000gn/T/RtmpwiELof/temp_libpathb59f3f885bb3'
-#> (as 'lib' is unspecified)
+remotes::install_github("JesseKartes/FastBreakR", quiet = TRUE)
 ```
 
 ## Core Features

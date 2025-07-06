@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   FastBreakR: FastBreakR.html
   pbpstats: pbpstats.html
-last_built: 2025-07-05T18:29Z
+last_built: 2025-07-06T15:09Z
 urls:
   reference: https://jessekartes.github.io/FastBreakR/reference
   article: https://jessekartes.github.io/FastBreakR/articles

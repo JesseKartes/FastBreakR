@@ -31,7 +31,7 @@ opts_chunk$set(
 
 ```{r load}
 # install.packages("remotes")
-# remotes::install_github("JesseKartes/FastBreakR")
+remotes::install_github("JesseKartes/FastBreakR", quiet = TRUE)
 
 library(FastBreakR)
 library(tibble, warn.conflicts = FALSE)
