@@ -27,7 +27,7 @@ Before you start, ensure you have installed the FastBreakR package and its depen
 
 ```{r install}
 # install.packages("remotes")
-remotes::install_github("JesseKartes/FastBreakR")
+remotes::install_github("JesseKartes/FastBreakR", quiet = TRUE)
 ```
 
 ## Getting Started
@@ -53,8 +53,8 @@ The **`nba_team_stats()`** function fetches NBA team statistics for specified se
 If you only need one or a few specific stat categories, simply use the `measure_type` argument within the **`nba_team_stats()`** function.
 
 ```{r, team stats, cache=TRUE}
-# Fetch team stats for the 2022-2023 & 2023-2024 regular season
-team_stats <- nba_team_stats(2023:2024, season_type = "Regular Season")
+# Fetch team stats for the 2023-2024 & 2024-2025 regular season
+team_stats <- nba_team_stats(2024:2025, season_type = "Regular Season")
 
 # Display a glimpse of the team stats data
 glimpse(team_stats)
@@ -62,14 +62,14 @@ glimpse(team_stats)
 
 ## Fetching Box Scores
 
-Now that we have a data frame with team-level stats, let’s dive deeper and retrieve box scores for the Christmas Day games in 2023. Using our `team_stats` data frame, we can filter and extract the game IDs we need.
+Now that we have a data frame with team-level stats, let’s dive deeper and retrieve box scores for the Christmas Day games in 2024. Using our `team_stats` data frame, we can filter and extract the game IDs we need.
 
 The **`nba_box_scores()`** function fetches detailed box score data for specified games and stat categories. The resulting data frame is clean and consolidated, with duplicate columns across stat categories automatically removed for easier analysis.
 
 ```{r, fetch box scores, cache=TRUE}
 # Here, we're getting the game_ids we need
 games <- team_stats %>%
-  filter(game_date == "2023-12-25") %>%
+  filter(game_date == "2024-12-25") %>%
   pull(game_id) %>%
   unique()
 
@@ -101,7 +101,7 @@ play_by_play_data <- nba_stats_play_by_play(games)
 glimpse(play_by_play_data)
 ```
 
-Great! Now we've got raw play-by-play data for a small subset of games. This data is ready to be analyzed or visualized further. Stay tuned—new functions are being developed to make these tasks even easier, simplifying the process and enhancing your ability to derive insights from the data!
+Great! Now we've got raw play-by-play data for a small subset of games. This data is ready to be analyzed or visualized further. Stay tuned—new functions are being developed to make these tasks even easier, simplifying the process and enhancing your ability to derive insights from the data! Pro tip: Try the `nba_data_play_by_play()` function to retrieve play-by-play data in an alternate format—great for tracking possessions!
 
 ## Conclusion
 
